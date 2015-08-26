@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<validation-config
+    xmlns="http://jboss.org/xml/ns/javax/validation/configuration"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://jboss.org/xml/ns/javax/validation/configuration">
+	
+	
+   <message-interpolator>br.com.belaAgenda.infra.beanValidation.ResourceBundleMessageInterpolator</message-interpolator>
+   <constraint-validator-factory>br.com.belaAgenda.infra.beanValidation.MyInjectingConstraintValidatorFactory</constraint-validator-factory>
+   
+   
+   
+</validation-config>
