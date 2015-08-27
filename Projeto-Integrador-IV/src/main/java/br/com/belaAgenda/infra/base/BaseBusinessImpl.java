@@ -1,16 +1,19 @@
 package br.com.belaAgenda.infra.base;
 
 import java.util.List;
+import java.util.ResourceBundle;
 
 import javax.inject.Inject;
 
-import br.com.baseDAOLib.DAO.BaseDAO;
+import br.com.belaAgenda.infra.resourceBundle.ResourceBundleFactory;
 
 @SuppressWarnings("rawtypes")
-public abstract class BaseBusinessImpl<T, D extends BaseDAO> implements BaseBusiness<T, D>{
+public abstract class BaseBusinessImpl<T, D extends BaseDao> implements BaseBusiness<T, D>{
 	
 	@Inject
 	protected D dao;
+	
+	private ResourceBundle resourceBundle = ResourceBundleFactory.createBundle(getClass());
 	
 	@SuppressWarnings("unchecked")
 	public T insert(T entity) {
@@ -57,5 +60,9 @@ public abstract class BaseBusinessImpl<T, D extends BaseDAO> implements BaseBusi
 	public <E> E findFieldForProperties(String field, String names, Object... values) {
 		return (E) dao.findFieldForProperties(field, names, values);
 	}
-
+	
+	public String getMessage(String key){
+		return resourceBundle.getString(key);
+	}
+	
 }

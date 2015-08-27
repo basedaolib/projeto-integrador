@@ -1,19 +1,21 @@
 package br.com.belaAgenda.infra.resourceBundle;
 
-import java.lang.reflect.ParameterizedType;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
-import javax.enterprise.inject.Produces;
-import javax.enterprise.inject.spi.InjectionPoint;
+import javax.faces.context.FacesContext;
 
 
-public class ResourceBundleFactory<T> {
+public class ResourceBundleFactory {
     
-	@SuppressWarnings({ "rawtypes", "unchecked" })
-	@Produces
-	public ResourceBundle<T>  create(InjectionPoint injectionPoint) {
-	    ParameterizedType type = (ParameterizedType) injectionPoint.getType();
-	    Class classe = (Class) type.getActualTypeArguments()[0];
-	    return new ResourceBundle<T>(classe);
-	  }
+	public static ResourceBundle createBundle(Class<?> clazz) {
+		
+	   return ResourceBundle.getBundle(
+			   clazz.getName().replace(clazz.getSimpleName(), ""), getLocale());
+	 }
+	
+	private static Locale getLocale(){
+		return FacesContext.getCurrentInstance().getExternalContext().getRequestLocale();
+	}
 
 }

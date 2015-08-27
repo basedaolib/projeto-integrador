@@ -8,13 +8,15 @@ import java.util.List;
 import org.hibernate.validator.resourceloading.AggregateResourceBundleLocator;
 import org.hibernate.validator.spi.resourceloading.ResourceBundleLocator;
 
+import br.com.belaAgenda.infra.resourceBundle.ResourceBundleMessageScan;
+
 
 public class ResourceBundleMessageInterpolator extends org.hibernate.validator.messageinterpolation.ResourceBundleMessageInterpolator{
 	
-	private static String uri = ResourceBundleMessageInterpolator.class.getResource("").toString().substring(0,  ResourceBundleMessageInterpolator.class.getResource("").toString().indexOf("/br")).replace("file:", "");
+	
 	
 	public ResourceBundleMessageInterpolator() {
-		this(new  AggregateResourceBundleLocator( listarArquivos(new File(uri))));
+		this(new  AggregateResourceBundleLocator( ResourceBundleMessageScan.listarArquivos()));
 		
 	}
 	
@@ -28,19 +30,6 @@ public class ResourceBundleMessageInterpolator extends org.hibernate.validator.m
 	}
 
 	
-	public static List<String> listarArquivos(File file){
-		List<String> lista = new ArrayList<String>();
-		File[] arquivos = file.listFiles();
-		for(File item : arquivos){
-			if(!item.isDirectory()){
-				if(item.getName().contains(".properties")){
-					lista.add(item.getPath().substring(item.getPath().indexOf("br")).replaceAll("/", ".").replace(".properties", ""));
-				}
-			}else{
-				lista.addAll(listarArquivos(item));
-			}
-		}
-		return lista;
-	}
+	
 	
 }

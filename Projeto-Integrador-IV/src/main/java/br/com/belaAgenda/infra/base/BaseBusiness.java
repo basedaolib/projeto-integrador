@@ -24,5 +24,7 @@ public interface BaseBusiness<T, D extends BaseDAO>{
 			Object... values);
 
 	public <E> E findFieldForProperties(String field, String names, Object... values);
+	
+	public String getMessage(String key);
 
 }
