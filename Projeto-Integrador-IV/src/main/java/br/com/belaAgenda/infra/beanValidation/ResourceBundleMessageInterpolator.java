@@ -1,10 +1,6 @@
 package br.com.belaAgenda.infra.beanValidation;
 
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
-
 import org.hibernate.validator.resourceloading.AggregateResourceBundleLocator;
 import org.hibernate.validator.spi.resourceloading.ResourceBundleLocator;
 

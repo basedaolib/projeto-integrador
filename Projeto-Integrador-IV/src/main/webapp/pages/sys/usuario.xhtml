@@ -2,17 +2,83 @@
 <html xmlns="http://www.w3c.org/1999/xhtml"
     xmlns:h="http://xmlns.jcp.org/jsf/html"
     xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
     xmlns:p="http://primefaces.org/ui">
     
 <h:head></h:head>
   <h:body>
-  	<h:form>
-  	<p:growl id="growl" showDetail="true" sticky="true" />
-    	<h:outputLabel value="Enter your name:" />
-    	<p:inputText value="#{usuarioBean.usuario.login}"/>
-    	<h:outputLabel value="senha" />
-    	<p:inputText value="#{usuarioBean.usuario.senha}"/>
-    	<p:commandButton value="salvar" actionListener="#{usuarioBean.salvar}" update="growl" />
+  <h:form id="form">
+  	<p:accordionPanel  id="accordionPanel">
+        <p:tab title="#{global.pesquisar}">
+        	<p:commandButton value="#{global.novo}" 
+	            					 actionListener="#{usuarioBean.adicionar}"
+	            					 update="cadastroTab"/>
+	            					 
+            <h:panelGrid columns="2" cellpadding="10">
+            </h:panelGrid>
+            <p:dataTable var="item" value="#{usuarioBean.usuarios}" layout="grid"
+        		paginator="true" id="usuariosDatagrid"
+        		paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+        		rowsPerPageTemplate="6,12,16">
+            
+            	<p:column headerText="#{global.codigo}">
+       		 		<h:outputText value="#{item.codigo}" />
+    			</p:column>
+    			
+    			<p:column headerText="#{global.nome}">
+       		 		<h:outputText value="#{item.nome}" />
+    			</p:column>
+    			
+    			<p:column headerText="#{usuarioLabels.login}">
+       		 		<h:outputText value="#{item.login}" />
+    			</p:column>
+    			
+    			<p:column headerText="#{global.opcoes}">
+       		 		<p:commandButton value="#{global.salvar}" 
+				            		 actionListener="#{usuarioBean.editar(item)}"
+				            		 update=":form:accordionPanel:cadastroTab">
+				    </p:commandButton>
+    			</p:column>
+            	
+            </p:dataTable>
+        </p:tab>
+        
+        <p:tab title="#{global.cadastro}" id="cadastro" >
+        	<p:tabView id="cadastroTab"  value="#{usuarioBean.usuariosEdit}" var="usuarioForm">
+        		<p:ajax event="tabClose" listener="#{usuarioBean.onTabClose(usuarioForm)}"/>
+	        	<p:tab title="#{usuarioBean.obterTituloTab(usuarioForm)}" closable="true">
+	        	
+		        		<p:growl id="status" showDetail="true" sticky="true" autoUpdate="true"/>
+			            <h:panelGrid columns="2" cellpadding="10">
+			            	
+			            	<h:inputHidden value="usuarioForm.id" />
+			            	<h:inputHidden/>
+			            
+			            	<p:outputLabel value="#{global.codigo}" />
+			            	<p:inputText value="#{usuarioForm.codigo}" disabled="true"/>
+			            	
+			            	<p:outputLabel value="#{global.nome}" />
+			            	<p:inputText value="#{usuarioForm.nome}"/>
+			            	
+			            	<p:outputLabel value="#{usuarioLabels.login}" />
+			            	<p:inputText value="#{usuarioForm.login}"/>
+			            	
+			            	<p:outputLabel value="#{usuarioLabels.senha}" />
+			            	<p:inputText value="#{usuarioForm.senha}"/>
+			            	
+			            	<p:outputLabel value="#{usuarioLabels.confirmacaoSenha}" />
+			            	<p:inputText value="#{usuarioForm.confirmacaoSenha}"/>
+			            
+			            	<p:commandButton value="#{global.salvar}" 
+			            					 action="#{usuarioBean.salvar(usuarioForm)}"
+			            					 icon="ui-icon-disk"
+			            					 update="cadastroTab">
+			            	</p:commandButton>
+			            </h:panelGrid>
+	        	</p:tab>
+        	</p:tabView>
+        </p:tab>
+    </p:accordionPanel>
 	</h:form>
    </h:body>
 </html>

@@ -1,4 +1,4 @@
-package br.com.belaAgenda.model.sys;
+package br.com.belaAgenda.infra.base.model;
 
 import java.io.Serializable;
 
@@ -9,7 +9,7 @@ import javax.persistence.PrePersist;
 
 
 @MappedSuperclass
-public abstract class EntityId implements Serializable{
+public abstract class EntityId extends EntityBase implements Serializable{
 	
 
 	private static final long serialVersionUID = -1842377326317111427L;

@@ -1,19 +1,25 @@
-package br.com.belaAgenda.infra.base;
+package br.com.belaAgenda.infra.base.business;
 
 import java.util.List;
-import java.util.ResourceBundle;
 
 import javax.inject.Inject;
 
-import br.com.belaAgenda.infra.resourceBundle.ResourceBundleFactory;
+import br.com.belaAgenda.infra.base.dao.BaseDao;
+import br.com.belaAgenda.infra.base.model.EntityId;
+import br.com.belaAgenda.infra.resourceBundle.MessageProvider;
 
 @SuppressWarnings("rawtypes")
-public abstract class BaseBusinessImpl<T, D extends BaseDao> implements BaseBusiness<T, D>{
+public abstract class BaseBusinessImpl<T extends EntityId, D extends BaseDao> implements BaseBusiness<T, D>{
 	
 	@Inject
 	protected D dao;
 	
-	private ResourceBundle resourceBundle = ResourceBundleFactory.createBundle(getClass());
+	@Inject
+	protected MessageProvider messageProvider;
+	
+	public String getMessage(String key){
+		return messageProvider.getValue(key);
+	}
 	
 	@SuppressWarnings("unchecked")
 	public T insert(T entity) {
@@ -27,7 +33,12 @@ public abstract class BaseBusinessImpl<T, D extends BaseDao> implements BaseBusi
 
 	@SuppressWarnings("unchecked")
 	public T update(T entity) {
-		return (T) dao.delete(entity);
+		return (T) dao.update(entity);
+	}
+	
+	@SuppressWarnings("unchecked")
+	public T save(T entity){
+		return (T) dao.save(entity);
 	}
 
 	@SuppressWarnings("unchecked")
@@ -38,6 +49,11 @@ public abstract class BaseBusinessImpl<T, D extends BaseDao> implements BaseBusi
 	@SuppressWarnings("unchecked")
 	public T findEntityForId(long id) {
 		return (T) dao.findEntityForId(id);
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<T> list(int beginning, int end, String order){
+		return dao.list(beginning, end, order);
 	}
 
 	@SuppressWarnings("unchecked")
@@ -60,9 +76,4 @@ public abstract class BaseBusinessImpl<T, D extends BaseDao> implements BaseBusi
 	public <E> E findFieldForProperties(String field, String names, Object... values) {
 		return (E) dao.findFieldForProperties(field, names, values);
 	}
-	
-	public String getMessage(String key){
-		return resourceBundle.getString(key);
-	}
-	
 }

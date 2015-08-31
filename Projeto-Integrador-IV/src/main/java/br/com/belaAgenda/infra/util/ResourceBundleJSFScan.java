@@ -5,7 +5,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.StringWriter;
 
-import javax.faces.context.FacesContext;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import javax.xml.parsers.DocumentBuilder;
@@ -28,55 +27,69 @@ import org.xml.sax.SAXException;
 
 import br.com.belaAgenda.infra.resourceBundle.ResourceBundleMessageScan;
 
-
 public class ResourceBundleJSFScan implements ServletContextListener {
 
+	private String path;
 	
-    public void contextDestroyed(ServletContextEvent arg0)  { 
-    	DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+	public void contextDestroyed(ServletContextEvent arg0) {
 
-    	dbf.setNamespaceAware(false);
+	}
 
-    	DocumentBuilder docBuilder;
+	private void scan() throws ParserConfigurationException, SAXException, IOException,
+			TransformerFactoryConfigurationError, TransformerException {
+		DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+
+		dbf.setNamespaceAware(false);
+
+		DocumentBuilder docBuilder;
+
+		
+		
+		String path = this.path + "/WEB-INF/";
+		docBuilder = dbf.newDocumentBuilder();
+
+		Document doc = docBuilder.parse(new File(path + "faces-config.xml"));
+
+		NodeList applications = doc.getElementsByTagName("application");
+
+		Node application = applications.item(0);
+		Element resourceBundle;
+		Element baseName;
+		Element var;
+		for (String local : ResourceBundleMessageScan.listarArquivos()) {
+			
+			resourceBundle = doc.createElement("resource-bundle");
+			baseName = doc.createElement("base-name");
+			var = doc.createElement("var");
+
+			baseName.appendChild(doc.createTextNode(local));
+			String varName = local.substring( 1 + local.lastIndexOf("."));
+			var.appendChild(doc.createTextNode(varName));
+
+			resourceBundle.appendChild(baseName);
+			resourceBundle.appendChild(var);
+
+			application.appendChild(resourceBundle);
+		}
+
+		Transformer transformer = TransformerFactory.newInstance().newTransformer();
+		transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+		StreamResult result = new StreamResult(new StringWriter());
+		DOMSource source = new DOMSource(doc);
+		transformer.transform(source, result);
+
+		String xmlString = result.getWriter().toString();
+
+		FileWriter fileWrite = new FileWriter(new File(path + "faces-config.xml"));
+		fileWrite.write(xmlString);
+		fileWrite.close();
+	}
+
+	public void contextInitialized(ServletContextEvent arg0) {
+		path = arg0.getServletContext().getRealPath("").replace("\\", "/");
+		
 		try {
-			String path = FacesContext.getCurrentInstance().getExternalContext().getRealPath("") + "WEB-INF/";
-			docBuilder = dbf.newDocumentBuilder();
-			
-			Document doc = docBuilder.parse(new File(path + "faces-config.xml"));
-			
-			NodeList applications = doc.getElementsByTagName("application");
-			
-			Node application = applications.item(0);
-			Element resourceBundle;
-			Element baseName;
-			Element var;
-			for(String local : ResourceBundleMessageScan.listarArquivos()){
-				resourceBundle = doc.createElement("resource-bundle");
-				baseName = doc.createElement("base-name");
-				var = doc.createElement("var");
-				
-				baseName.appendChild(doc.createTextNode(local));
-				//var.appendChild(doc.createTextNode(data));
-				
-				resourceBundle.appendChild(baseName);
-				resourceBundle.appendChild(var);
-				
-				application.appendChild(resourceBundle);
-			}
-			
-			Transformer transformer = TransformerFactory.newInstance().newTransformer();
-            transformer.setOutputProperty(OutputKeys.INDENT, "yes");
-			StreamResult result = new StreamResult(new StringWriter());
-            DOMSource source = new DOMSource(doc);
-            transformer.transform(source, result);
-
-            String xmlString = result.getWriter().toString();
-			
-			FileWriter fileWrite = new FileWriter(new File(path + "faces-config.xml"));  
-		    fileWrite.write(xmlString);  
-		    fileWrite.close();  
-			
-			
+			scan();
 		} catch (ParserConfigurationException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -97,12 +110,6 @@ public class ResourceBundleJSFScan implements ServletContextListener {
 			e.printStackTrace();
 		}
 
+	}
 
-
-    }
-
-	
-    public void contextInitialized(ServletContextEvent arg0)  { 
-    }
-	
 }

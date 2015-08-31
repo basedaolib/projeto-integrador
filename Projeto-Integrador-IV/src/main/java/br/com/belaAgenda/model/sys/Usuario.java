@@ -1,35 +1,60 @@
 package br.com.belaAgenda.model.sys;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
+import br.com.belaAgenda.infra.base.model.ChaveValor;
+import br.com.belaAgenda.model.sys.types.NivelUsuario;
+import br.com.belaAgenda.model.sys.types.UsuarioModelException;
+
 
 @Entity
-public class Usuario extends EntityId{
+public class Usuario extends ChaveValor{
 
 	private static final long serialVersionUID = -3327573295169448466L;
 	
-
+	@NotEmpty(message="{loginObrigatorio}")
+	@Size(message="{tamanhoDoLogin}", min=6)
 	private String login;
 	
-	@NotEmpty(message="{obg}")
-	@Size(message="{mim.senha}", min=6)
+	@NotEmpty(message="{senhaObrigatoria}")
+	@Size(message="{tamanhoDaSenha}", min=6)
 	private String senha;
 	
-	private String nivel;
+	@NotEmpty(message="{confirmacaoSenhaObrigatoria}")
+	private String confirmacaoSenha;
+	
+	//@NotEmpty(message="{nivelObrigatoria}")
+	@Enumerated(EnumType.STRING) 
+	private NivelUsuario nivel = NivelUsuario.EDITOR;
 	
 	
 	public Usuario() {
 		super();
 	}
 	
+	@PrePersist
+	@PreUpdate
+	private void consistir(){
+		consistirSenha();
+	}
+	
+	private void consistirSenha(){
+		if(!senha.equals(confirmacaoSenha)){
+			throw new UsuarioModelException(getMessage("usuario.asSenhasNaoConferem"));
+		}
+	}
 
-	public String getNivel() {
+	public NivelUsuario getNivel() {
 		return nivel;
 	}
-	public void setNivel(String nivel) {
+	public void setNivel(NivelUsuario nivel) {
 		this.nivel = nivel;
 	}
 	
@@ -48,6 +73,14 @@ public class Usuario extends EntityId{
 		this.senha = senha;
 	}
 
+	public String getConfirmacaoSenha() {
+		return confirmacaoSenha;
+	}
+
+
+	public void setConfirmacaoSenha(String confirmacaoSenha) {
+		this.confirmacaoSenha = confirmacaoSenha;
+	}
 
 	@Override
 	public int hashCode() {
@@ -74,10 +107,7 @@ public class Usuario extends EntityId{
 				return false;
 		} else if (!login.equals(other.login))
 			return false;
-		if (nivel == null) {
-			if (other.nivel != null)
-				return false;
-		} else if (!nivel.equals(other.nivel))
+		if (nivel != other.nivel)
 			return false;
 		if (senha == null) {
 			if (other.senha != null)
@@ -86,6 +116,6 @@ public class Usuario extends EntityId{
 			return false;
 		return true;
 	}
-	
+
 	
 }

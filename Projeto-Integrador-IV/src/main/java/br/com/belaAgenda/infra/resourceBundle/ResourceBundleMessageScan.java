@@ -15,10 +15,16 @@ public class ResourceBundleMessageScan {
 	private static List<String> listarArquivos(File file){
 		List<String> lista = new ArrayList<String>();
 		File[] arquivos = file.listFiles();
+		String nome;
 		for(File item : arquivos){
 			if(!item.isDirectory()){
 				if(item.getName().contains(".properties")){
-					lista.add(item.getPath().substring(item.getPath().indexOf("br")).replaceAll("/", ".").replace(".properties", ""));
+					nome = item.getPath().substring(item.getPath().indexOf("br"));
+					nome = nome.replace("/", ".");
+					nome = nome.replace("\\", ".");
+					nome = nome.replace(".properties", "");
+					
+					lista.add(nome);
 				}
 			}else{
 				lista.addAll(listarArquivos(item));

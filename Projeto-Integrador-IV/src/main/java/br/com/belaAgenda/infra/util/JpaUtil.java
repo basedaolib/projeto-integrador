@@ -8,7 +8,7 @@ import javax.persistence.Persistence;
 
 class JpaUtil {
 	
-	private EntityManagerFactory factory =  Persistence.createEntityManagerFactory("projeto");
+	private EntityManagerFactory factory =  Persistence.createEntityManagerFactory("bela_agenda");
 	
 	
 	@Produces

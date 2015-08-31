@@ -6,10 +6,7 @@
     version="2.2">
 
 <application>
-	<resource-bundle>
-		<base-name>messages.rotulos</base-name>
-		<var>msgs</var>
-	</resource-bundle>
+
 	<locale-config>
 		<default-locale>pt_BR</default-locale>
 		<!--<supported-locale>en_US</supported-locale>-->

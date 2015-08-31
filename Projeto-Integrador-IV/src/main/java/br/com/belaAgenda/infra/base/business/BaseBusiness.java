@@ -1,20 +1,25 @@
-package br.com.belaAgenda.infra.base;
+package br.com.belaAgenda.infra.base.business;
 
 import java.util.List;
 
 import br.com.baseDAOLib.DAO.BaseDAO;
+import br.com.belaAgenda.infra.base.model.EntityId;
 
 @SuppressWarnings("rawtypes")
-public interface BaseBusiness<T, D extends BaseDAO>{
+public interface BaseBusiness<T extends EntityId, D extends BaseDAO>{
 	public T insert(T entity);
 
 	public T delete(T entity);
 
 	public T update(T entity);
+	
+	public T save(T entity);
 
 	public T disassociate(T entity);
 
 	public T findEntityForId(long id);
+	
+	public List<T> list(int beginning, int end, String order);
 
 	public List<T> findEntitiesForProperties(int beginning, int end, String order, String names, Object... values);
 
