@@ -1,21 +1,35 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3c.org/1999/xhtml"
+<ui:composition xmlns="http://www.w3c.org/1999/xhtml"
     xmlns:h="http://xmlns.jcp.org/jsf/html"
     xmlns:f="http://java.sun.com/jsf/core"
     xmlns:ui="http://java.sun.com/jsf/facelets"
     xmlns:p="http://primefaces.org/ui">
     
-<h:head></h:head>
+<h:head>
+</h:head>
   <h:body>
   <h:form id="form">
   	<p:accordionPanel  id="accordionPanel">
         <p:tab title="#{global.pesquisar}">
-        	<p:commandButton value="#{global.novo}" 
-	            					 actionListener="#{usuarioBean.adicionar}"
-	            					 update="cadastroTab"/>
-	            					 
-            <h:panelGrid columns="2" cellpadding="10">
-            </h:panelGrid>
+        
+        	<div class="ui-grid ui-grid-responsive">
+    			<div class="ui-grid-row">
+        			<div class="ui-grid-col-8">
+        				<p:inputText value="#{usuarioBean.pesquisa}" style="width: 98%;"/>
+        			</div>
+        			<div class="ui-grid-col-4">
+        				<p:commandButton value="#{global.pesquisar}" 
+		            					 actionListener="#{usuarioBean.pesquisar}"
+		            					 update="usuariosDatagrid"/>
+	        	
+			        	<p:commandButton value="#{global.novo}" 
+				            					 actionListener="#{usuarioBean.adicionar}"
+				            					 update="cadastroTab"/>
+        			</div>
+    			</div>
+			</div>
+	        	
+	        <br/><br/>
             <p:dataTable var="item" value="#{usuarioBean.usuarios}" layout="grid"
         		paginator="true" id="usuariosDatagrid"
         		paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
@@ -34,7 +48,7 @@
     			</p:column>
     			
     			<p:column headerText="#{global.opcoes}">
-       		 		<p:commandButton value="#{global.salvar}" 
+       		 		<p:commandButton value="#{global.editar}" 
 				            		 actionListener="#{usuarioBean.editar(item)}"
 				            		 update=":form:accordionPanel:cadastroTab">
 				    </p:commandButton>
@@ -64,10 +78,10 @@
 			            	<p:inputText value="#{usuarioForm.login}"/>
 			            	
 			            	<p:outputLabel value="#{usuarioLabels.senha}" />
-			            	<p:inputText value="#{usuarioForm.senha}"/>
+			            	<p:password value="#{usuarioForm.senha}"/>
 			            	
 			            	<p:outputLabel value="#{usuarioLabels.confirmacaoSenha}" />
-			            	<p:inputText value="#{usuarioForm.confirmacaoSenha}"/>
+			            	<p:password value="#{usuarioForm.confirmacaoSenha}"/>
 			            
 			            	<p:commandButton value="#{global.salvar}" 
 			            					 action="#{usuarioBean.salvar(usuarioForm)}"
@@ -81,4 +95,4 @@
     </p:accordionPanel>
 	</h:form>
    </h:body>
-</html>
+</ui:composition>

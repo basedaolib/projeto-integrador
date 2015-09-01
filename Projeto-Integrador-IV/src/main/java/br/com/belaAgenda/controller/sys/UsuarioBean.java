@@ -28,6 +28,8 @@ public class UsuarioBean extends BaseBean implements Serializable{
 	
 	private List<Usuario> usuariosEdit = new ArrayList<>();
 	
+	private String pesquisa;
+	
 	public void adicionar(){
 		usuariosEdit.add(new Usuario());
 	}
@@ -37,6 +39,20 @@ public class UsuarioBean extends BaseBean implements Serializable{
 		
 		addMessage(null, FacesMessage.SEVERITY_INFO ,getMessage("usuarioBean.usuarioSalvo"), null);
 		
+	}
+	
+	public void pesquisar(){
+		String codigoS;
+		Long codigo;
+		if(pesquisa!= null && pesquisa.startsWith(",")){
+			try{
+				codigoS = pesquisa.replace(",", "");
+				codigo = Long.parseLong(codigoS);
+				usuarios = usuarioBusiness.findEntitiesForProperties(0, 0, "codigo", "codigo", codigo);
+				return;
+			}catch(Exception e){}
+		}
+		usuarios = usuarioBusiness.findEntitiesForProperties(0, 0, "nome", "nome+", "%" + pesquisa);
 	}
 	
 	public void editar(Usuario usuario){
@@ -68,9 +84,6 @@ public class UsuarioBean extends BaseBean implements Serializable{
 	}
 
 	public List<Usuario> getUsuarios() {
-		if(usuarios == null){
-			usuarios = usuarioBusiness.list(0, 0, "nome");
-		}
 		return usuarios;
 	}
 
@@ -84,6 +97,14 @@ public class UsuarioBean extends BaseBean implements Serializable{
 
 	public void setUsuariosEdit(List<Usuario> usuariosEdit) {
 		this.usuariosEdit = usuariosEdit;
+	}
+
+	public String getPesquisa() {
+		return pesquisa;
+	}
+
+	public void setPesquisa(String pesquisa) {
+		this.pesquisa = pesquisa;
 	}
 	
 	
