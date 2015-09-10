@@ -1,7 +1,6 @@
 package br.com.belaAgenda.controller.sys;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.faces.application.FacesMessage;
@@ -26,12 +25,15 @@ public class UsuarioBean extends BaseBean implements Serializable{
 	
 	private List<Usuario> usuarios;
 	
-	private List<Usuario> usuariosEdit = new ArrayList<>();
 	
 	private String pesquisa;
 	
 	public void adicionar(){
-		usuariosEdit.add(new Usuario());
+		usuario = new Usuario();
+	}
+	
+	public void clonar(Usuario usuario){
+		this.usuario = (Usuario) usuario.clone();
 	}
 	
 	public void salvar(Usuario usuario){
@@ -56,20 +58,14 @@ public class UsuarioBean extends BaseBean implements Serializable{
 	}
 	
 	public void editar(Usuario usuario){
-		if(usuario != null)
-			usuariosEdit.add(usuario);
+		this.usuario = usuario;
 	}
 	
-	public void onTabClose(Usuario usuario){
-		if(usuario != null)
-			usuariosEdit.remove(usuario);
-	}
-	
-	public String obterTituloTab(Usuario usuario){
-		if(usuario.getId() == 0){
+	public String obterTituloCadastro(){
+		if(usuario == null || (usuario != null && usuario.getId() == 0)){
 			return getMessage("global.novo");
 		}else{
-			return usuario.getCodigo().toString();
+			return usuario.getCodigo().toString() + " - " +usuario.getNome();
 		}
 	}
 	
@@ -89,14 +85,6 @@ public class UsuarioBean extends BaseBean implements Serializable{
 
 	public void setUsuarios(List<Usuario> usuarios) {
 		this.usuarios = usuarios;
-	}
-
-	public List<Usuario> getUsuariosEdit() {
-		return usuariosEdit;
-	}
-
-	public void setUsuariosEdit(List<Usuario> usuariosEdit) {
-		this.usuariosEdit = usuariosEdit;
 	}
 
 	public String getPesquisa() {

@@ -8,91 +8,101 @@
 <h:head>
 </h:head>
   <h:body>
-  <h:form id="form">
-  	<p:accordionPanel  id="accordionPanel">
-        <p:tab title="#{global.pesquisar}">
-        
-        	<div class="ui-grid ui-grid-responsive">
-    			<div class="ui-grid-row">
-        			<div class="ui-grid-col-8">
-        				<p:inputText value="#{usuarioBean.pesquisa}" style="width: 98%;"/>
-        			</div>
-        			<div class="ui-grid-col-4">
-        				<p:commandButton value="#{global.pesquisar}" 
-		            					 actionListener="#{usuarioBean.pesquisar}"
-		            					 update="usuariosDatagrid"/>
-	        	
-			        	<p:commandButton value="#{global.novo}" 
-				            					 actionListener="#{usuarioBean.adicionar}"
-				            					 update="cadastroTab"/>
-        			</div>
-    			</div>
-			</div>
-	        	
-	        <br/><br/>
-            <p:dataTable var="item" value="#{usuarioBean.usuarios}" layout="grid"
-        		paginator="true" id="usuariosDatagrid"
-        		paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-        		rowsPerPageTemplate="6,12,16">
-            
-            	<p:column headerText="#{global.codigo}">
-       		 		<h:outputText value="#{item.codigo}" />
-    			</p:column>
-    			
-    			<p:column headerText="#{global.nome}">
-       		 		<h:outputText value="#{item.nome}" />
-    			</p:column>
-    			
-    			<p:column headerText="#{usuarioLabels.login}">
-       		 		<h:outputText value="#{item.login}" />
-    			</p:column>
-    			
-    			<p:column headerText="#{global.opcoes}">
-       		 		<p:commandButton value="#{global.editar}" 
-				            		 actionListener="#{usuarioBean.editar(item)}"
-				            		 update=":form:accordionPanel:cadastroTab">
-				    </p:commandButton>
-    			</p:column>
-            	
-            </p:dataTable>
-        </p:tab>
-        
-        <p:tab title="#{global.cadastro}" id="cadastro" >
-        	<p:tabView id="cadastroTab"  value="#{usuarioBean.usuariosEdit}" var="usuarioForm">
-        		<p:ajax event="tabClose" listener="#{usuarioBean.onTabClose(usuarioForm)}"/>
-	        	<p:tab title="#{usuarioBean.obterTituloTab(usuarioForm)}" closable="true">
-	        	
-		        		<p:growl id="status" showDetail="true" sticky="true" autoUpdate="true"/>
-			            <h:panelGrid columns="2" cellpadding="10">
-			            	
-			            	<h:inputHidden value="usuarioForm.id" />
-			            	<h:inputHidden/>
-			            
-			            	<p:outputLabel value="#{global.codigo}" />
-			            	<p:inputText value="#{usuarioForm.codigo}" disabled="true"/>
-			            	
-			            	<p:outputLabel value="#{global.nome}" />
-			            	<p:inputText value="#{usuarioForm.nome}"/>
-			            	
-			            	<p:outputLabel value="#{usuarioLabels.login}" />
-			            	<p:inputText value="#{usuarioForm.login}"/>
-			            	
-			            	<p:outputLabel value="#{usuarioLabels.senha}" />
-			            	<p:password value="#{usuarioForm.senha}"/>
-			            	
-			            	<p:outputLabel value="#{usuarioLabels.confirmacaoSenha}" />
-			            	<p:password value="#{usuarioForm.confirmacaoSenha}"/>
-			            
-			            	<p:commandButton value="#{global.salvar}" 
-			            					 action="#{usuarioBean.salvar(usuarioForm)}"
-			            					 icon="ui-icon-disk"
-			            					 update="cadastroTab">
-			            	</p:commandButton>
-			            </h:panelGrid>
-	        	</p:tab>
-        	</p:tabView>
-        </p:tab>
-    </p:accordionPanel>
-	</h:form>
+  
+  <h:form id="root">
+       <h:form id="formDataTable">
+       	<div class="ui-grid ui-grid-responsive">
+   			<div class="ui-grid-row">
+       			<div class="ui-grid-col-8">
+       				<p:inputText value="#{usuarioBean.pesquisa}" style="width: 98%;"/>
+       			</div>
+       			<div class="ui-grid-col-4">
+       				<p:commandButton value="#{global.pesquisar}" 
+	            					 actionListener="#{usuarioBean.pesquisar}"
+	            					 update="usuariosDatagrid"/>
+        	
+		        	<p:commandButton value="#{global.novo}" 
+			            					 actionListener="#{usuarioBean.adicionar}"
+			            					 update="root:cadastro"
+			            					 onclick="PF('formPopUp').show();"/>
+       			</div>
+   			</div>
+		</div>
+        	
+        <br/><br/>
+           <p:dataTable var="item" value="#{usuarioBean.usuarios}" layout="grid"
+       		paginator="true" id="usuariosDatagrid"
+       		paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+       		rowsPerPageTemplate="10,20,30" rows="10">
+           
+           	<p:column headerText="#{global.codigo}" width="10%" >
+      		 		<h:outputText value="#{item.codigo}" 
+      		 					  dir="rtl"/>
+   			</p:column>
+   			
+   			<p:column headerText="#{global.nome}" width="50%">
+      		 		<h:outputText value="#{item.nome}"/>
+   			</p:column>
+   			
+   			<p:column headerText="#{usuarioLabels.login}" width="40%">
+      		 		<h:outputText value="#{item.login}" />
+   			</p:column>
+   			
+   			<p:column headerText="#{global.opcoes}" width="20%">
+      		 	<p:commandButton value="#{global.editar}" 
+			            		 actionListener="#{usuarioBean.editar(item)}"
+			            		 update="root:cadastro"
+			            		 onclick="PF('formPopUp').show();">
+			    </p:commandButton>
+			    <p:commandButton value="#{global.clonar}" 
+			            		 actionListener="#{usuarioBean.clonar(item)}"
+			            		 update="root:cadastro"
+			            		 onclick="PF('formPopUp').show();">
+			    </p:commandButton>
+   			</p:column>
+           	
+           </p:dataTable>
+           
+           </h:form>
+            <p:dialog header="#{usuarioBean.obterTituloCadastro()}" 
+            		  widgetVar="formPopUp" 
+            		  id="formPopUp"
+            		  modal="true" 
+            		  showEffect="explode">
+            		  
+			  	<h:form id="cadastro" >
+	        		<p:messages id="status" 
+	        					showDetail="true" 
+	        					autoUpdate="true"/>
+	        					
+		            <h:panelGrid columns="2" cellpadding="10">
+		            	
+		            	<h:inputHidden value="usuarioBean.usuario.id" />
+		            	<h:inputHidden/>
+		            
+		            	<p:outputLabel value="#{global.codigo}" />
+		            	<p:inputText value="#{usuarioBean.usuario.codigo}" disabled="true"/>
+		            	
+		            	<p:outputLabel value="#{global.nome}" />
+		            	<p:inputText value="#{usuarioBean.usuario.nome}"/>
+		            	
+		            	<p:outputLabel value="#{usuarioLabels.login}" />
+		            	<p:inputText value="#{usuarioBean.usuario.login}"/>
+		            	
+		            	<p:outputLabel value="#{usuarioLabels.senha}" />
+		            	<p:password value="#{usuarioBean.usuario.senha}"/>
+		            	
+		            	<p:outputLabel value="#{usuarioLabels.confirmacaoSenha}" />
+		            	<p:password value="#{usuarioBean.usuario.confirmacaoSenha}"/>
+		            
+		            	<p:commandButton value="#{global.salvar}" 
+		            					 action="#{usuarioBean.salvar(usuarioBean.usuario)}"
+		            					 icon="ui-icon-disk"
+		            					 update="cadastro">
+		            	</p:commandButton>
+		            </h:panelGrid>
+	        	</h:form>
+	        </p:dialog>
+		</h:form>
    </h:body>
 </ui:composition>

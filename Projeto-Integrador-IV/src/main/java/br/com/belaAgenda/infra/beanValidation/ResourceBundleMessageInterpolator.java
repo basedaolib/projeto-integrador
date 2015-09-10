@@ -1,7 +1,6 @@
 package br.com.belaAgenda.infra.beanValidation;
 
 
-import org.hibernate.validator.resourceloading.AggregateResourceBundleLocator;
 import org.hibernate.validator.spi.resourceloading.ResourceBundleLocator;
 
 import br.com.belaAgenda.infra.resourceBundle.ResourceBundleMessageScan;
@@ -12,7 +11,7 @@ public class ResourceBundleMessageInterpolator extends org.hibernate.validator.m
 	
 	
 	public ResourceBundleMessageInterpolator() {
-		this(new  AggregateResourceBundleLocator( ResourceBundleMessageScan.listarArquivos()));
+		this(new  MyAggregateResourceBundleLocator( ResourceBundleMessageScan.listarArquivos()));
 		
 	}
 	

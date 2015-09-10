@@ -2,7 +2,6 @@ package br.com.belaAgenda.infra.base.controller;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
-import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 
 import br.com.belaAgenda.infra.resourceBundle.MessageProvider;

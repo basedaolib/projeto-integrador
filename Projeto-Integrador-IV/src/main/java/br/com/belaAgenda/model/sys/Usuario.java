@@ -3,6 +3,7 @@ package br.com.belaAgenda.model.sys;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.PostLoad;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.validation.constraints.Size;
@@ -19,15 +20,15 @@ public class Usuario extends ChaveValor{
 
 	private static final long serialVersionUID = -3327573295169448466L;
 	
-	@NotEmpty(message="{loginObrigatorio}")
-	@Size(message="{tamanhoDoLogin}", min=6)
+	@NotEmpty(message="{usuario.loginObrigatorio}")
+	@Size(message="{usuario.tamanhoDoLogin}", min=6)
 	private String login;
 	
-	@NotEmpty(message="{senhaObrigatoria}")
-	@Size(message="{tamanhoDaSenha}", min=6)
+	@NotEmpty(message="{usuario.senhaObrigatoria}")
+	@Size(message="{usuario.tamanhoDaSenha}", min=6)
 	private String senha;
 	
-	@NotEmpty(message="{confirmacaoSenhaObrigatoria}")
+	@NotEmpty(message="{usuario.confirmacaoSenhaObrigatoria}")
 	private String confirmacaoSenha;
 	
 	//@NotEmpty(message="{nivelObrigatoria}")
@@ -43,6 +44,12 @@ public class Usuario extends ChaveValor{
 	@PreUpdate
 	private void consistir(){
 		consistirSenha();
+	}
+	
+	@PostLoad
+	private void postLoad(){
+		this.senha = null;
+		this.confirmacaoSenha = null;
 	}
 	
 	private void consistirSenha(){
@@ -82,6 +89,14 @@ public class Usuario extends ChaveValor{
 		this.confirmacaoSenha = confirmacaoSenha;
 	}
 
+	@Override
+	public Object clone() {
+		Usuario clone = (Usuario) super.clone();
+		clone.setSenha(null);
+		clone.setConfirmacaoSenha(null);
+		return clone;
+	}
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;

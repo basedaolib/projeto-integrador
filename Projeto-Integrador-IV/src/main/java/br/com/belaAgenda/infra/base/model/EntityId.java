@@ -31,5 +31,11 @@ public abstract class EntityId extends EntityBase implements Serializable{
 		
 	}
 	
+	@Override
+	public Object clone() {
+		EntityId clone = (EntityId) super.clone();
+		clone.setId(0);
+		return clone;
+	}
 	
 }
