@@ -67,37 +67,44 @@
             <p:dialog header="#{usuarioBean.obterTituloCadastro()}" 
             		  widgetVar="formPopUp" 
             		  id="formPopUp"
-            		  modal="true" 
+            		  modal="true"
+            		  
             		  showEffect="explode">
             		  
 			  	<h:form id="cadastro" >
-	        		<p:messages id="status" 
-	        					showDetail="true" 
-	        					autoUpdate="true"/>
 	        					
-		            <h:panelGrid columns="2" cellpadding="10">
-		            	
-		            	<h:inputHidden value="usuarioBean.usuario.id" />
-		            	<h:inputHidden/>
+		            <h:panelGrid columns="3" cellpadding="10">
 		            
 		            	<p:outputLabel value="#{global.codigo}" />
-		            	<p:inputText value="#{usuarioBean.usuario.codigo}" disabled="true"/>
+		            	<p:inputText id="codigoInput" 
+		            				 value="#{usuarioBean.usuario.codigo}" 
+		            				 disabled="true"/>
+		            	<p:message for="codigoInput"/>
 		            	
 		            	<p:outputLabel value="#{global.nome}" />
-		            	<p:inputText value="#{usuarioBean.usuario.nome}"/>
+		            	<p:inputText id="nomeInput" 
+		            				 value="#{usuarioBean.usuario.nome}"/>
+		            	<p:message for="nomeInput" />
 		            	
 		            	<p:outputLabel value="#{usuarioLabels.login}" />
-		            	<p:inputText value="#{usuarioBean.usuario.login}"/>
+		            	<p:inputText id="loginInput" 
+		            				 value="#{usuarioBean.usuario.login}"/>
+		            	<p:message for="loginInput"/>
 		            	
 		            	<p:outputLabel value="#{usuarioLabels.senha}" />
-		            	<p:password value="#{usuarioBean.usuario.senha}"/>
+		            	<p:password id="senhaImput" 
+		            				value="#{usuarioBean.usuario.senha}"/>
+		            	<p:message for="senhaImput" />
 		            	
 		            	<p:outputLabel value="#{usuarioLabels.confirmacaoSenha}" />
-		            	<p:password value="#{usuarioBean.usuario.confirmacaoSenha}"/>
+		            	<p:password id="reSenhaInput" 
+		            				value="#{usuarioBean.usuario.confirmacaoSenha}"/>
+		            	<p:message for="reSenhaInput"/>
 		            
 		            	<p:commandButton value="#{global.salvar}" 
-		            					 action="#{usuarioBean.salvar(usuarioBean.usuario)}"
+		            					 actionListener="#{usuarioBean.salvar()}"
 		            					 icon="ui-icon-disk"
+		            					 process="cadastro"
 		            					 update="cadastro">
 		            	</p:commandButton>
 		            </h:panelGrid>

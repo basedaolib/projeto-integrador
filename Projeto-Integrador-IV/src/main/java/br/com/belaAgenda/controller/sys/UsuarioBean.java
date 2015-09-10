@@ -36,8 +36,8 @@ public class UsuarioBean extends BaseBean implements Serializable{
 		this.usuario = (Usuario) usuario.clone();
 	}
 	
-	public void salvar(Usuario usuario){
-		usuario = usuarioBusiness.save(usuario);
+	public void salvar(){
+		this.usuario = usuarioBusiness.save(this.usuario);
 		
 		addMessage(null, FacesMessage.SEVERITY_INFO ,getMessage("usuarioBean.usuarioSalvo"), null);
 		
@@ -54,7 +54,7 @@ public class UsuarioBean extends BaseBean implements Serializable{
 				return;
 			}catch(Exception e){}
 		}
-		usuarios = usuarioBusiness.findEntitiesForProperties(0, 0, "nome", "nome+", "%" + pesquisa);
+		usuarios = usuarioBusiness.findEntitiesForProperties(0, 0, "nome", "nome+", pesquisa + "%");
 	}
 	
 	public void editar(Usuario usuario){

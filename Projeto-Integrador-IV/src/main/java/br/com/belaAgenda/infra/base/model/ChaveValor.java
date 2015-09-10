@@ -13,7 +13,7 @@ public abstract class ChaveValor extends EntityId {
 	@NaturalId(mutable=false)
 	protected Long codigo;
 	
-	@NotBlank(message="nomeObrigatorio")
+	@NotBlank(message="{chaveValor.nomeObrigatorio}")
 	protected String nome;
 
 	public Long getCodigo() {

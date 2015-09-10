@@ -15,6 +15,7 @@ class JpaUtil {
 	@RequestScoped
 	public EntityManager getEntityManager(){
 		return factory.createEntityManager();
+		
 	}
 
 }
