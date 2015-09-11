@@ -40,7 +40,7 @@ public class UsuarioBean extends BaseBean implements Serializable{
 		this.usuario = usuarioBusiness.save(this.usuario);
 		
 		addMessage(null, FacesMessage.SEVERITY_INFO ,getMessage("usuarioBean.usuarioSalvo"), null);
-		
+		usuarios.add(usuario);
 	}
 	
 	public void pesquisar(){

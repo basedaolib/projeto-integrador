@@ -6,6 +6,12 @@
     xmlns:p="http://primefaces.org/ui">
     
 <h:head>
+	<style type="text/css">  
+           .ui-widget {  
+               font-size: 12px !important;  
+           }  
+       </style> 
+       
 </h:head>
   <h:body>
   
@@ -19,17 +25,19 @@
        			<div class="ui-grid-col-4">
        				<p:commandButton value="#{global.pesquisar}" 
 	            					 actionListener="#{usuarioBean.pesquisar}"
+	            					 icon="ui-icon-search" 
 	            					 update="usuariosDatagrid"/>
         	
 		        	<p:commandButton value="#{global.novo}" 
 			            					 actionListener="#{usuarioBean.adicionar}"
-			            					 update="root:cadastro"
-			            					 onclick="PF('formPopUp').show();"/>
+			            					 icon="ui-icon-plus" 
+			            					 update="root:formPopUp"
+			            					 oncomplete="PF('formPopUp').show();"/>
        			</div>
    			</div>
 		</div>
         	
-        <br/><br/>
+        <br/>
            <p:dataTable var="item" value="#{usuarioBean.usuarios}" layout="grid"
        		paginator="true" id="usuariosDatagrid"
        		paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
@@ -49,15 +57,15 @@
    			</p:column>
    			
    			<p:column headerText="#{global.opcoes}" width="20%">
-      		 	<p:commandButton value="#{global.editar}" 
+      		 	<p:commandButton icon="ui-icon-pencil" 
 			            		 actionListener="#{usuarioBean.editar(item)}"
-			            		 update="root:cadastro"
-			            		 onclick="PF('formPopUp').show();">
+			            		 update="root:formPopUp"
+			            		 oncomplete="PF('formPopUp').show();">
 			    </p:commandButton>
-			    <p:commandButton value="#{global.clonar}" 
+			    <p:commandButton icon="ui-icon-copy" 
 			            		 actionListener="#{usuarioBean.clonar(item)}"
-			            		 update="root:cadastro"
-			            		 onclick="PF('formPopUp').show();">
+			            		 update="root:formPopUp"
+			            		 oncomplete="PF('formPopUp').show();">
 			    </p:commandButton>
    			</p:column>
            	
@@ -68,10 +76,9 @@
             		  widgetVar="formPopUp" 
             		  id="formPopUp"
             		  modal="true"
-            		  
             		  showEffect="explode">
             		  
-			  	<h:form id="cadastro" >
+			  	<h:form id="cadastro">
 	        					
 		            <h:panelGrid columns="3" cellpadding="10">
 		            
