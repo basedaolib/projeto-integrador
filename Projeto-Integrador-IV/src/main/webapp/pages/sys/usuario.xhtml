@@ -98,6 +98,13 @@
 		            				 value="#{usuarioBean.usuario.login}"/>
 		            	<p:message for="loginInput"/>
 		            	
+		            	<p:outputLabel value="#{usuarioLabels.nivel}" />
+		            	<p:selectOneMenu id="nivelInput" 
+		            					 value="#{usuarioBean.usuario.nivel}">
+		            		<f:selectItems value="#{usuarioBean.niveisUsuario}"/> 
+		            	</p:selectOneMenu>
+		            	<p:message for="nivelInput"/>
+		            	
 		            	<p:outputLabel value="#{usuarioLabels.senha}" />
 		            	<p:password id="senhaImput" 
 		            				value="#{usuarioBean.usuario.senha}"/>

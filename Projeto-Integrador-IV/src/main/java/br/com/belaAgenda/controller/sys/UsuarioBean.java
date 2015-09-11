@@ -11,6 +11,7 @@ import javax.inject.Named;
 import br.com.belaAgenda.business.sys.UsuarioBusiness;
 import br.com.belaAgenda.infra.base.controller.BaseBean;
 import br.com.belaAgenda.model.sys.Usuario;
+import br.com.belaAgenda.model.sys.types.NivelUsuario;
 
 @Named
 @ViewScoped
@@ -21,7 +22,7 @@ public class UsuarioBean extends BaseBean implements Serializable{
 	@Inject
 	private UsuarioBusiness usuarioBusiness;
 	
-	private Usuario usuario;
+	private Usuario usuario = new Usuario();
 	
 	private List<Usuario> usuarios;
 	
@@ -95,6 +96,8 @@ public class UsuarioBean extends BaseBean implements Serializable{
 		this.pesquisa = pesquisa;
 	}
 	
-	
+	public NivelUsuario[] getNiveisUsuario(){
+		return NivelUsuario.values();
+	}
 	
 }

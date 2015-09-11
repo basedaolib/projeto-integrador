@@ -31,7 +31,7 @@ public class Usuario extends ChaveValor{
 	@NotEmpty(message="{usuario.confirmacaoSenhaObrigatoria}")
 	private String confirmacaoSenha;
 	
-	//@NotEmpty(message="{nivelObrigatoria}")
+	@NotEmpty(message="{usuario.nivelObrigatorio}")
 	@Enumerated(EnumType.STRING) 
 	private NivelUsuario nivel = NivelUsuario.EDITOR;
 	
