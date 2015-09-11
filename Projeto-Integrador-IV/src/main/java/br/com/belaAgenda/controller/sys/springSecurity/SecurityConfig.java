@@ -4,7 +4,6 @@ import javax.inject.Inject;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
-import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -12,24 +11,19 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 
 @EnableWebSecurity
 @Configuration
-@EnableGlobalMethodSecurity(securedEnabled = false)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Inject
 	private UserService userService;
 	
-	/*@Inject
+	
+	@Inject
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
 		auth.userDetailsService(userService);
 		
-    }*/
+    }
 	
-	@Override
-	protected void configure(AuthenticationManagerBuilder auth)
-			throws Exception {
-		auth.userDetailsService(userService);
-		super.configure(auth);
-	}
+
 	
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
@@ -43,7 +37,5 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		 web.ignoring().antMatchers("/resources/**"); 
 		super.configure(web);
 	}
-	
-	
 	
 }
