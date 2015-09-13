@@ -3,9 +3,9 @@ package br.com.belaAgenda.model.sys;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.PostLoad;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.NotEmpty;
@@ -31,7 +31,7 @@ public class Usuario extends ChaveValor{
 	@NotEmpty(message="{usuario.confirmacaoSenhaObrigatoria}")
 	private String confirmacaoSenha;
 	
-	@NotEmpty(message="{usuario.nivelObrigatorio}")
+	@NotNull(message="{usuario.nivelObrigatorio}")
 	@Enumerated(EnumType.STRING) 
 	private NivelUsuario nivel = NivelUsuario.EDITOR;
 	
@@ -44,12 +44,6 @@ public class Usuario extends ChaveValor{
 	@PreUpdate
 	private void consistir(){
 		consistirSenha();
-	}
-	
-	@PostLoad
-	private void postLoad(){
-		this.senha = null;
-		this.confirmacaoSenha = null;
 	}
 	
 	private void consistirSenha(){

@@ -4,7 +4,9 @@ import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
 import javax.faces.context.FacesContext;
+import javax.inject.Named;
 
+@Named
 public class MessageProviderImpl implements MessageProvider{
 	 
     public ResourceBundle getBundle(String name) {

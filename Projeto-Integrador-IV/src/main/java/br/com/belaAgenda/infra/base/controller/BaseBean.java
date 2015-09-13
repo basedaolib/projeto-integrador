@@ -1,5 +1,7 @@
 package br.com.belaAgenda.infra.base.controller;
 
+import javax.enterprise.context.RequestScoped;
+import javax.enterprise.inject.Produces;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
@@ -10,6 +12,9 @@ import br.com.belaAgenda.infra.util.Transactional;
 @Transactional
 public class BaseBean {
 	
+	@Inject
+	@RequestScoped
+	protected FacesContext facesContext;
 	
 	@Inject
 	protected MessageProvider messageProvider;
@@ -32,5 +37,11 @@ public class BaseBean {
 			}
 		}
 		return message;
+	}
+	
+	@Produces
+	@RequestScoped
+	private FacesContext getFacesContext(){
+		return FacesContext.getCurrentInstance();
 	}
 }
