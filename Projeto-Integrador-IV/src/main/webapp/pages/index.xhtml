@@ -7,20 +7,31 @@
     
 <h:head>
 	<style type="text/css">  
-           .ui-widget {  
-               font-size: 12px !important;  
-           }  
-       </style> 
-       
+    	.ui-widget {  
+        	font-size: 12px !important;  
+        }  
+    </style> 
+       		
+    <script>
+       function complete() {
+  			$(".ui-dialog-content").css("overflow", "hidden");
+  			$("iframe").css("overflow", "hidden");
+  			$("iframe").attr("scrolling", "no");
+  			$("html").css("cursor", "Default");
+  		}
+	</script>
+	
+	<h:outputScript library="js" name="custom.core.dialog.js" />
+      
 </h:head>
   <h:body>
   		<h:form>
+  		<p:ajaxStatus onstart='$("html").css("cursor", "Wait");' oncomplete="complete()"/>
 	  		<p:menubar>
 	  			<p:submenu label="#{indexLabels.cadastro}" icon="ui-icon-document">
 	  				 <p:menuitem value="#{indexLabels.cadastroUsuario}"
 								 rendered='#{securityBean.isRole("ADMINISTRADOR","MASTER")}'
-	  				 			 actionListener='#{indexBean.setPage("/pages/sys/usuario.xhtml")}'
-	  				 			 update="painel"/>
+	  				 			 actionListener='#{indexBean.opem("/pages/sys/usuario.xhtml", indexLabels.cadastroUsuario, 600, 500)}'/>
 	  			</p:submenu>
 	  			<p:submenu label="#{indexLabels.sistema}" >
 	  				<p:menuitem value="#{indexLabels.sair}" actionListener="#{loginBean.logOut()}" icon="ui-icon-extlink"/>
@@ -29,10 +40,6 @@
 	  		
 	  		
 	  </h:form>
-	  <p:panel id="painel">
-	  
-	  	 <ui:include src="#{indexBean.page}"/>
-	  </p:panel>
 	  	 
   </h:body>
 </html>

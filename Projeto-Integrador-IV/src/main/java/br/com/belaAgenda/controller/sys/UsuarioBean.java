@@ -1,6 +1,5 @@
 package br.com.belaAgenda.controller.sys;
 
-import java.io.Serializable;
 import java.util.List;
 
 import javax.faces.application.FacesMessage;
@@ -15,7 +14,7 @@ import br.com.belaAgenda.model.sys.types.NivelUsuario;
 
 @Named
 @ViewScoped
-public class UsuarioBean extends BaseBean implements Serializable{
+public class UsuarioBean extends BaseBean{
 
 	private static final long serialVersionUID = -1141653908595714524L;
 

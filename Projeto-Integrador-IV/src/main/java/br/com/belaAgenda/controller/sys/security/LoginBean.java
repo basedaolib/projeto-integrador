@@ -1,7 +1,6 @@
 package br.com.belaAgenda.controller.sys.security;
 
 import java.io.IOException;
-import java.io.Serializable;
 
 import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
@@ -18,7 +17,7 @@ import br.com.belaAgenda.infra.base.controller.BaseBean;
 
 @Named
 @RequestScoped
-public class LoginBean extends BaseBean implements Serializable{
+public class LoginBean extends BaseBean{
 
 	private static final long serialVersionUID = 4012405416366953134L;
 	public static final String HOME_URL = "/pages/index.xhtml";

@@ -14,6 +14,8 @@ import br.com.belaAgenda.infra.base.controller.BaseBean;
 @RequestScoped
 public class SecurityBean extends BaseBean {
 
+	private static final long serialVersionUID = -3252420920957235310L;
+
 	public boolean isRole(String... roles){
 		List<String> rolesList = new ArrayList<String>();
 		for(String role : roles){

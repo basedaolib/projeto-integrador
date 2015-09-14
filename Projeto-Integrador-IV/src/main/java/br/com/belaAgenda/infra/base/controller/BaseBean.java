@@ -1,5 +1,7 @@
 package br.com.belaAgenda.infra.base.controller;
 
+import java.io.Serializable;
+
 import javax.enterprise.context.RequestScoped;
 import javax.enterprise.inject.Produces;
 import javax.faces.application.FacesMessage;
@@ -10,8 +12,10 @@ import br.com.belaAgenda.infra.resourceBundle.MessageProvider;
 import br.com.belaAgenda.infra.util.Transactional;
 
 @Transactional
-public class BaseBean {
+public class BaseBean  implements Serializable{
 	
+	private static final long serialVersionUID = 1554092142713407528L;
+
 	@Inject
 	@RequestScoped
 	protected FacesContext facesContext;
