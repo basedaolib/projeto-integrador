@@ -1,7 +1,5 @@
 package br.com.belaAgenda.infra.base.model;
 
-import java.io.Serializable;
-
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
