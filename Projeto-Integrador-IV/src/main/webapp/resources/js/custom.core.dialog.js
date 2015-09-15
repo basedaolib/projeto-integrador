@@ -29,12 +29,14 @@ PrimeFaces.dialog.DialogHandler = {
                     .append('<a class="ui-dialog-titlebar-icon ui-dialog-titlebar-minimize ui-corner-all" href="#" role="button"><span class="ui-icon ui-icon-minus"></span></a>');
         }
 
-	if(cfg.options.header){
-	    dialogDOM.children('.ui-dialog-titlebar').children('.ui-dialog-title')
-                    .append(cfg.options.header);
-	}
+		if(cfg.options.header){
+		    dialogDOM.children('.ui-dialog-titlebar').children('.ui-dialog-title')
+		                .append(cfg.options.header);
+		}
         
-        dialogDOM.append('<iframe style="border:0 none" frameborder="0"/>');
+		dialogDOM.append('<div class="ui-dialog-content ui-widget-content" style="height: auto;">' +
+	            '<iframe style="border:0 none" frameborder="0"/>' + 
+	            '</div>');
         
         dialogDOM.appendTo(document.body);
         
