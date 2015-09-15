@@ -21,6 +21,7 @@ public class IndexBean extends BaseBean {
 		Map<String,Object> options = new HashMap<String, Object>();
         options.put("minimizable", true);
         options.put("header", "'" + header + "'");
+        options.put("maximizable", true);
         options.put("width", width);
         options.put("height", height);
         options.put("contentHeight", "'100%'");

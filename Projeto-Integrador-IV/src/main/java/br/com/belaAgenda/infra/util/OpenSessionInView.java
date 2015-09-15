@@ -32,21 +32,17 @@ public class OpenSessionInView implements Filter {
 		entityManager.getTransaction().begin();
 		try{
 		chain.doFilter(request, response);
-		if(entityManager.getTransaction().getRollbackOnly()){
-			entityManager.getTransaction().rollback();
-		}else{
-			entityManager.getTransaction().commit();
-		}
+		entityManager.getTransaction().commit();
 		}catch (Throwable t) {
             if (entityManager != null && entityManager.getTransaction().isActive()) {
             	entityManager.getTransaction().rollback();
             }
             lancarFacesMessage(t.getMessage());
-        } finally {
-            if (entityManager != null && entityManager.isOpen()) {
-            	entityManager.close();
-            }
         }
+        if (entityManager != null && entityManager.isOpen()) {
+          	entityManager.close();
+        }
+        
 		
 	}
 	

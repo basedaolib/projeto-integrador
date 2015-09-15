@@ -3,6 +3,7 @@ PrimeFaces.dialog = {};
 PrimeFaces.dialog.DialogHandler = {
 		
     openDialog: function(cfg) {
+    	$("html").css("cursor", "Wait");
         var dialogId = cfg.sourceComponentId + '_dlg';
         if(document.getElementById(dialogId)) {
             return;
@@ -33,9 +34,7 @@ PrimeFaces.dialog.DialogHandler = {
                     .append(cfg.options.header);
 	}
         
-        dialogDOM.append('<div class="ui-dialog-content ui-widget-content" style="height: auto;">' +
-                '<iframe style="border:0 none" frameborder="0"/>' + 
-                '</div>');
+        dialogDOM.append('<iframe style="border:0 none" frameborder="0"/>');
         
         dialogDOM.appendTo(document.body);
         
@@ -43,9 +42,10 @@ PrimeFaces.dialog.DialogHandler = {
         symbol = cfg.url.indexOf('?') === -1 ? '?' : '&',
         frameURL = cfg.url + symbol + 'pfdlgcid=' + cfg.pfdlgcid,
         frameWidth = cfg.options.contentWidth||640;
-
+        frameHeight = cfg.options.contentHeight ||'auto';
         dialogFrame.width(frameWidth);
-
+        dialogFrame.height(frameHeight);
+        
         dialogFrame.on('load', function() {
             var $frame = $(this),
             titleElement = $frame.contents().find('title');
@@ -59,21 +59,8 @@ PrimeFaces.dialog.DialogHandler = {
                     onHide: function() {
                         var $dialogWidget = this,
                         dialogFrame = this.content.children('iframe');
-                        
-                        if(dialogFrame.get(0).contentWindow.PrimeFaces) {
-                            this.destroyIntervalId = setInterval(function() {
-                                if(dialogFrame.get(0).contentWindow.PrimeFaces.ajax.Queue.isEmpty()) {
-                                    clearInterval($dialogWidget.destroyIntervalId);
-                                    dialogFrame.attr('src','about:blank');
-                                    $dialogWidget.jq.remove();
-                                }
-                            }, 10);
-                        }
-                        else {
-                            dialogFrame.attr('src','about:blank');
-                            $dialogWidget.jq.remove();
-                        }
-                        
+                        dialogFrame.attr('src','about:blank');
+                        $dialogWidget.jq.remove();
                         PF[dialogWidgetVar] = undefined;
                     },
                     modal: cfg.options.modal,
@@ -90,14 +77,13 @@ PrimeFaces.dialog.DialogHandler = {
                 PF(dialogWidgetVar).titlebar.children('span.ui-dialog-title').html(titleElement.text());
             }
             
-            //adjust height
             var offset = PrimeFaces.env.browser.webkit ? 5 : 20,
-            frameHeight = cfg.options.contentHeight||$frame.get(0).contentWindow.document.body.scrollHeight + offset;
+            frameHeight = cfg.options.height||$frame.get(0).contentWindow.document.body.scrollHeight + offset;
             $frame.height(frameHeight);
-            
             dialogFrame.data('initialized', true);
             
             PF(dialogWidgetVar).show();
+            $("html").css("cursor", "Default");
         })
         .attr('src', frameURL);
     },
