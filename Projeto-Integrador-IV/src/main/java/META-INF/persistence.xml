@@ -13,7 +13,15 @@
     <class>br.com.belaAgenda.infra.base.model.EntityId</class>
     <class>br.com.belaAgenda.infra.base.model.ChaveValor</class>
     <class>br.com.belaAgenda.model.sys.Usuario</class>
-    
+    <class>br.com.belaAgenda.model.glb.Cliente</class>
+    <class>br.com.belaAgenda.model.glb.Contato</class>
+    <class>br.com.belaAgenda.model.glb.Endereco</class>
+    <class>br.com.belaAgenda.model.glb.Pessoa</class>
+    <class>br.com.belaAgenda.model.glb.PessoaFisica</class>
+    <class>br.com.belaAgenda.model.rh.Funcionario</class>
+    <class>br.com.belaAgenda.model.svc.Agenda</class>
+    <class>br.com.belaAgenda.model.svc.Atendimento</class>
+    <class>br.com.belaAgenda.model.svc.Servico</class>
     
     <properties>
     <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />

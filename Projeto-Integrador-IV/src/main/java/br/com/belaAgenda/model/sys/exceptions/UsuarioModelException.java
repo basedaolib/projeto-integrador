@@ -1,4 +1,4 @@
-package br.com.belaAgenda.model.sys.types;
+package br.com.belaAgenda.model.sys.exceptions;
 
 import br.com.belaAgenda.infra.util.BaseException;
 

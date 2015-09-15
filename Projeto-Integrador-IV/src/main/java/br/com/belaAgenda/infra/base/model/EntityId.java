@@ -9,7 +9,7 @@ import javax.persistence.PrePersist;
 
 
 @MappedSuperclass
-public abstract class EntityId extends EntityBase implements Serializable{
+public abstract class EntityId extends EntityBase {
 	
 
 	private static final long serialVersionUID = -1842377326317111427L;

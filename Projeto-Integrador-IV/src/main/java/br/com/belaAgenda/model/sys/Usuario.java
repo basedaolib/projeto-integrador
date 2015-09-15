@@ -11,8 +11,8 @@ import javax.validation.constraints.Size;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import br.com.belaAgenda.infra.base.model.ChaveValor;
+import br.com.belaAgenda.model.sys.exceptions.UsuarioModelException;
 import br.com.belaAgenda.model.sys.types.NivelUsuario;
-import br.com.belaAgenda.model.sys.types.UsuarioModelException;
 
 
 @Entity
