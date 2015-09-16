@@ -39,7 +39,7 @@ public class UsuarioBean extends BaseBean{
 	public void salvar(){
 		this.usuario = usuarioBusiness.save(this.usuario);
 		
-		addMessage("menssagem", FacesMessage.SEVERITY_INFO ,getMessage("usuarioBean.usuarioSalvo"), null);
+		addMessage(null, FacesMessage.SEVERITY_INFO ,getMessage("usuarioBean.usuarioSalvo"), null);
 		usuarios.add(usuario);
 	}
 	

@@ -5,6 +5,9 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
 import br.com.belaAgenda.infra.base.model.ChaveValor;
+import br.com.belaAgenda.infra.base.model.exceptions.ChaveValorModelException;
+import br.com.belaAgenda.model.sys.Usuario;
+import br.com.belaAgenda.model.sys.exceptions.UsuarioModelException;
 
 public abstract class ChaveValorDaoImpl<T extends ChaveValor> extends BaseDaoImpl<T> {
 	
@@ -23,6 +26,6 @@ public abstract class ChaveValorDaoImpl<T extends ChaveValor> extends BaseDaoImp
 		}
 		entity.setCodigo(codigo);
 		
-		return super.afterInsert(entity);
+		return super.beforeInsert(entity);
 	}
 }

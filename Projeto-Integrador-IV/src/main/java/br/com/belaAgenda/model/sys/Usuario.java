@@ -35,7 +35,6 @@ public class Usuario extends ChaveValor{
 	@Enumerated(EnumType.STRING) 
 	private NivelUsuario nivel = NivelUsuario.EDITOR;
 	
-	
 	public Usuario() {
 		super();
 	}

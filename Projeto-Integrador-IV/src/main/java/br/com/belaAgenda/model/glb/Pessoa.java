@@ -1,11 +1,14 @@
 package br.com.belaAgenda.model.glb;
 
 import javax.persistence.Embedded;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.MappedSuperclass;
 
 import br.com.belaAgenda.infra.base.model.ChaveValor;
 
 @MappedSuperclass
+@Inheritance(strategy=InheritanceType.SINGLE_TABLE)
 public abstract class Pessoa extends ChaveValor {
 
 	private static final long serialVersionUID = -6993956148404259051L;

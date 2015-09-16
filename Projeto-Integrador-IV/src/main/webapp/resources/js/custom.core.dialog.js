@@ -59,12 +59,24 @@ PrimeFaces.dialog.DialogHandler = {
                     sourceComponentId: cfg.sourceComponentId,
                     sourceWidget: cfg.sourceWidget,
                     onHide: function() {
-                        var $dialogWidget = this,
-                        dialogFrame = this.content.children('iframe');
-                        dialogFrame.attr('src','about:blank');
-                        $dialogWidget.jq.remove();
-                        PF[dialogWidgetVar] = undefined;
-                    },
+                    	  var $dialogWidget = this,
+                          dialogFrame = this.content.children('iframe');
+                          
+                          if(dialogFrame.get(0).contentWindow.PrimeFaces) {
+                              this.destroyIntervalId = setInterval(function() {
+                                  if(dialogFrame.get(0).contentWindow.PrimeFaces.ajax.Queue.isEmpty()) {
+                                      clearInterval($dialogWidget.destroyIntervalId);
+                                      dialogFrame.attr('src','about:blank');
+                                      $dialogWidget.jq.remove();
+                                  }
+                              }, 10);
+                          }
+                          else {
+                              dialogFrame.attr('src','about:blank');
+                              $dialogWidget.jq.remove();
+                          }
+                          
+                          PF[dialogWidgetVar] = undefined;},
                     modal: cfg.options.modal,
                     resizable: cfg.options.resizable,
                     draggable: cfg.options.draggable,

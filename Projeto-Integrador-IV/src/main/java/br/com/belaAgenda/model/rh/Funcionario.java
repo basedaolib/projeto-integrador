@@ -8,5 +8,6 @@ import br.com.belaAgenda.infra.base.model.ChaveValor;
 public class Funcionario extends ChaveValor {
 
 	private static final long serialVersionUID = -8193525146089076187L;
-
+	
+	
 }

@@ -15,7 +15,34 @@ public class BaseDaoImpl<T extends EntityId> extends BaseDAOImpl<T> {
 		return messageProvider.getValue(key);
 	}
 	
+	@Override
+	public T insert(T entity) {
+		if(!getEntityManager().getTransaction().isActive()){
+			getEntityManager().getTransaction().begin();
+		}
+		return super.insert(entity);
+	}
+	
+	@Override
+	public T update(T entity) {
+		if(!getEntityManager().getTransaction().isActive()){
+			getEntityManager().getTransaction().begin();
+		}
+		return super.update(entity);
+	}
+	
+	@Override
+	public T delete(T entity) {
+		if(!getEntityManager().getTransaction().isActive()){
+			getEntityManager().getTransaction().begin();
+		}
+		return super.delete(entity);
+	}
+	
 	public T save(T entity){
+		if(!getEntityManager().getTransaction().isActive()){
+			getEntityManager().getTransaction().begin();
+		}
 		entity = beforeSave(entity);
 		if(entity.getId() == 0){
 			entity = insert(entity);
