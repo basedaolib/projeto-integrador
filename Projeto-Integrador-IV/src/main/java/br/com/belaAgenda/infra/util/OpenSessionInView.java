@@ -15,7 +15,7 @@ import javax.servlet.annotation.WebFilter;
 
 
 @WebFilter("*.xhtml")
-public class CloseSessionInView implements Filter {
+public class OpenSessionInView implements Filter {
 
 	@Inject
 	@RequestScoped
@@ -28,16 +28,11 @@ public class CloseSessionInView implements Filter {
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 		
 		try{
-		chain.doFilter(request, response);
-		if(entityManager.getTransaction().isActive()){
+			entityManager.getTransaction().begin();
+			chain.doFilter(request, response);
 			entityManager.getTransaction().commit();
-		}else if(entityManager.getTransaction().getRollbackOnly()){
-			entityManager.getTransaction().rollback();
-		}
 		}catch (Throwable t) {
-            if (entityManager != null && entityManager.getTransaction().isActive()) {
-            	entityManager.getTransaction().rollback();
-            }
+            entityManager.getTransaction().rollback();
         }
         if (entityManager != null && entityManager.isOpen()) {
           	entityManager.close();

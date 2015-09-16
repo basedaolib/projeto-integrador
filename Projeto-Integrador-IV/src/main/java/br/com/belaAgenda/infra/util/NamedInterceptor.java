@@ -6,17 +6,12 @@ import java.lang.reflect.Modifier;
 import javax.annotation.Priority;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
-import javax.inject.Inject;
 import javax.interceptor.AroundInvoke;
 import javax.interceptor.Interceptor;
 import javax.interceptor.InvocationContext;
-import javax.persistence.EntityManager;
 
 @Interceptor @Transactional @Priority(Interceptor.Priority.APPLICATION)
 public class NamedInterceptor {
-	
-	@Inject
-	private EntityManager en;
 	
 	@AroundInvoke
 	public Object auditar(InvocationContext context) throws Exception {
@@ -29,7 +24,6 @@ public class NamedInterceptor {
 			return retorno;
 		}catch (Exception t) {
             lancarFacesMessage(t.getMessage());
-            en.getTransaction().setRollbackOnly();
         }
 		return retorno;
 	}
