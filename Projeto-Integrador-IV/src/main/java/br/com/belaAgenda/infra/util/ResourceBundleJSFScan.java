@@ -85,28 +85,23 @@ public class ResourceBundleJSFScan implements ServletContextListener {
 		fileWrite.close();
 	}
 
+	@Override
 	public void contextInitialized(ServletContextEvent arg0) {
 		path = arg0.getServletContext().getRealPath("").replace("\\", "/");
 		
 		try {
 			scan();
 		} catch (ParserConfigurationException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (SAXException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (TransformerConfigurationException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (TransformerFactoryConfigurationError e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (TransformerException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 

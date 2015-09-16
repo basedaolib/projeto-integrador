@@ -29,10 +29,7 @@ public class MyInjectingConstraintValidatorFactory implements ConstraintValidato
     }
 
     private BeanManager getBeanManager() throws NamingException {
-            
-           
-            BeanManager beanManager = CDI.current().getBeanManager();
-            return beanManager;
+            return CDI.current().getBeanManager();
     }
 
     @SuppressWarnings("unchecked")
@@ -57,8 +54,6 @@ public class MyInjectingConstraintValidatorFactory implements ConstraintValidato
 	
 
 	public void releaseInstance(ConstraintValidator<?, ?> instance) {
-		// TODO Auto-generated method stub
-		
 	}
 
 

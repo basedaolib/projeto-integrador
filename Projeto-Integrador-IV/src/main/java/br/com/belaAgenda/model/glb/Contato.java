@@ -12,6 +12,8 @@ public class Contato extends EntityBase{
 	private String email;
 	private String clular;
 	private String telefoneFixo;
+	
+	
 	public String getEmail() {
 		return email;
 	}

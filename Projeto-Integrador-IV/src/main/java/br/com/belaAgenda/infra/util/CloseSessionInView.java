@@ -21,10 +21,11 @@ public class CloseSessionInView implements Filter {
 	@RequestScoped
 	private EntityManager entityManager;
 
+	@Override
 	public void destroy() {
 	}
 
-
+	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 		
 		try{
@@ -46,7 +47,7 @@ public class CloseSessionInView implements Filter {
 		
 	}
 	
-	
+	@Override
 	public void init(FilterConfig fConfig) throws ServletException {
 	}
 

@@ -2,11 +2,10 @@ package br.com.belaAgenda.infra.base.business;
 
 import java.util.List;
 
-import br.com.baseDAOLib.DAO.BaseDAO;
 import br.com.belaAgenda.infra.base.model.EntityId;
 
-@SuppressWarnings("rawtypes")
-public interface BaseBusiness<T extends EntityId, D extends BaseDAO>{
+public interface BaseBusiness<T extends EntityId>{
+	
 	public T insert(T entity);
 
 	public T delete(T entity);

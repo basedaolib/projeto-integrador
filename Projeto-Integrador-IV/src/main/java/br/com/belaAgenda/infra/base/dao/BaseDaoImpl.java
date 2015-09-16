@@ -53,6 +53,10 @@ public class BaseDaoImpl<T extends EntityId> extends BaseDAOImpl<T> {
 		return entity;
 	}
 	
-	protected T beforeSave(T entity){ return entity;}
-	protected T afterSave(T entity){ return entity;}
+	protected T beforeSave(T entity){
+		return entity;
+	}
+	protected T afterSave(T entity){ 
+		return entity;
+	}
 }

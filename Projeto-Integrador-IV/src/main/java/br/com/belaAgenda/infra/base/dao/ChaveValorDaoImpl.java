@@ -20,7 +20,7 @@ public abstract class ChaveValorDaoImpl<T extends ChaveValor> extends BaseDaoImp
 		Long codigo = getEntityManager().createQuery(criteria).getSingleResult();
 	
 		if(codigo == null){
-			codigo = 1l;
+			codigo = 1L;
 		}else{
 			codigo++;
 		}

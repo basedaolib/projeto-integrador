@@ -40,11 +40,11 @@ public class LoginBean extends BaseBean{
 	        catch (AuthenticationException e) {
 	        	addMessage(null, FacesMessage.SEVERITY_FATAL ,
 	        			getMessage("Unknown user, please try again"), null);
-	            e.printStackTrace(); // TODO: logger.
+	            e.printStackTrace();
 	        }catch (IOException e) {
 	        	addMessage(null, FacesMessage.SEVERITY_FATAL ,
 	        			getMessage("Unknown user, please try again"), null);
-	            e.printStackTrace(); // TODO: logger.
+	            e.printStackTrace();
 			}
 	}
 	
