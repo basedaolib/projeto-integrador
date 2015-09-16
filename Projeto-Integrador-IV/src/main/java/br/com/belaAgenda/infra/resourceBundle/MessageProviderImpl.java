@@ -1,5 +1,6 @@
 package br.com.belaAgenda.infra.resourceBundle;
 
+import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
 import javax.faces.context.FacesContext;
@@ -23,7 +24,7 @@ public class MessageProviderImpl implements MessageProvider{
         	name = key.substring(0 , key.indexOf("."));
         	message = key.substring(1 + key.indexOf("."));
             result = getBundle(name).getString(message);
-        } catch (Exception e) {
+        } catch (MissingResourceException e) {
             result = "???" + key + "??? not found";
         }
         return result;
