@@ -3,7 +3,6 @@ package br.com.belaAgenda.infra.base.model;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
-import javax.persistence.PrePersist;
 
 
 @MappedSuperclass
@@ -21,12 +20,6 @@ public abstract class EntityId extends EntityBase {
 	
 	public void setId(long id) {
 		this.id = id;
-	}
-	
-	@PrePersist
-	public void peristente(){
-		System.out.println("Entity super");
-		
 	}
 	
 	@Override

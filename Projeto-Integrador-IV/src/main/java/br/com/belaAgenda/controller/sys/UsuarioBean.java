@@ -52,9 +52,10 @@ public class UsuarioBean extends BaseBean{
 				codigo = Long.parseLong(codigoS);
 				usuarios = usuarioBusiness.findEntitiesForProperties(0, 0, "codigo", "codigo", codigo);
 				return;
-			}catch(Exception e){}
+			}catch(Exception e){
+				usuarios = usuarioBusiness.findEntitiesForProperties(0, 0, "nome", "nome+", pesquisa + "%");
+			}
 		}
-		usuarios = usuarioBusiness.findEntitiesForProperties(0, 0, "nome", "nome+", pesquisa + "%");
 	}
 	
 	public void editar(Usuario usuario){

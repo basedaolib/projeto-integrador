@@ -9,7 +9,7 @@ import br.com.belaAgenda.infra.base.model.EntityId;
 import br.com.belaAgenda.infra.resourceBundle.MessageProvider;
 
 @SuppressWarnings("rawtypes")
-public abstract class BaseBusinessImpl<T extends EntityId, D extends BaseDao> implements BaseBusiness<T, D>{
+public abstract class BaseBusinessImpl<T extends EntityId, D extends BaseDao> implements BaseBusiness<T>{
 	
 	@Inject
 	protected D dao;

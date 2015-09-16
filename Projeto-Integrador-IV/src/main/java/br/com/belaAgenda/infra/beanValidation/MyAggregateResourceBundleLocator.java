@@ -16,9 +16,9 @@ import org.hibernate.validator.resourceloading.PlatformResourceBundleLocator;
 import org.hibernate.validator.spi.resourceloading.ResourceBundleLocator;
 
 public class MyAggregateResourceBundleLocator extends DelegatingResourceBundleLocator {
+	private final static String BUNDLE_FROM_DELEGATE = "bundleFromDelegate";
 	private final List<String> bundleNames;
 	private final ClassLoader classLoader;
-	private final static String BUNDLE_FROM_DELEGATE = "bundleFromDelegate";
 
 	public MyAggregateResourceBundleLocator(List<String> bundleNames) {
 		this( bundleNames, null );
