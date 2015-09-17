@@ -1,8 +1,11 @@
 package br.com.belaAgenda.model.glb;
 
 import javax.persistence.Embeddable;
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 
 import br.com.belaAgenda.infra.base.model.EntityBase;
+import br.com.belaAgenda.model.glb.exceptions.ContatoException;
 
 @Embeddable
 public class Contato extends EntityBase{
@@ -10,8 +13,17 @@ public class Contato extends EntityBase{
 	private static final long serialVersionUID = 4110936356127159119L;
 	
 	private String email;
-	private String clular;
+	private String celular;
 	private String telefoneFixo;
+	
+	@PrePersist
+	@PreUpdate
+	private void consistir(){
+		if(email == null && celular == null && telefoneFixo == null){
+			throw new ContatoException(getMessage("contato.contatoObrigatorio"));
+		}
+	}
+	
 	
 	
 	public String getEmail() {
@@ -20,11 +32,11 @@ public class Contato extends EntityBase{
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	public String getClular() {
-		return clular;
+	public String getCelular() {
+		return celular;
 	}
-	public void setClular(String clular) {
-		this.clular = clular;
+	public void setCelular(String celular) {
+		this.celular = celular;
 	}
 	public String getTelefoneFixo() {
 		return telefoneFixo;
@@ -36,7 +48,7 @@ public class Contato extends EntityBase{
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((clular == null) ? 0 : clular.hashCode());
+		result = prime * result + ((celular == null) ? 0 : celular.hashCode());
 		result = prime * result + ((email == null) ? 0 : email.hashCode());
 		result = prime * result + ((telefoneFixo == null) ? 0 : telefoneFixo.hashCode());
 		return result;
@@ -50,10 +62,10 @@ public class Contato extends EntityBase{
 		if (getClass() != obj.getClass())
 			return false;
 		Contato other = (Contato) obj;
-		if (clular == null) {
-			if (other.clular != null)
+		if (celular == null) {
+			if (other.celular != null)
 				return false;
-		} else if (!clular.equals(other.clular))
+		} else if (!celular.equals(other.celular))
 			return false;
 		if (email == null) {
 			if (other.email != null)

@@ -23,9 +23,6 @@
     <class>br.com.belaAgenda.model.svc.Atendimento</class>
     <class>br.com.belaAgenda.model.svc.Servico</class>
     
-    <!-- converter -->
-    <class>br.com.belaAgenda.infra.util.LocalDateTimePersistenceConverter</class>
-    <class>br.com.belaAgenda.infra.util.LocalDatePersistenceConverter</class>
     
     <properties>
     <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />

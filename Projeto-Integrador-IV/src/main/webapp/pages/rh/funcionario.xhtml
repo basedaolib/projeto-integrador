@@ -20,16 +20,16 @@
        	<div class="ui-grid ui-grid-responsive">
    			<div class="ui-grid-row">
        			<div class="ui-grid-col-8">
-       				<p:inputText value="#{usuarioBean.pesquisa}" style="width: 98%;"/>
+       				<p:inputText value="#{funcionarioBean.pesquisa}" style="width: 98%;"/>
        			</div>
        			<div class="ui-grid-col-4">
        				<p:commandButton value="#{global.pesquisar}" 
-	            					 actionListener="#{usuarioBean.pesquisar}"
+	            					 actionListener="#{funcionarioBean.pesquisar}"
 	            					 icon="ui-icon-search" 
-	            					 update="usuariosDatagrid"/>
+	            					 update="funcionariosDatagrid"/>
         	
 		        	<p:commandButton value="#{global.novo}" 
-			            					 actionListener="#{usuarioBean.adicionar}"
+			            					 actionListener="#{funcionarioBean.adicionar}"
 			            					 icon="ui-icon-plus" 
 			            					 update="root:formPopUp"
 			            					 oncomplete="PF('formPopUp').show();"/>
@@ -38,8 +38,8 @@
 		</div>
         	
         <br/>
-           <p:dataTable var="item" value="#{usuarioBean.usuarios}" layout="grid"
-       		paginator="true" id="usuariosDatagrid"
+           <p:dataTable var="item" value="#{funcionarioBean.funcionarios}" layout="grid"
+       		paginator="true" id="funcionariosDatagrid"
        		paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
        		rowsPerPageTemplate="10,20,30" rows="10">
            
@@ -52,18 +52,14 @@
       		 		<h:outputText value="#{item.nome}"/>
    			</p:column>
    			
-   			<p:column headerText="#{usuarioLabels.login}" width="40%">
-      		 		<h:outputText value="#{item.login}" />
-   			</p:column>
-   			
    			<p:column headerText="#{global.opcoes}" width="20%">
       		 	<p:commandButton icon="ui-icon-pencil" 
-			            		 actionListener="#{usuarioBean.editar(item)}"
+			            		 actionListener="#{funcionarioBean.editar(item)}"
 			            		 update="root:formPopUp"
 			            		 oncomplete="PF('formPopUp').show();">
 			    </p:commandButton>
 			    <p:commandButton icon="ui-icon-copy" 
-			            		 actionListener="#{usuarioBean.clonar(item)}"
+			            		 actionListener="#{funcionarioBean.clonar(item)}"
 			            		 update="root:formPopUp"
 			            		 oncomplete="PF('formPopUp').show();">
 			    </p:commandButton>
@@ -72,7 +68,7 @@
            </p:dataTable>
            
            </h:form>
-            <p:dialog header="#{usuarioBean.obterTituloCadastro()}" 
+            <p:dialog header="#{funcionarioBean.obterTituloCadastro()}" 
             		  widgetVar="formPopUp" 
             		  id="formPopUp"
             		  modal="true"
@@ -86,39 +82,39 @@
 		            
 		            	<p:outputLabel value="#{global.codigo}" />
 		            	<p:inputText id="codigoInput" 
-		            				 value="#{usuarioBean.usuario.codigo}" 
+		            				 value="#{funcionarioBean.funcionario.codigo}" 
 		            				 disabled="true"/>
 		            	<p:message for="codigoInput"/>
 		            	
 		            	<p:outputLabel value="#{global.nome}" />
 		            	<p:inputText id="nomeInput" 
-		            				 value="#{usuarioBean.usuario.nome}"/>
+		            				 value="#{funcionarioBean.funcionario.nome}"/>
 		            	<p:message for="nomeInput" />
 		            	
-		            	<p:outputLabel value="#{usuarioLabels.login}" />
+		            	<p:outputLabel value="#{funcionarioLabels.login}" />
 		            	<p:inputText id="loginInput" 
-		            				 value="#{usuarioBean.usuario.login}"/>
+		            				 value="#{funcionarioBean.funcionario.login}"/>
 		            	<p:message for="loginInput"/>
 		            	
-		            	<p:outputLabel value="#{usuarioLabels.nivel}" />
+		            	<p:outputLabel value="#{funcionarioLabels.nivel}" />
 		            	<p:selectOneMenu id="nivelInput" 
-		            					 value="#{usuarioBean.usuario.nivel}">
-		            		<f:selectItems value="#{usuarioBean.niveisUsuario}"/> 
+		            					 value="#{funcionarioBean.funcionario.nivel}">
+		            		<f:selectItems value="#{funcionarioBean.niveisUsuario}"/> 
 		            	</p:selectOneMenu>
 		            	<p:message for="nivelInput"/>
 		            	
-		            	<p:outputLabel value="#{usuarioLabels.senha}" />
+		            	<p:outputLabel value="#{funcionarioLabels.senha}" />
 		            	<p:password id="senhaImput" 
-		            				value="#{usuarioBean.usuario.senha}"/>
+		            				value="#{funcionarioBean.funcionario.senha}"/>
 		            	<p:message for="senhaImput" />
 		            	
-		            	<p:outputLabel value="#{usuarioLabels.confirmacaoSenha}" />
+		            	<p:outputLabel value="#{funcionarioLabels.confirmacaoSenha}" />
 		            	<p:password id="reSenhaInput" 
-		            				value="#{usuarioBean.usuario.confirmacaoSenha}"/>
+		            				value="#{funcionarioBean.funcionario.confirmacaoSenha}"/>
 		            	<p:message for="reSenhaInput"/>
 		            
 		            	<p:commandButton value="#{global.salvar}" 
-		            					 actionListener="#{usuarioBean.salvar()}"
+		            					 actionListener="#{funcionarioBean.salvar()}"
 		            					 icon="ui-icon-disk"
 		            					 process="cadastro"
 		            					 update="cadastro">

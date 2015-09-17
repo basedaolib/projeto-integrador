@@ -6,9 +6,16 @@ import javax.persistence.Convert;
 import javax.persistence.Embeddable;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
+import javax.validation.constraints.NotNull;
+
+import org.hibernate.validator.constraints.NotEmpty;
+import org.hibernate.validator.constraints.br.CPF;
 
 import br.com.belaAgenda.infra.base.model.EntityBase;
 import br.com.belaAgenda.infra.util.LocalDatePersistenceConverter;
+import br.com.belaAgenda.model.glb.exceptions.PessoaFisicaException;
 import br.com.belaAgenda.model.glb.types.EstadoCivil;
 import br.com.belaAgenda.model.glb.types.OrgaoExpedidorRG;
 import br.com.belaAgenda.model.glb.types.Sexo;
@@ -19,16 +26,21 @@ public class PessoaFisica extends EntityBase{
 
 	private static final long serialVersionUID = 394359038026985519L;
 	
+	@CPF(message = "{pessoaFisica.cpfInvalido}")
 	private String cpf;
 	
+	@NotEmpty(message = "{pessoaFisica.rgObrigatorio}")
 	private String rg;
 	
+	@NotNull(message= "{pessoaFisica.orgaoExpedidorObrigatorio}")
 	@Enumerated(EnumType.STRING) 
 	private OrgaoExpedidorRG orgaoExpedidor;
 	
+	@NotNull(message="{pessoaFisica.ufObrigatoria}")
 	@Enumerated(EnumType.STRING) 
 	private UnidadeFederacao ufOrgaoExpedidor;
 	
+	@NotNull(message="{pessoaFisica.dataNascimentoObrigatorio}")
 	@Convert(converter = LocalDatePersistenceConverter.class)
 	private LocalDate dataNascimento;
 	
@@ -36,13 +48,27 @@ public class PessoaFisica extends EntityBase{
 	
 	private String mae;
 	
+	@NotNull(message="{pessoaFisica.sexoObrigatorio}")
 	@Enumerated(EnumType.STRING) 
 	private Sexo sexo = Sexo.Masculino;
 	
+	@NotNull(message="{pessoaFisica.estadoCivilObrigatorio}")
 	@Enumerated(EnumType.STRING) 
 	private EstadoCivil estadoCivil = EstadoCivil.Solteiro;
 	
 	private String conjuge;
+	
+	@PrePersist
+	@PreUpdate
+	private void consistir(){
+		verificarConjuge();
+	}
+	
+	private void verificarConjuge(){
+		if(estadoCivil.contemConjugue()){
+			throw new PessoaFisicaException(getMessage("pessoaFisiaca.conjugueObrigatorio"));
+		}
+	}
 
 	public String getCpf() {
 		return cpf;

@@ -3,6 +3,9 @@ package br.com.belaAgenda.model.glb;
 import javax.persistence.Embeddable;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.validation.constraints.NotNull;
+
+import org.hibernate.validator.constraints.NotEmpty;
 
 import br.com.belaAgenda.infra.base.model.EntityBase;
 import br.com.belaAgenda.model.glb.types.UnidadeFederacao;
@@ -12,13 +15,26 @@ public class Endereco extends EntityBase{
 
 	private static final long serialVersionUID = -6417625003670672983L;
 	
+	@NotEmpty(message="{endereco.logradouroObrigatorio}")
 	private String logradouro;
+	
 	private String numero;
+	
+	@NotEmpty(message="{endereco.complementoObrigatorio}")
 	private String complemento;
+	
+	@NotEmpty(message="{endereco.bairroObrigatorio}")
 	private String bairro;
+	
+	@NotEmpty(message="{endereco.cepObrigatorio}")
 	private String cep;
+	
 	private String pontoReferencia;
+	
+	@NotEmpty(message="{endereco.municipioObrigatorio}")
 	private String municipio;
+	
+	@NotNull(message="{endereco.ufObrigatorio}")
 	@Enumerated(EnumType.STRING) 
 	private UnidadeFederacao uf;
 	

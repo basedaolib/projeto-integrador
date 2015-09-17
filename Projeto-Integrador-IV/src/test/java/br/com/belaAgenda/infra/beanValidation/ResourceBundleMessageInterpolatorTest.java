@@ -2,6 +2,7 @@ package br.com.belaAgenda.infra.beanValidation;
 
 import java.util.List;
 
+import org.hibernate.validator.messageinterpolation.ResourceBundleMessageInterpolator;
 import org.junit.Test;
 
 import br.com.belaAgenda.infra.resourceBundle.ResourceBundleMessageScan;
