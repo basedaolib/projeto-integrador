@@ -150,31 +150,31 @@ public class PessoaFisica extends EntityBase{
 		this.conjuge = conjuge;
 	}
 	
-	public Boolean getFeminino() {
+	public Boolean isFeminino() {
 		return getSexo() != null && getSexo().equals(Sexo.Feminino);
 	}
 	
-	public Boolean getMasculino() {
+	public Boolean isMasculino() {
 		return getSexo() != null && getSexo().equals(Sexo.Masculino);
 	}
 	
-	public Boolean getSolteiro() {
+	public Boolean isSolteiro() {
 		return getEstadoCivil() != null && getEstadoCivil().equals(EstadoCivil.Solteiro);
 	}
 	
-	public Boolean getCasado() {
+	public Boolean isCasado() {
 		return getEstadoCivil() != null && getEstadoCivil().equals(EstadoCivil.Casado);
 	}
 	
-	public Boolean getUniaoEstavel() {
+	public Boolean isUniaoEstavel() {
 		return getEstadoCivil() != null && getEstadoCivil().equals(EstadoCivil.UniaoEstavel);
 	}
 	
-	public Boolean getDesquitado() {
+	public Boolean isDesquitado() {
 		return getEstadoCivil() != null && getEstadoCivil().equals(EstadoCivil.Desquitado);
 	}
 	
-	public Boolean getViuvo() {
+	public Boolean isViuvo() {
 		return getEstadoCivil() != null && getEstadoCivil().equals(EstadoCivil.Viuvo);
 	}
 	

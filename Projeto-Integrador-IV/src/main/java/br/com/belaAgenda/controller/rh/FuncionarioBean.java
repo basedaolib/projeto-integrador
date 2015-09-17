@@ -3,13 +3,20 @@ package br.com.belaAgenda.controller.rh;
 import java.util.List;
 
 import javax.faces.application.FacesMessage;
+import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
+import javax.inject.Named;
 
 import br.com.belaAgenda.business.rh.FuncionarioBusiness;
 import br.com.belaAgenda.infra.base.controller.BaseBean;
+import br.com.belaAgenda.model.glb.types.EstadoCivil;
+import br.com.belaAgenda.model.glb.types.OrgaoExpedidorRG;
+import br.com.belaAgenda.model.glb.types.Sexo;
+import br.com.belaAgenda.model.glb.types.UnidadeFederacao;
 import br.com.belaAgenda.model.rh.Funcionario;
 
-
+@Named
+@ViewScoped
 public class FuncionarioBean extends BaseBean {
 	
 	private static final long serialVersionUID = -4737484614157295865L;
@@ -90,5 +97,21 @@ public class FuncionarioBean extends BaseBean {
 
 	public void setPesquisa(String pesquisa) {
 		this.pesquisa = pesquisa;
+	}
+	
+	public OrgaoExpedidorRG[] getOrgaos(){
+		return OrgaoExpedidorRG.values();
+	}
+	
+	public UnidadeFederacao[] getUnidadesFederacoes(){
+		return UnidadeFederacao.values();
+	}
+	
+	public EstadoCivil[] getEstadosCivis() {
+		return EstadoCivil.values();
+	}
+	
+	public Sexo[] getSexos(){
+		return Sexo.values();
 	}
 }
