@@ -46,6 +46,12 @@ public class FuncionarioBean extends BaseBean {
 		funcionarios.add(funcionario);
 	}
 	
+	public void inativar(){
+		this.funcionario = funcionarioBusiness.inativar(this.funcionario);
+		
+		addMessage(null, FacesMessage.SEVERITY_INFO ,getMessage("funcionarioBean.funcionarioInativado"), null);
+	}
+	
 	public void pesquisar(){
 		String codigoS;
 		Long codigo;

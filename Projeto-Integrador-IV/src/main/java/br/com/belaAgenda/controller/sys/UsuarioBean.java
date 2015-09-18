@@ -43,19 +43,24 @@ public class UsuarioBean extends BaseBean{
 		usuarios.add(usuario);
 	}
 	
+	public void inativar(){
+		this.usuario = usuarioBusiness.inativar(this.usuario);
+		
+		addMessage(null, FacesMessage.SEVERITY_INFO ,getMessage("usuarioBean.usuarioInativado"), null);
+	}
+	
 	public void pesquisar(){
 		String codigoS;
 		Long codigo;
-		if(pesquisa!= null && pesquisa.startsWith(",")){
-			try{
-				codigoS = pesquisa.replace(",", "");
-				codigo = Long.parseLong(codigoS);
+		try{
+			if(pesquisa!= null && pesquisa.startsWith(",")){
+					codigoS = pesquisa.replace(",", "");
+					codigo = Long.parseLong(codigoS);
 				usuarios = usuarioBusiness.findEntitiesForProperties(0, 0, "codigo", "codigo", codigo);
 				return;
-			}catch(Exception e){
-				usuarios = usuarioBusiness.findEntitiesForProperties(0, 0, "nome", "nome+", pesquisa + "%");
-			}
-		}
+				}
+		}finally{}
+		usuarios = usuarioBusiness.findEntitiesForProperties(0, 0, "nome", "nome+", pesquisa + "%");
 	}
 	
 	public void editar(Usuario usuario){

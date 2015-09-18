@@ -40,6 +40,11 @@ public abstract class BaseBusinessImpl<T extends EntityId, D extends BaseDao> im
 	public T save(T entity){
 		return (T) dao.save(entity);
 	}
+	
+	@SuppressWarnings("unchecked")
+	public T inativar(T entity) {
+		return (T) dao.inativar(entity);
+	}
 
 	@SuppressWarnings("unchecked")
 	public T disassociate(T entity) {

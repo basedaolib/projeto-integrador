@@ -13,6 +13,8 @@ public interface BaseBusiness<T extends EntityId>{
 	public T update(T entity);
 	
 	public T save(T entity);
+	
+	public T inativar(T entity);
 
 	public T disassociate(T entity);
 
