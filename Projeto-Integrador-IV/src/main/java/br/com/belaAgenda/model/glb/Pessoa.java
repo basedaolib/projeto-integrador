@@ -1,5 +1,7 @@
 package br.com.belaAgenda.model.glb;
 
+import javax.persistence.DiscriminatorColumn;
+import javax.persistence.DiscriminatorType;
 import javax.persistence.Embedded;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
@@ -9,6 +11,7 @@ import br.com.belaAgenda.infra.base.model.ChaveValor;
 
 @MappedSuperclass
 @Inheritance(strategy=InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name="FROM_CLASS", discriminatorType=DiscriminatorType.STRING)
 public abstract class Pessoa extends ChaveValor {
 
 	private static final long serialVersionUID = -6993956148404259051L;

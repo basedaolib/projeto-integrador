@@ -14,7 +14,7 @@ public class PessoaDaoImpl<T extends Pessoa> extends ChaveValorDaoImpl<T> implem
 	}
 	
 	private void validarCPF(T entity){
-		String nome = this.<String>findFieldForProperties("nome", "cpf,id!=", 
+		String nome = this.<String>findFieldForProperties("nome", "pessoaFisica.cpf,id!=", 
 				entity.getPessoaFisica().getCpf(), entity.getId());
 		
 		if(nome != null){
