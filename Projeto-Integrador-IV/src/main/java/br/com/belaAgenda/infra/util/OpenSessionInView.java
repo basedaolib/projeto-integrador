@@ -2,7 +2,6 @@ package br.com.belaAgenda.infra.util;
 
 import java.io.IOException;
 
-import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.servlet.Filter;
@@ -18,7 +17,6 @@ import javax.servlet.annotation.WebFilter;
 public class OpenSessionInView implements Filter {
 
 	@Inject
-	@RequestScoped
 	private EntityManager entityManager;
 
 	public void destroy() {

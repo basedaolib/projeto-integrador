@@ -49,16 +49,15 @@ public class FuncionarioBean extends BaseBean {
 	public void pesquisar(){
 		String codigoS;
 		Long codigo;
-		if(pesquisa!= null && pesquisa.startsWith(",")){
-			try{
-				codigoS = pesquisa.replace(",", "");
-				codigo = Long.parseLong(codigoS);
-				funcionarios = funcionarioBusiness.findEntitiesForProperties(0, 0, "codigo", "codigo", codigo);
-				return;
-			}catch(Exception e){
-				funcionarios = funcionarioBusiness.findEntitiesForProperties(0, 0, "nome", "nome+", pesquisa + "%");
+		try{
+			if(pesquisa!= null && pesquisa.startsWith(",")){
+					codigoS = pesquisa.replace(",", "");
+					codigo = Long.parseLong(codigoS);
+					funcionarios = funcionarioBusiness.findEntitiesForProperties(0, 0, "codigo", "codigo", codigo);
+					return;
 			}
-		}
+		}finally{}
+		funcionarios = funcionarioBusiness.findEntitiesForProperties(0, 0, "nome", "nome+", pesquisa + "%");
 	}
 	
 	public void editar(Funcionario funcionario){
@@ -72,8 +71,6 @@ public class FuncionarioBean extends BaseBean {
 			return funcionario.getCodigo().toString() + " - " +funcionario.getNome();
 		}
 	}
-	
-	
 
 	public Funcionario getFuncionario() {
 		return funcionario;

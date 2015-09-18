@@ -5,6 +5,4 @@ import br.com.belaAgenda.model.rh.Funcionario;
 
 class FuncionarioDaoImpl extends PessoaDaoImpl<Funcionario> implements FuncionarioDao {
 	
-	
-	
 }

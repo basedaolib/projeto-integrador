@@ -38,27 +38,31 @@
 		</div>
         	
         <br/>
-           <p:dataTable var="funcionario" value="#{funcionarioBean.funcionarios}" layout="grid"
+           <p:dataTable var="item" value="#{funcionarioBean.funcionarios}" layout="grid"
 			       		paginator="true" id="funcionariosDatagrid"
 			       		paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
 			       		rowsPerPageTemplate="10,20,30" rows="10">
            
            	<p:column headerText="#{global.codigo}" width="10%" >
-      		 		<h:outputText value="#{funcionario.codigo}"/>
+      		 		<h:outputText value="#{item.codigo}"/>
    			</p:column>
    			
    			<p:column headerText="#{global.nome}" width="50%">
-      		 		<h:outputText value="#{funcionario.nome}"/>
+      		 		<h:outputText value="#{item.nome}"/>
+   			</p:column>
+   			
+   			<p:column headerText="#{pessoaFisicaLabels.cpf}" width="50%">
+      		 		<h:outputText value="#{item.pessoaFisica.cpf}"/>
    			</p:column>
    			
    			<p:column headerText="#{global.opcoes}" width="20%">
       		 	<p:commandButton icon="ui-icon-pencil" 
-			            		 actionListener="#{funcionarioBean.editar(funcionario)}"
+			            		 actionListener="#{funcionarioBean.editar(item)}"
 			            		 update="root:formPopUp"
 			            		 oncomplete="PF('formPopUp').show();">
 			    </p:commandButton>
 			    <p:commandButton icon="ui-icon-copy" 
-			            		 actionListener="#{funcionarioBean.clonar(funcionario)}"
+			            		 actionListener="#{funcionarioBean.clonar(item)}"
 			            		 update="root:formPopUp"
 			            		 oncomplete="PF('formPopUp').show();">
 			    </p:commandButton>
@@ -71,13 +75,15 @@
             		  widgetVar="formPopUp" 
             		  id="formPopUp"
             		  modal="true"
+            		  width="500"
+            		  height="450"
             		  showEffect="explode">
             		  
 			  	<h:form id="cadastro">
 			  	
 			  		<p:tabView>
 			  			<p:tab title="#{global.dadosGerais}">
-			  				<h:panelGrid columns="3" cellpadding="10">
+			  				<h:panelGrid columns="1" cellspacing="5">
 			  				
 			  					<p:outputLabel value="#{global.codigo}" />
 				            	<p:inputText id="codigoInput" 
@@ -94,123 +100,134 @@
 			  			</p:tab>
 			  			
 			  			<p:tab title="#{global.pessoaFisica}">
-			  				<h:panelGrid columns="3" cellpadding="10">
-			  				
-			  					<p:outputLabel value="#{pessoaFisicaLabels.cpf}" />
-				            	<p:inputMask id="cpfInput"
-				            				 mask="999.999.999-99"
-				            				 value="#{funcionarioBean.funcionario.pessoaFisica.cpf}"/>
-				            	<p:message for="cpfInput" />
-				            	
-				            	<p:outputLabel value="#{pessoaFisicaLabels.rg}" />
-				            	<p:inputText id="rgInput"
-				            				 title="number"
-				            				 value="#{funcionarioBean.funcionario.pessoaFisica.rg}"/>
-				            	<p:message for="rgInput" />
-				            	
-				            	<p:outputLabel value="#{pessoaFisicaLabels.orgaoExpedidor}" />
-				            	<p:selectOneMenu id="orgaoExpedidorInput" 
-				            					 value="#{funcionarioBean.funcionario.pessoaFisica.orgaoExpedidor}">
-				            		<f:selectItems value="#{funcionarioBean.orgaos}"/> 
-				            	</p:selectOneMenu>
-				            	<p:message for="orgaoExpedidorInput"/>
-				            	
-				            	<p:outputLabel value="#{pessoaFisicaLabels.ufOrgaoExpedidor}" />
-				            	<p:selectOneMenu id="ufOrgaoExpedidorInput" 
-				            					 value="#{funcionarioBean.funcionario.pessoaFisica.ufOrgaoExpedidor}">
-				            		<f:selectItems value="#{funcionarioBean.unidadesFederacoes}"/> 
-				            	</p:selectOneMenu>
-				            	<p:message for="ufOrgaoExpedidorInput"/>
-				            	
-				            	<p:outputLabel value="#{pessoaFisicaLabels.dataNascimento}" />
-				            	<p:calendar id="dataNascimentoInput"
-				            				mask="99/99/9999"
-				            				 value="#{funcionarioBean.funcionario.pessoaFisica.dataNascimento}"
-				            				 converter="localDateConverter"/>
-				            	<p:message for="dataNascimentoInput" />
-				            	
-				            	<p:outputLabel value="#{pessoaFisicaLabels.pai}" />
-				            	<p:inputText id="paiInput" 
-				            				 value="#{funcionarioBean.funcionario.pessoaFisica.pai}"/>
-				            	<p:message for="paiInput" />
-				            	
-				            	<p:outputLabel value="#{pessoaFisicaLabels.mae}" />
-				            	<p:inputText id="maeInput" 
-				            				 value="#{funcionarioBean.funcionario.pessoaFisica.mae}"/>
-				            	<p:message for="maeInput" />
-				            	
-				            	<p:outputLabel value="#{pessoaFisicaLabels.sexo}" />
-				            	<p:selectOneMenu id="sexoInput" 
-				            					 value="#{funcionarioBean.funcionario.pessoaFisica.sexo}">
-				            		<f:selectItems value="#{funcionarioBean.sexos}"/> 
-				            	</p:selectOneMenu>
-				            	<p:message for="sexoInput"/>
-				            	
-				            	<p:outputLabel value="#{pessoaFisicaLabels.estadoCivil}" />
-				            	<p:selectOneMenu id="estadoCivilInput" 
-				            					 value="#{funcionarioBean.funcionario.pessoaFisica.estadoCivil}">
-				            		<f:selectItems value="#{funcionarioBean.estadosCivis}"/> 
-				            	</p:selectOneMenu>
-				            	<p:message for="estadoCivilInput"/>
-				            	
-				            	<p:outputLabel value="#{pessoaFisicaLabels.conjuge}" />
-				            	<p:inputText id="conjugeInput" 
-				            				 value="#{funcionarioBean.funcionario.pessoaFisica.conjuge}"/>
-				            	<p:message for="conjugeInput" />
-			  				
+			  				<h:panelGrid columns="2" cellpadding="10">
+				  				<h:panelGrid columns="1"  cellspacing="5">
+				  				
+				  					<p:outputLabel value="#{pessoaFisicaLabels.cpf}" />
+					            	<p:inputMask id="cpfInput"
+					            				 mask="999.999.999-99"
+					            				 value="#{funcionarioBean.funcionario.pessoaFisica.cpf}"/>
+					            	<p:message for="cpfInput" />
+					            	
+					            	<p:outputLabel value="#{pessoaFisicaLabels.rg}" />
+					            	<p:inputText id="rgInput"
+					            				 title="number"
+					            				 value="#{funcionarioBean.funcionario.pessoaFisica.rg}"/>
+					            	<p:message for="rgInput" />
+					            	
+					            	<p:outputLabel value="#{pessoaFisicaLabels.orgaoExpedidor}" />
+					            	<p:selectOneMenu id="orgaoExpedidorInput" 
+					            					 value="#{funcionarioBean.funcionario.pessoaFisica.orgaoExpedidor}">
+					            		<f:selectItems value="#{funcionarioBean.orgaos}"/> 
+					            	</p:selectOneMenu>
+					            	<p:message for="orgaoExpedidorInput"/>
+					            	
+					            	<p:outputLabel value="#{pessoaFisicaLabels.ufOrgaoExpedidor}" />
+					            	<p:selectOneMenu id="ufOrgaoExpedidorInput" 
+					            					 value="#{funcionarioBean.funcionario.pessoaFisica.ufOrgaoExpedidor}">
+					            		<f:selectItems value="#{funcionarioBean.unidadesFederacoes}"/> 
+					            	</p:selectOneMenu>
+					            	<p:message for="ufOrgaoExpedidorInput"/>
+					            	
+					            	<p:outputLabel value="#{pessoaFisicaLabels.dataNascimento}" />
+					            	<p:calendar id="dataNascimentoInput"
+					            				mask="99/99/9999"
+					            				 value="#{funcionarioBean.funcionario.pessoaFisica.dataNascimento}"
+					            				 converter="localDateConverter"/>
+					            	<p:message for="dataNascimentoInput" />
+					            	
+					            </h:panelGrid>
+					            	
+					            <h:panelGrid columns="1"  cellspacing="5">
+					            	
+					            	<p:outputLabel value="#{pessoaFisicaLabels.pai}" />
+					            	<p:inputText id="paiInput" 
+					            				 value="#{funcionarioBean.funcionario.pessoaFisica.pai}"/>
+					            	<p:message for="paiInput" />
+					            	
+					            	<p:outputLabel value="#{pessoaFisicaLabels.mae}" />
+					            	<p:inputText id="maeInput" 
+					            				 value="#{funcionarioBean.funcionario.pessoaFisica.mae}"/>
+					            	<p:message for="maeInput" />
+					            	
+					            	<p:outputLabel value="#{pessoaFisicaLabels.sexo}" />
+					            	<p:selectOneMenu id="sexoInput" 
+					            					 value="#{funcionarioBean.funcionario.pessoaFisica.sexo}">
+					            		<f:selectItems value="#{funcionarioBean.sexos}"/> 
+					            	</p:selectOneMenu>
+					            	<p:message for="sexoInput"/>
+					            	
+					            	<p:outputLabel value="#{pessoaFisicaLabels.estadoCivil}" />
+					            	<p:selectOneMenu id="estadoCivilInput" 
+					            					 value="#{funcionarioBean.funcionario.pessoaFisica.estadoCivil}">
+					            		<f:selectItems value="#{funcionarioBean.estadosCivis}"/> 
+					            	</p:selectOneMenu>
+					            	<p:message for="estadoCivilInput"/>
+					            	
+					            	<p:outputLabel value="#{pessoaFisicaLabels.conjuge}" />
+					            	<p:inputText id="conjugeInput" 
+					            				 value="#{funcionarioBean.funcionario.pessoaFisica.conjuge}"/>
+					            	<p:message for="conjugeInput" />
+				  				
+				  				</h:panelGrid>
 			  				</h:panelGrid>
 			  			</p:tab>
 			  			
 			  			<p:tab title="#{global.endereco}">
-			  				<h:panelGrid columns="3" cellpadding="10">
-			  				
-			  					<p:outputLabel value="#{enderecoLabels.logradouro}" />
-				            	<p:inputText id="logradouroInput" 
-				            				 value="#{funcionarioBean.funcionario.endereco.logradouro}"/>
-				            	<p:message for="logradouroInput" />
-				            	
-				            	<p:outputLabel value="#{enderecoLabels.numero}" />
-				            	<p:inputText id="numeroInput" 
-				            				 value="#{funcionarioBean.funcionario.endereco.numero}"/>
-				            	<p:message for="numeroInput" />
-				            	
-				            	<p:outputLabel value="#{enderecoLabels.complemento}" />
-				            	<p:inputText id="complementoInput" 
-				            				 value="#{funcionarioBean.funcionario.endereco.complemento}"/>
-				            	<p:message for="complementoInput" />
-				            	
-				            	<p:outputLabel value="#{enderecoLabels.bairro}" />
-				            	<p:inputText id="bairroInput" 
-				            				 value="#{funcionarioBean.funcionario.endereco.bairro}"/>
-				            	<p:message for="bairroInput" />
-				            	
-				            	<p:outputLabel value="#{enderecoLabels.cep}" />
-				            	<p:inputText id="cepInput" 
-				            				 value="#{funcionarioBean.funcionario.endereco.cep}"/>
-				            	<p:message for="cepInput" />
-				            	
-				            	<p:outputLabel value="#{enderecoLabels.pontoReferencia}" />
-				            	<p:inputTextarea id="pontoReferenciaInput" 
-				            				 	 value="#{funcionarioBean.funcionario.endereco.pontoReferencia}"/>
-				            	<p:message for="pontoReferenciaInput" />
-				            	
-				            	<p:outputLabel value="#{enderecoLabels.municipio}" />
-				            	<p:inputText id="municipioInput" 
-				            				 value="#{funcionarioBean.funcionario.endereco.municipio}"/>
-				            	<p:message for="municipioInput" />
-				            	
-				            	<p:outputLabel value="#{enderecoLabels.uf}" />
-				            	<p:selectOneMenu id="ufInput" 
-				            					 value="#{funcionarioBean.funcionario.endereco.uf}">
-				            		<f:selectItems value="#{funcionarioBean.unidadesFederacoes}"/> 
-				            	</p:selectOneMenu>
-				            	<p:message for="ufInput"/>
-				            	
-			  				</h:panelGrid>
+				  			<h:panelGrid columns="2" cellpadding="10">
+				  				<h:panelGrid columns="1" cellspacing="5">
+				  				
+				  					<p:outputLabel value="#{enderecoLabels.logradouro}" />
+					            	<p:inputText id="logradouroInput" 
+					            				 value="#{funcionarioBean.funcionario.endereco.logradouro}"/>
+					            	<p:message for="logradouroInput" />
+					            	
+					            	<p:outputLabel value="#{enderecoLabels.numero}" />
+					            	<p:inputText id="numeroInput" 
+					            				 value="#{funcionarioBean.funcionario.endereco.numero}"/>
+					            	<p:message for="numeroInput" />
+					            	
+					            	<p:outputLabel value="#{enderecoLabels.complemento}" />
+					            	<p:inputText id="complementoInput" 
+					            				 value="#{funcionarioBean.funcionario.endereco.complemento}"/>
+					            	<p:message for="complementoInput" />
+					            	
+					            	<p:outputLabel value="#{enderecoLabels.bairro}" />
+					            	<p:inputText id="bairroInput" 
+					            				 value="#{funcionarioBean.funcionario.endereco.bairro}"/>
+					            	<p:message for="bairroInput" />
+					            	
+					            	<p:outputLabel value="#{enderecoLabels.cep}" />
+					            	<p:inputText id="cepInput" 
+					            				 value="#{funcionarioBean.funcionario.endereco.cep}"/>
+					            	<p:message for="cepInput" />
+					            	
+					            </h:panelGrid>
+					            <h:panelGrid columns="1" cellspacing="5">
+					            	
+					            	<p:outputLabel value="#{enderecoLabels.pontoReferencia}" />
+					            	<p:inputTextarea id="pontoReferenciaInput" 
+					            				 	 value="#{funcionarioBean.funcionario.endereco.pontoReferencia}"/>
+					            	<p:message for="pontoReferenciaInput" />
+					            	
+					            	<p:outputLabel value="#{enderecoLabels.municipio}" />
+					            	<p:inputText id="municipioInput" 
+					            				 value="#{funcionarioBean.funcionario.endereco.municipio}"/>
+					            	<p:message for="municipioInput" />
+					            	
+					            	<p:outputLabel value="#{enderecoLabels.uf}" />
+					            	<p:selectOneMenu id="ufInput" 
+					            					 value="#{funcionarioBean.funcionario.endereco.uf}">
+					            		<f:selectItems value="#{funcionarioBean.unidadesFederacoes}"/> 
+					            	</p:selectOneMenu>
+					            	<p:message for="ufInput"/>
+					            	
+				  				</h:panelGrid>
+				  			</h:panelGrid>
 			  			</p:tab>
 			  			
 			  			<p:tab title="#{global.contato}">
-			  				<h:panelGrid columns="3" cellpadding="10">
+			  				<h:panelGrid columns="1" cellspacing="5">
 			  				
 			  					<p:outputLabel value="#{contatoLabels.email}" />
 				            	<p:inputText id="emailInput" 
@@ -234,6 +251,8 @@
 			  				
 			  			</p:tab>
 			  		</p:tabView>
+			  		
+			  		
 		          	<p:commandButton value="#{global.salvar}" 
 	            					 actionListener="#{funcionarioBean.salvar()}"
 	            					 icon="ui-icon-disk"

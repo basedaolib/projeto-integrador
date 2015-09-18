@@ -23,7 +23,7 @@ public class PessoaDaoImpl<T extends Pessoa> extends ChaveValorDaoImpl<T> implem
 	}
 	
 	private void validarRG(T entity){
-		String nome = this.<String>findFieldForProperties("nome", "rg,orgaoExpedido,id!=", 
+		String nome = this.<String>findFieldForProperties("nome", "pessoaFisica.rg,pessoaFisica.orgaoExpedidor,id!=", 
 				entity.getPessoaFisica().getCpf(), entity.getPessoaFisica().getOrgaoExpedidor() ,entity.getId());
 		
 		if(nome != null){
