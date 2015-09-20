@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3c.org/1999/xhtml"
+    xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:f="http://xmlns.jcp.org/jsf/core"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui">
+    
+<h:head>
+	<style type="text/css">  
+           .ui-widget {  
+               font-size: 12px !important;  
+           }
+       </style> 
+       
+</h:head>
+  <h:body>
+  
+  <h:form id="root">
+       <h:form id="formDataTable">
+       	<div class="ui-grid ui-grid-responsive">
+   			<div class="ui-grid-row">
+       			<div class="ui-grid-col-6">
+       				<p:inputText value="#{clienteBean.pesquisa}" style="width: 98%;"/>
+       			</div>
+       			<div class="ui-grid-col-6">
+       				<h:panelGrid columns="3" >
+       				
+		            	<p:selectOneRadio id="console" value="#{clienteBean.estado}">
+		            		<f:selectItems value="#{clienteBean.estadosEntidade()}"/>
+		            	</p:selectOneRadio>
+		            	
+	       				<p:commandButton value="#{global.pesquisar}" 
+		            					 actionListener="#{clienteBean.pesquisar}"
+		            					 icon="ui-icon-search" 
+		            					 update="clientesDatagrid"/>
+	        	
+			        	<p:commandButton value="#{global.novo}" 
+				            					 actionListener="#{clienteBean.adicionar}"
+				            					 icon="ui-icon-plus" 
+				            					 update="root:formPopUp"
+				            					 oncomplete="PF('formPopUp').show();"/>
+					</h:panelGrid>
+       			</div>
+   			</div>
+		</div>
+        	
+        <br/>
+           <p:dataTable var="item" value="#{clienteBean.clientes}" layout="grid"
+			       		paginator="true" id="clientesDatagrid"
+			       		paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+			       		rows="10">
+           
+           	<p:column headerText="#{global.codigo}" width="10%" >
+      		 		<h:outputText value="#{item.codigo}"/>
+   			</p:column>
+   			
+   			<p:column headerText="#{global.nome}" width="50%">
+      		 		<h:outputText value="#{item.nome}"/>
+   			</p:column>
+   			
+   			<p:column headerText="#{pessoaFisicaLabels.cpf}" width="50%">
+      		 		<h:outputText value="#{item.pessoaFisica.cpf}"/>
+   			</p:column>
+   			
+   			<p:column headerText="#{global.opcoes}" width="20%">
+      		 	<p:commandButton icon="ui-icon-pencil" 
+			            		 actionListener="#{clienteBean.editar(item)}"
+			            		 update="root:formPopUp"
+			            		 oncomplete="PF('formPopUp').show();">
+			    </p:commandButton>
+			    <p:commandButton icon="ui-icon-copy" 
+			            		 actionListener="#{clienteBean.clonar(item)}"
+			            		 update="root:formPopUp"
+			            		 oncomplete="PF('formPopUp').show();">
+			    </p:commandButton>
+   			</p:column>
+           	
+           </p:dataTable>
+           
+           </h:form>
+            <p:dialog header="#{clienteBean.obterTituloCadastro()}" 
+            		  widgetVar="formPopUp" 
+            		  id="formPopUp"
+            		  modal="true"
+            		  width="500"
+            		  height="530"
+            		  showEffect="explode">
+            		  
+			  	<h:form id="cadastro">
+			  	
+			  		<p:tabView>
+			  			<p:tab title="#{global.dadosGerais}">
+			  				<h:panelGrid columns="1" cellspacing="5">
+			  				
+			  					<p:outputLabel value="#{global.codigo}" />
+				            	<p:inputText id="codigoInput" 
+				            				 value="#{clienteBean.cliente.codigo}" 
+				            				 disabled="true"/>
+				            	<p:message for="codigoInput"/>
+				            	
+				            	<p:outputLabel value="#{global.nome}" />
+				            	<p:inputText id="nomeInput" 
+				            				 value="#{clienteBean.cliente.nome}"/>
+				            	<p:message for="nomeInput" />
+				            	
+			  				</h:panelGrid>
+			  			</p:tab>
+			  			
+			  			<p:tab title="#{global.pessoaFisica}">
+			  				<h:panelGrid columns="2" cellpadding="10">
+				  				<h:panelGrid columns="1"  cellspacing="5">
+				  				
+				  					<p:outputLabel value="#{pessoaFisicaLabels.cpf}" />
+					            	<p:inputMask id="cpfInput"
+					            				 mask="999.999.999-99"
+					            				 value="#{clienteBean.cliente.pessoaFisica.cpf}"/>
+					            	<p:message for="cpfInput" />
+					            	
+					            	<p:outputLabel value="#{pessoaFisicaLabels.rg}" />
+					            	<p:inputText id="rgInput"
+					            				 title="number"
+					            				 value="#{clienteBean.cliente.pessoaFisica.rg}"/>
+					            	<p:message for="rgInput" />
+					            	
+					            	<p:outputLabel value="#{pessoaFisicaLabels.orgaoExpedidor}" />
+					            	<p:selectOneMenu id="orgaoExpedidorInput" 
+					            					 value="#{clienteBean.cliente.pessoaFisica.orgaoExpedidor}">
+					            		<f:selectItems value="#{clienteBean.orgaos}"/> 
+					            	</p:selectOneMenu>
+					            	<p:message for="orgaoExpedidorInput"/>
+					            	
+					            	<p:outputLabel value="#{pessoaFisicaLabels.ufOrgaoExpedidor}" />
+					            	<p:selectOneMenu id="ufOrgaoExpedidorInput" 
+					            					 value="#{clienteBean.cliente.pessoaFisica.ufOrgaoExpedidor}">
+					            		<f:selectItems value="#{clienteBean.unidadesFederacoes}"/> 
+					            	</p:selectOneMenu>
+					            	<p:message for="ufOrgaoExpedidorInput"/>
+					            	
+					            	<p:outputLabel value="#{pessoaFisicaLabels.dataNascimento}" />
+					            	<p:calendar id="dataNascimentoInput"
+					            				mask="99/99/9999"
+					            				 value="#{clienteBean.cliente.pessoaFisica.dataNascimento}"
+					            				 converter="localDateConverter"/>
+					            	<p:message for="dataNascimentoInput" />
+					            	
+					            </h:panelGrid>
+					            	
+					            <h:panelGrid columns="1"  cellspacing="5">
+					            	
+					            	<p:outputLabel value="#{pessoaFisicaLabels.pai}" />
+					            	<p:inputText id="paiInput" 
+					            				 value="#{clienteBean.cliente.pessoaFisica.pai}"/>
+					            	<p:message for="paiInput" />
+					            	
+					            	<p:outputLabel value="#{pessoaFisicaLabels.mae}" />
+					            	<p:inputText id="maeInput" 
+					            				 value="#{clienteBean.cliente.pessoaFisica.mae}"/>
+					            	<p:message for="maeInput" />
+					            	
+					            	<p:outputLabel value="#{pessoaFisicaLabels.sexo}" />
+					            	<p:selectOneMenu id="sexoInput" 
+					            					 value="#{clienteBean.cliente.pessoaFisica.sexo}">
+					            		<f:selectItems value="#{clienteBean.sexos}"/> 
+					            	</p:selectOneMenu>
+					            	<p:message for="sexoInput"/>
+					            	
+					            	<p:outputLabel value="#{pessoaFisicaLabels.estadoCivil}" />
+					            	<p:selectOneMenu id="estadoCivilInput" 
+					            					 value="#{clienteBean.cliente.pessoaFisica.estadoCivil}">
+					            		<f:selectItems value="#{clienteBean.estadosCivis}"/> 
+					            	</p:selectOneMenu>
+					            	<p:message for="estadoCivilInput"/>
+					            	
+					            	<p:outputLabel value="#{pessoaFisicaLabels.conjuge}" />
+					            	<p:inputText id="conjugeInput" 
+					            				 value="#{clienteBean.cliente.pessoaFisica.conjuge}"/>
+					            	<p:message for="conjugeInput" />
+				  				
+				  				</h:panelGrid>
+			  				</h:panelGrid>
+			  			</p:tab>
+			  			
+			  			<p:tab title="#{global.endereco}">
+				  			<h:panelGrid columns="2" cellpadding="10">
+				  				<h:panelGrid columns="1" cellspacing="5">
+				  				
+				  					<p:outputLabel value="#{enderecoLabels.logradouro}" />
+					            	<p:inputText id="logradouroInput" 
+					            				 value="#{clienteBean.cliente.endereco.logradouro}"/>
+					            	<p:message for="logradouroInput" />
+					            	
+					            	<p:outputLabel value="#{enderecoLabels.numero}" />
+					            	<p:inputText id="numeroInput" 
+					            				 value="#{clienteBean.cliente.endereco.numero}"/>
+					            	<p:message for="numeroInput" />
+					            	
+					            	<p:outputLabel value="#{enderecoLabels.complemento}" />
+					            	<p:inputText id="complementoInput" 
+					            				 value="#{clienteBean.cliente.endereco.complemento}"/>
+					            	<p:message for="complementoInput" />
+					            	
+					            	<p:outputLabel value="#{enderecoLabels.bairro}" />
+					            	<p:inputText id="bairroInput" 
+					            				 value="#{clienteBean.cliente.endereco.bairro}"/>
+					            	<p:message for="bairroInput" />
+					            	
+					            	<p:outputLabel value="#{enderecoLabels.cep}" />
+					            	<p:inputText id="cepInput" 
+					            				 value="#{clienteBean.cliente.endereco.cep}"/>
+					            	<p:message for="cepInput" />
+					            	
+					            </h:panelGrid>
+					            <h:panelGrid columns="1" cellspacing="5">
+					            	
+					            	<p:outputLabel value="#{enderecoLabels.pontoReferencia}" />
+					            	<p:inputTextarea id="pontoReferenciaInput" 
+					            				 	 value="#{clienteBean.cliente.endereco.pontoReferencia}"/>
+					            	<p:message for="pontoReferenciaInput" />
+					            	
+					            	<p:outputLabel value="#{enderecoLabels.municipio}" />
+					            	<p:inputText id="municipioInput" 
+					            				 value="#{clienteBean.cliente.endereco.municipio}"/>
+					            	<p:message for="municipioInput" />
+					            	
+					            	<p:outputLabel value="#{enderecoLabels.uf}" />
+					            	<p:selectOneMenu id="ufInput" 
+					            					 value="#{clienteBean.cliente.endereco.uf}">
+					            		<f:selectItems value="#{clienteBean.unidadesFederacoes}"/> 
+					            	</p:selectOneMenu>
+					            	<p:message for="ufInput"/>
+					            	
+				  				</h:panelGrid>
+				  			</h:panelGrid>
+			  			</p:tab>
+			  			
+			  			<p:tab title="#{global.contato}">
+			  				<h:panelGrid columns="1" cellspacing="5">
+			  				
+			  					<p:outputLabel value="#{contatoLabels.email}" />
+				            	<p:inputText id="emailInput" 
+				            				 type="email"
+				            				 value="#{clienteBean.cliente.contato.email}"/>
+				            	<p:message for="emailInput" />
+				            	
+				            	<p:outputLabel value="#{contatoLabels.celular}" />
+				            	<p:inputMask id="celularInput"
+				            				 mask="(999) 99999-9999"
+				            				 value="#{clienteBean.cliente.contato.celular}"/>
+				            	<p:message for="celularInput" />
+				            	
+				            	<p:outputLabel value="#{contatoLabels.telefoneFixo}" />
+				            	<p:inputMask id="telefoneFixoInput"
+				            				 mask="(999) 99999-9999"
+				            				 value="#{clienteBean.cliente.contato.telefoneFixo}"/>
+				            	<p:message for="telefoneFixoInput" />
+				            	
+			  				</h:panelGrid>
+			  				
+			  			</p:tab>
+			  		</p:tabView>
+			  		
+			  		<h:panelGrid columns="2" cellpadding="10">
+			          	<p:commandButton value="#{global.salvar}" 
+		            					 actionListener="#{clienteBean.salvar()}"
+		            					 icon="ui-icon-disk"
+		            					 process="cadastro"
+		            					 update="cadastro">
+			           	</p:commandButton>
+			           	
+			           	<p:commandButton value="#{global.inativar}" 
+		            					 actionListener="#{clienteBean.inativar()}"
+		            					 disabled="#{clienteBean.podeInativar()}"
+		            					 icon="ui-icon-cancel"
+		            					 process="cadastro"
+		            					 update="cadastro">
+			           	</p:commandButton>
+			           	
+			        </h:panelGrid>
+	        	</h:form>
+	        </p:dialog>
+		</h:form>
+   </h:body>
+</html>
