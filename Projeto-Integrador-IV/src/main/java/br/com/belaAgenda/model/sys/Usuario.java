@@ -5,12 +5,14 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
 import br.com.belaAgenda.infra.base.model.ChaveValor;
+import br.com.belaAgenda.infra.base.model.type.EstadoEntidade;
 import br.com.belaAgenda.model.sys.exceptions.UsuarioModelException;
 import br.com.belaAgenda.model.sys.types.NivelUsuario;
 
@@ -24,11 +26,9 @@ public class Usuario extends ChaveValor{
 	@Size(message="{usuario.tamanhoDoLogin}", min=6)
 	private String login;
 	
-	@NotEmpty(message="{usuario.senhaObrigatoria}")
-	@Size(message="{usuario.tamanhoDaSenha}", min=6)
 	private String senha;
 	
-	@NotEmpty(message="{usuario.confirmacaoSenhaObrigatoria}")
+	@Transient
 	private String confirmacaoSenha;
 	
 	@NotNull(message="{usuario.nivelObrigatorio}")
@@ -46,8 +46,14 @@ public class Usuario extends ChaveValor{
 	}
 	
 	private void consistirSenha(){
-		if(!senha.equals(confirmacaoSenha)){
-			throw new UsuarioModelException(getMessage("usuario.asSenhasNaoConferem"));
+		if(estado.equals(EstadoEntidade.Ativo)){
+			if(senha == null || (senha != null && senha.length() < 6)){
+				throw new UsuarioModelException(getMessage("usuario.tamanhoDaSenha"));
+			}
+			
+			if(!senha.equals(confirmacaoSenha)){
+				throw new UsuarioModelException(getMessage("usuario.asSenhasNaoConferem"));
+			}
 		}
 	}
 

@@ -19,20 +19,27 @@
        <h:form id="formDataTable">
        	<div class="ui-grid ui-grid-responsive">
    			<div class="ui-grid-row">
-       			<div class="ui-grid-col-8">
+       			<div class="ui-grid-col-6">
        				<p:inputText value="#{usuarioBean.pesquisa}" style="width: 98%;"/>
        			</div>
-       			<div class="ui-grid-col-4">
-       				<p:commandButton value="#{global.pesquisar}" 
-	            					 actionListener="#{usuarioBean.pesquisar}"
-	            					 icon="ui-icon-search" 
-	            					 update="usuariosDatagrid"/>
-        	
-		        	<p:commandButton value="#{global.novo}" 
-			            					 actionListener="#{usuarioBean.adicionar}"
-			            					 icon="ui-icon-plus" 
-			            					 update="root:formPopUp"
-			            					 oncomplete="PF('formPopUp').show();"/>
+       			<div class="ui-grid-col-6">
+       			
+       				<h:panelGrid columns="3" >
+	        			<p:selectOneRadio id="console" value="#{usuarioBean.estado}" >
+		            		<f:selectItems value="#{usuarioBean.estadosEntidade()}"/>
+		            	</p:selectOneRadio>
+		            	
+	       				<p:commandButton value="#{global.pesquisar}" 
+		            					 actionListener="#{usuarioBean.pesquisar}"
+		            					 icon="ui-icon-search" 
+		            					 update="usuariosDatagrid"/>
+	        			
+			        	<p:commandButton value="#{global.novo}" 
+				            					 actionListener="#{usuarioBean.adicionar}"
+				            					 icon="ui-icon-plus" 
+				            					 update="root:formPopUp"
+				            					 oncomplete="PF('formPopUp').show();"/>
+					</h:panelGrid>
        			</div>
    			</div>
 		</div>
@@ -41,7 +48,7 @@
            <p:dataTable var="item" value="#{usuarioBean.usuarios}" layout="grid"
        		paginator="true" id="usuariosDatagrid"
        		paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-       		rowsPerPageTemplate="10,20,30" rows="10">
+       		rows="10">
            
            	<p:column headerText="#{global.codigo}" width="10%" >
       		 		<h:outputText value="#{item.codigo}" 
@@ -82,7 +89,7 @@
 			  	
 			  		<p:messages autoUpdate="true"></p:messages>
 	        					
-		            <h:panelGrid columns="3" cellpadding="10">
+		            <h:panelGrid columns="1">
 		            
 		            	<p:outputLabel value="#{global.codigo}" />
 		            	<p:inputText id="codigoInput" 
@@ -129,6 +136,7 @@
 			            	<p:commandButton value="#{global.inativar}" 
 			            					 actionListener="#{usuarioBean.inativar()}"
 			            					 icon="ui-icon-cancel"
+			            					 disabled="usuarioBean.podeInativar()"
 			            					 process="cadastro"
 			            					 update="cadastro">
 			            	</p:commandButton>

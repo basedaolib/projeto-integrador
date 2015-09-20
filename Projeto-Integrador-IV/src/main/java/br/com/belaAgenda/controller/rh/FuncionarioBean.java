@@ -9,6 +9,7 @@ import javax.inject.Named;
 
 import br.com.belaAgenda.business.rh.FuncionarioBusiness;
 import br.com.belaAgenda.infra.base.controller.BaseBean;
+import br.com.belaAgenda.infra.base.model.type.EstadoEntidade;
 import br.com.belaAgenda.model.glb.types.EstadoCivil;
 import br.com.belaAgenda.model.glb.types.OrgaoExpedidorRG;
 import br.com.belaAgenda.model.glb.types.Sexo;
@@ -28,6 +29,7 @@ public class FuncionarioBean extends BaseBean {
 	
 	private List<Funcionario> funcionarios;
 	
+	private EstadoEntidade estado = EstadoEntidade.Ativo;
 	
 	private String pesquisa;
 	
@@ -59,11 +61,11 @@ public class FuncionarioBean extends BaseBean {
 			if(pesquisa!= null && pesquisa.startsWith(",")){
 					codigoS = pesquisa.replace(",", "");
 					codigo = Long.parseLong(codigoS);
-					funcionarios = funcionarioBusiness.findEntitiesForProperties(0, 0, "codigo", "codigo", codigo);
+					funcionarios = funcionarioBusiness.findEntitiesForProperties(0, 0, "codigo", "codigo,estado", codigo, estado);
 					return;
 			}
 		}finally{}
-		funcionarios = funcionarioBusiness.findEntitiesForProperties(0, 0, "nome", "nome+", pesquisa + "%");
+		funcionarios = funcionarioBusiness.findEntitiesForProperties(0, 0, "nome", "nome+,estado", pesquisa + "%", estado);
 	}
 	
 	public void editar(Funcionario funcionario){
@@ -102,6 +104,14 @@ public class FuncionarioBean extends BaseBean {
 		this.pesquisa = pesquisa;
 	}
 	
+	public EstadoEntidade getEstado() {
+		return estado;
+	}
+
+	public void setEstado(EstadoEntidade estado) {
+		this.estado = estado;
+	}
+
 	public OrgaoExpedidorRG[] getOrgaos(){
 		return OrgaoExpedidorRG.values();
 	}
@@ -116,5 +126,12 @@ public class FuncionarioBean extends BaseBean {
 	
 	public Sexo[] getSexos(){
 		return Sexo.values();
+	}
+	
+	public boolean podeInativar(){
+		return funcionario.getId() == 0? true : false;
+	}
+	public EstadoEntidade[] estadosEntidade(){
+		return EstadoEntidade.values();
 	}
 }

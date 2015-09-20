@@ -19,20 +19,27 @@
        <h:form id="formDataTable">
        	<div class="ui-grid ui-grid-responsive">
    			<div class="ui-grid-row">
-       			<div class="ui-grid-col-8">
+       			<div class="ui-grid-col-6">
        				<p:inputText value="#{funcionarioBean.pesquisa}" style="width: 98%;"/>
        			</div>
-       			<div class="ui-grid-col-4">
-       				<p:commandButton value="#{global.pesquisar}" 
-	            					 actionListener="#{funcionarioBean.pesquisar}"
-	            					 icon="ui-icon-search" 
-	            					 update="funcionariosDatagrid"/>
-        	
-		        	<p:commandButton value="#{global.novo}" 
-			            					 actionListener="#{funcionarioBean.adicionar}"
-			            					 icon="ui-icon-plus" 
-			            					 update="root:formPopUp"
-			            					 oncomplete="PF('formPopUp').show();"/>
+       			<div class="ui-grid-col-6">
+       				<h:panelGrid columns="3" >
+       				
+		            	<p:selectOneRadio id="console" value="#{funcionarioBean.estado}">
+		            		<f:selectItems value="#{funcionarioBean.estadosEntidade()}"/>
+		            	</p:selectOneRadio>
+		            	
+	       				<p:commandButton value="#{global.pesquisar}" 
+		            					 actionListener="#{funcionarioBean.pesquisar}"
+		            					 icon="ui-icon-search" 
+		            					 update="funcionariosDatagrid"/>
+	        	
+			        	<p:commandButton value="#{global.novo}" 
+				            					 actionListener="#{funcionarioBean.adicionar}"
+				            					 icon="ui-icon-plus" 
+				            					 update="root:formPopUp"
+				            					 oncomplete="PF('formPopUp').show();"/>
+					</h:panelGrid>
        			</div>
    			</div>
 		</div>
@@ -41,7 +48,7 @@
            <p:dataTable var="item" value="#{funcionarioBean.funcionarios}" layout="grid"
 			       		paginator="true" id="funcionariosDatagrid"
 			       		paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-			       		rowsPerPageTemplate="10,20,30" rows="10">
+			       		rows="10">
            
            	<p:column headerText="#{global.codigo}" width="10%" >
       		 		<h:outputText value="#{item.codigo}"/>
@@ -76,7 +83,7 @@
             		  id="formPopUp"
             		  modal="true"
             		  width="500"
-            		  height="450"
+            		  height="530"
             		  showEffect="explode">
             		  
 			  	<h:form id="cadastro">
@@ -262,6 +269,7 @@
 			           	
 			           	<p:commandButton value="#{global.inativar}" 
 		            					 actionListener="#{funcionarioBean.inativar()}"
+		            					 disabled="#{funcionarioBean.podeInativar()}"
 		            					 icon="ui-icon-cancel"
 		            					 process="cadastro"
 		            					 update="cadastro">

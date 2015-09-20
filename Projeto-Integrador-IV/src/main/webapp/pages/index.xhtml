@@ -9,7 +9,13 @@
 	<style type="text/css">  
     	.ui-widget {  
         	font-size: 12px !important;  
-        }  
+        }
+        
+        body{
+    		background-image: url(../resources/img/background.jpg);
+		}
+
+
     </style> 
        		
     <script>
@@ -32,7 +38,13 @@
 	  			<p:submenu label="#{indexLabels.cadastro}" icon="ui-icon-document">
 	  				 <p:menuitem value="#{indexLabels.cadastroUsuario}"
 								 rendered='#{securityBean.isRole("ADMINISTRADOR","MASTER")}'
-	  				 			 actionListener='#{indexBean.opem("/pages/sys/usuario.xhtml", indexLabels.cadastroUsuario, 600, 500)}'/>
+	  				 			 actionListener='#{indexBean.opem("/pages/sys/usuario.xhtml", indexLabels.cadastroUsuario, 800, 450)}'/>
+	  				 
+	  				 <p:menuitem value="#{indexLabels.cadastroFuncionario}"
+	  				 			 actionListener='#{indexBean.opem("/pages/rh/funcionario.xhtml", indexLabels.cadastroFuncionario, 800, 600)}'/>
+	  				 
+	  				 <p:menuitem value="#{indexLabels.cadastroCliente}"
+	  				 			 actionListener='#{indexBean.opem("/pages/glb/cliente.xhtml", indexLabels.cadastroCliente, 800, 600)}'/>
 	  			</p:submenu>
 	  			<p:submenu label="#{indexLabels.sistema}" >
 	  				<p:menuitem value="#{indexLabels.sair}" actionListener="#{loginBean.logOut()}" icon="ui-icon-extlink"/>

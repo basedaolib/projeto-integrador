@@ -17,6 +17,7 @@ import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 
 import br.com.belaAgenda.business.sys.UsuarioBusiness;
+import br.com.belaAgenda.infra.base.model.type.EstadoEntidade;
 import br.com.belaAgenda.model.sys.Usuario;
 
 public class AppAuthorizingRealm extends AuthorizingRealm {
@@ -27,7 +28,7 @@ public class AppAuthorizingRealm extends AuthorizingRealm {
 	@Override
 	protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
 		String login = (String) principals.fromRealm(getName()).iterator().next();
-		Usuario usuario = usuarioBusiness.findEntityForProperties("login", login);
+		Usuario usuario = usuarioBusiness.findEntityForProperties("login,estado", login, EstadoEntidade.Ativo);
 		if(usuario != null) {
 			SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
 			Set<String> roles = new HashSet<String>();

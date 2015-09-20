@@ -9,6 +9,7 @@ import javax.inject.Named;
 
 import br.com.belaAgenda.business.sys.UsuarioBusiness;
 import br.com.belaAgenda.infra.base.controller.BaseBean;
+import br.com.belaAgenda.infra.base.model.type.EstadoEntidade;
 import br.com.belaAgenda.model.sys.Usuario;
 import br.com.belaAgenda.model.sys.types.NivelUsuario;
 
@@ -25,6 +26,7 @@ public class UsuarioBean extends BaseBean{
 	
 	private List<Usuario> usuarios;
 	
+	private EstadoEntidade estado = EstadoEntidade.Ativo;
 	
 	private String pesquisa;
 	
@@ -56,11 +58,11 @@ public class UsuarioBean extends BaseBean{
 			if(pesquisa!= null && pesquisa.startsWith(",")){
 					codigoS = pesquisa.replace(",", "");
 					codigo = Long.parseLong(codigoS);
-				usuarios = usuarioBusiness.findEntitiesForProperties(0, 0, "codigo", "codigo", codigo);
+				usuarios = usuarioBusiness.findEntitiesForProperties(0, 0, "codigo", "codigo,estado", codigo, estado);
 				return;
 				}
 		}finally{}
-		usuarios = usuarioBusiness.findEntitiesForProperties(0, 0, "nome", "nome+", pesquisa + "%");
+		usuarios = usuarioBusiness.findEntitiesForProperties(0, 0, "nome", "nome+,estado", pesquisa + "%", estado);
 	}
 	
 	public void editar(Usuario usuario){
@@ -101,8 +103,26 @@ public class UsuarioBean extends BaseBean{
 		this.pesquisa = pesquisa;
 	}
 	
+	
+	
+	public EstadoEntidade getEstado() {
+		return estado;
+	}
+
+	public void setEstado(EstadoEntidade estado) {
+		this.estado = estado;
+	}
+
 	public NivelUsuario[] getNiveisUsuario(){
 		return NivelUsuario.values();
+	}
+	
+	public boolean podeInativar(){
+		return usuario.getId() == 0? true : false;
+	}
+	
+	public EstadoEntidade[] estadosEntidade(){
+		return EstadoEntidade.values();
 	}
 	
 }

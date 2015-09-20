@@ -1,4 +1,4 @@
-package br.com.belaAgenda.controller.sys;
+package br.com.belaAgenda.controller;
 
 import java.util.HashMap;
 import java.util.Map;
