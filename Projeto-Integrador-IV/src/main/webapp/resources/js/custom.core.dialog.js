@@ -3,7 +3,6 @@ PrimeFaces.dialog = {};
 PrimeFaces.dialog.DialogHandler = {
 		
     openDialog: function(cfg) {
-    	$("html").css("cursor", "Wait");
         var dialogId = cfg.sourceComponentId + '_dlg';
         if(document.getElementById(dialogId)) {
             return;
@@ -97,9 +96,13 @@ PrimeFaces.dialog.DialogHandler = {
             dialogFrame.data('initialized', true);
             
             PF(dialogWidgetVar).show();
-            $("html").css("cursor", "Default");
+           
         })
         .attr('src', frameURL);
+        
+        $(dialogFrame).ready(function() {
+        	$("body").css("cursor", "Default");
+        });
     },
 
     closeDialog: function(cfg) {
