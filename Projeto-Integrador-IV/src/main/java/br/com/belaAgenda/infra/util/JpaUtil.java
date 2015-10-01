@@ -9,10 +9,14 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
 @Singleton
-class JpaUtil {
+public class JpaUtil {
 	
-	private static final EntityManagerFactory factory =  Persistence.createEntityManagerFactory("bela_agenda");
+	private static EntityManagerFactory factory;
 	
+	public JpaUtil() {
+		if(factory == null)
+			factory =  Persistence.createEntityManagerFactory("bela_agenda");
+	}
 	
 	@Produces
 	@RequestScoped

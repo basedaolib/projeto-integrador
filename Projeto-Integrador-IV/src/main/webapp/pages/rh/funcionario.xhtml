@@ -257,6 +257,34 @@
 			  				</h:panelGrid>
 			  				
 			  			</p:tab>
+			  			<p:tab title="#{funcionarioLabels.comperencias}">
+			  				<h:panelGrid columns="2" cellpadding="10">
+			  					<p:dataTable var="item" value="#{funcionarioBean.funcionario.servicos}" layout="grid"
+						       		paginator="true" id="servicosDatagrid"
+						       		paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+						       		rows="10">
+						           
+						           	<p:column headerText="#{global.codigo}" width="10%" >
+						      		 		<h:outputText value="#{item.codigo}" 
+						      		 					  dir="rtl"/>
+						   			</p:column>
+						   			
+						   			<p:column headerText="#{global.nome}" width="50%">
+						      		 		<h:outputText value="#{item.nome}"/>
+						   			</p:column>
+						   			
+						   			<p:column headerText="#{global.opcoes}" width="20%">
+						      		 	<p:commandButton actionListener="#{funcionarioBean.remover(item)}"/>
+						   			</p:column>
+						           	
+						           </p:dataTable>
+						           
+						           <p:commandButton value="#{global.adicionar}" 
+		            					 actionListener="#{funcionarioBean.openSearch}">
+		            					  <p:ajax event="dialogReturn" listener="#{funcionarioBean.onServicosChosen}" update="servicosDatagrid" />
+			           			   </p:commandButton>
+			  				</h:panelGrid>
+			  			</p:tab>
 			  		</p:tabView>
 			  		
 			  		<h:panelGrid columns="2" cellpadding="10">

@@ -7,6 +7,9 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import org.primefaces.context.RequestContext;
+import org.primefaces.event.SelectEvent;
+
 import br.com.belaAgenda.business.rh.FuncionarioBusiness;
 import br.com.belaAgenda.infra.base.controller.BaseBean;
 import br.com.belaAgenda.infra.base.model.type.EstadoEntidade;
@@ -15,6 +18,7 @@ import br.com.belaAgenda.model.glb.types.OrgaoExpedidorRG;
 import br.com.belaAgenda.model.glb.types.Sexo;
 import br.com.belaAgenda.model.glb.types.UnidadeFederacao;
 import br.com.belaAgenda.model.rh.Funcionario;
+import br.com.belaAgenda.model.svc.Servico;
 
 @Named
 @ViewScoped
@@ -78,6 +82,20 @@ public class FuncionarioBean extends BaseBean {
 		}else{
 			return funcionario.getCodigo().toString() + " - " +funcionario.getNome();
 		}
+	}
+	
+	public void openSearch(){
+		RequestContext.getCurrentInstance().openDialog("/pages/svc/servicoSearch.xhtml");
+	}
+	
+	public void remover(Servico servico){
+		funcionario.getServicos().remove(servico);
+	}
+	
+	public void onServicosChosen(SelectEvent event) {
+	    Servico  servico = (Servico) event.getObject();
+	    
+	    funcionario.getServicos().add(servico);
 	}
 
 	public Funcionario getFuncionario() {
