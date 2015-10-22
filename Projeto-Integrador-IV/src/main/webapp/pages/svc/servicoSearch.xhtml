@@ -30,7 +30,7 @@
 		            	
 	       				<p:commandButton value="#{global.pesquisar}" 
 		            					 actionListener="#{servicoSearchBean.pesquisar}"
-		            					 icon="ui-icon-search" 
+		            					 icon="ui-icon-search"
 		            					 update="servicoSearchsDatagrid"/>
 					</h:panelGrid>
        			</div>
@@ -43,18 +43,18 @@
        		paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
        		rows="10">
            
-           	<p:column headerText="#{global.codigo}" width="10%" >
-      		 		<h:outputText value="#{item.codigo}" 
-      		 					  dir="rtl"/>
-   			</p:column>
-   			
-   			<p:column headerText="#{global.nome}" width="50%">
-      		 		<h:outputText value="#{item.nome}"/>
-   			</p:column>
-   			
-   			<p:column headerText="#{global.opcoes}" width="20%">
-      		 	<p:commandButton actionListener="#{servicoSearchBean.selecionar(item)}"/>
-   			</p:column>
+	           	<p:column headerText="#{global.codigo}" width="10%" >
+	      		 		<h:outputText value="#{item.codigo}" 
+	      		 					  dir="rtl"/>
+	   			</p:column>
+	   			
+	   			<p:column headerText="#{global.nome}" width="50%">
+	      		 		<h:outputText value="#{item.nome}"/>
+	   			</p:column>
+	   			
+	   			<p:column headerText="#{global.opcoes}" width="20%">
+	      		 	<p:commandButton value="ok" actionListener="#{servicoSearchBean.selecionar(item)}"/>
+	   			</p:column>
            	
            </p:dataTable>	
 	  		

@@ -85,13 +85,13 @@
 	<dependency>
 		<groupId>org.jboss.weld</groupId>
 		<artifactId>weld-core</artifactId>
-		<version>2.2.15.Final</version>
+		<version>2.3.0.Final</version>
 	</dependency>
 	
 	<dependency>
 		<groupId>org.jboss.weld.servlet</groupId>
 		<artifactId>weld-servlet</artifactId>
-		<version>2.2.15.Final</version>
+		<version>2.3.0.Final</version>
 	</dependency>
 	
 	<!-- drive JDBC  -->
@@ -107,20 +107,20 @@
     <dependency>
         <groupId>com.sun.faces</groupId>
         <artifactId>jsf-api</artifactId>
-        <version>2.2.2</version>
+        <version>2.2.12</version>
     </dependency>
     
     <dependency>
         <groupId>com.sun.faces</groupId>
         <artifactId>jsf-impl</artifactId>
-        <version>2.2.2</version>
+        <version>2.2.12</version>
     </dependency>
     
     <!-- primefaces -->
     <dependency>  
     	<groupId>org.primefaces</groupId>  
     	<artifactId>primefaces</artifactId>  
-    	<version>5.2</version>  
+    	<version>5.3</version>  
 	</dependency> 
     
 	<dependency>

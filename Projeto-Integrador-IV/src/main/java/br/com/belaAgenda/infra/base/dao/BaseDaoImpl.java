@@ -1,5 +1,7 @@
 package br.com.belaAgenda.infra.base.dao;
 
+import java.io.Serializable;
+
 import javax.inject.Inject;
 
 import br.com.baseDAOLib.DAO.BaseDAOImpl;
@@ -7,8 +9,9 @@ import br.com.belaAgenda.infra.base.model.EntityId;
 import br.com.belaAgenda.infra.base.model.type.EstadoEntidade;
 import br.com.belaAgenda.infra.resourceBundle.MessageProvider;
 
-public class BaseDaoImpl<T extends EntityId> extends BaseDAOImpl<T> implements BaseDao<T>{
+public class BaseDaoImpl<T extends EntityId> extends BaseDAOImpl<T> implements BaseDao<T>, Serializable{
 
+	private static final long serialVersionUID = -3066284710854840911L;
 	@Inject
 	protected MessageProvider messageProvider;
 	

@@ -6,6 +6,8 @@ import br.com.belaAgenda.model.sys.Usuario;
 
 class UsuarioDaoImpl extends ChaveValorDaoImpl<Usuario> implements UsuarioDao {
 	
+	private static final long serialVersionUID = 7014193426943195000L;
+
 	@Override
 	protected Usuario consist(Usuario entity) {
 		String login = this.<String>findFieldForProperties("login", "login,id!=", entity.getLogin(), entity.getId());

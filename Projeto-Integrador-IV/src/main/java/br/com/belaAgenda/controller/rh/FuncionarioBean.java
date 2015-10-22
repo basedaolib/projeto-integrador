@@ -7,7 +7,6 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import org.primefaces.context.RequestContext;
 import org.primefaces.event.SelectEvent;
 
 import br.com.belaAgenda.business.rh.FuncionarioBusiness;
@@ -84,9 +83,6 @@ public class FuncionarioBean extends BaseBean {
 		}
 	}
 	
-	public void openSearch(){
-		RequestContext.getCurrentInstance().openDialog("/pages/svc/servicoSearch.xhtml");
-	}
 	
 	public void remover(Servico servico){
 		funcionario.getServicos().remove(servico);

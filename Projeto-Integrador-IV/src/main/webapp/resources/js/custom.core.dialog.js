@@ -109,9 +109,9 @@ PrimeFaces.dialog.DialogHandler = {
         var dlg = $(document.body).children('div.ui-dialog').filter(function() {
             return $(this).data('pfdlgcid') === cfg.pfdlgcid;
         }),
-        dlgWidget = PF(dlg.data('widgetvar')),
-        sourceWidget = dlgWidget.cfg.sourceWidget,
-        sourceComponentId = dlgWidget.cfg.sourceComponentId,
+        dlgWidget = PF(dlg.data('widgetvar'));
+        sourceWidget = dlgWidget.cfg.sourceWidget;
+        sourceComponentId = dlgWidget.cfg.sourceComponentId;
         dialogReturnBehavior = null;
 
         if(sourceWidget && sourceWidget.cfg.behaviors) {

@@ -2,7 +2,7 @@ package br.com.belaAgenda.controller.svc;
 
 import java.util.List;
 
-import javax.faces.bean.ViewScoped;
+import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -12,9 +12,10 @@ import br.com.belaAgenda.business.svc.ServicoBusiness;
 import br.com.belaAgenda.infra.base.controller.BaseBean;
 import br.com.belaAgenda.infra.base.model.type.EstadoEntidade;
 import br.com.belaAgenda.model.svc.Servico;
+
  @Named
  @ViewScoped
-public class ServicoSearch extends BaseBean {
+public class ServicoSearchBean extends BaseBean {
 	private static final long serialVersionUID = -6805305359830905268L;
 
 	private List<Servico> servicos;
@@ -36,6 +37,10 @@ public class ServicoSearch extends BaseBean {
 			}
 		}finally{}
 		servicos = servicoBusiness.findEntitiesForProperties(0, 0, "nome", "nome+,estado", pesquisa + "%", EstadoEntidade.Ativo);
+	}
+	
+	public void openSearch(){
+		RequestContext.getCurrentInstance().openDialog("/pages/svc/servicoSearch.xhtml");
 	}
 	
 	public void selecionar(Servico servico){

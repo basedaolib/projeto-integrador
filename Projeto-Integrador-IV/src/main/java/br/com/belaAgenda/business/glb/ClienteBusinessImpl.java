@@ -6,5 +6,7 @@ import br.com.belaAgenda.model.glb.Cliente;
 
 
 class ClienteBusinessImpl extends BaseBusinessImpl<Cliente, ClienteDao> implements ClienteBusiness {
+
+	private static final long serialVersionUID = -156081890060175858L;
 	
 }

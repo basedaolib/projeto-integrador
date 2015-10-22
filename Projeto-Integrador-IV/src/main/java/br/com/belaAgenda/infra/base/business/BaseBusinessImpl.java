@@ -1,5 +1,6 @@
 package br.com.belaAgenda.infra.base.business;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -9,8 +10,10 @@ import br.com.belaAgenda.infra.base.model.EntityId;
 import br.com.belaAgenda.infra.resourceBundle.MessageProvider;
 
 @SuppressWarnings("rawtypes")
-public abstract class BaseBusinessImpl<T extends EntityId, D extends BaseDao> implements BaseBusiness<T>{
-	
+public abstract class BaseBusinessImpl<T extends EntityId, D extends BaseDao> implements BaseBusiness<T>, Serializable{
+
+	private static final long serialVersionUID = -8429004020315675875L;
+
 	@Inject
 	protected D dao;
 	

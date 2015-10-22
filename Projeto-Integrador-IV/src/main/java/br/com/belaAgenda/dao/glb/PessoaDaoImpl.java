@@ -6,6 +6,8 @@ import br.com.belaAgenda.model.glb.Pessoa;
 
 public class PessoaDaoImpl<T extends Pessoa> extends ChaveValorDaoImpl<T> implements PessoaDao<T>{
 	
+	private static final long serialVersionUID = 2422108002556413034L;
+
 	@Override
 	protected T consist(T entity) {
 		validarCPF(entity);

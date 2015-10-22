@@ -1,6 +1,7 @@
 
 package br.com.belaAgenda.infra.util;
 
+import java.io.Serializable;
 import java.lang.reflect.Modifier;
 
 import javax.annotation.Priority;
@@ -13,8 +14,9 @@ import javax.interceptor.InvocationContext;
 import javax.persistence.EntityManager;
 
 @Interceptor @Transactional @Priority(Interceptor.Priority.APPLICATION)
-public class NamedInterceptor {
+public class NamedInterceptor implements Serializable{
 	
+	private static final long serialVersionUID = -7994877557421884197L;
 	@Inject
 	private EntityManager en;
 	
