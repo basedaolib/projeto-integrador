@@ -37,7 +37,4 @@ public class IndexBean extends BaseBean {
 	public void setPage(String page) {
 		this.page = page;
 	}
-	
-	
-
 }

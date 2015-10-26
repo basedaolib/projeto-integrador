@@ -21,9 +21,6 @@
        		
     <script>
        function complete() {
-  			$(".ui-dialog-content").css("overflow", "hidden");
-  			$("iframe").css("overflow", "hidden");
-  			$("iframe").attr("scrolling", "no");
   			$("html").css("cursor", "Default");
   		}
 	</script>
@@ -34,7 +31,7 @@
 </h:head>
   <h:body>
   		<h:form>
-  		<p:ajaxStatus onstart='$("html").css("cursor", "Wait");' oncomplete="complete()"/>
+  		
 	  		<p:menubar>
 	  			<p:submenu label="#{indexLabels.cadastro}" icon="ui-icon-document">
 	  				 <p:menuitem value="#{indexLabels.cadastroUsuario}"
@@ -42,7 +39,7 @@
 	  				 			 actionListener='#{indexBean.opem("/pages/sys/usuario.xhtml", indexLabels.cadastroUsuario, 800, 450)}'/>
 	  				 
 	  				 <p:menuitem value="#{indexLabels.cadastroFuncionario}"
-	  				 			 actionListener='#{indexBean.opem("/pages/rh/funcionario.xhtml", indexLabels.cadastroFuncionario, 800, 600)}'/>
+	  				 			 actionListener='#{indexBean.setPage("/pages/rh/funcionario.xhtml")}' update="conteudo"/>
 	  				 
 	  				 <p:menuitem value="#{indexLabels.cadastroCliente}"
 	  				 			 actionListener='#{indexBean.opem("/pages/glb/cliente.xhtml", indexLabels.cadastroCliente, 800, 600)}'/>
@@ -52,8 +49,12 @@
 	  			</p:submenu>
 	  		</p:menubar>
 	  		
+	  		<h:panelGroup id="conteudo">
+	  		   <ui:include src='#{indexBean.page}'/>
+	  		</h:panelGroup> 
 	  		
 	  </h:form>
+	  
 	  	 
   </h:body>
 </html>

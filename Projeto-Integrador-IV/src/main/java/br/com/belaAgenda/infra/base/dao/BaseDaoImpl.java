@@ -4,10 +4,10 @@ import java.io.Serializable;
 
 import javax.inject.Inject;
 
-import br.com.baseDAOLib.DAO.BaseDAOImpl;
 import br.com.belaAgenda.infra.base.model.EntityId;
 import br.com.belaAgenda.infra.base.model.type.EstadoEntidade;
 import br.com.belaAgenda.infra.resourceBundle.MessageProvider;
+import br.com.generic.dao.BaseDAOImpl;
 
 public class BaseDaoImpl<T extends EntityId> extends BaseDAOImpl<T> implements BaseDao<T>, Serializable{
 

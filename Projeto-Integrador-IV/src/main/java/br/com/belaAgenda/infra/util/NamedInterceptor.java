@@ -17,6 +17,7 @@ import javax.persistence.EntityManager;
 public class NamedInterceptor implements Serializable{
 	
 	private static final long serialVersionUID = -7994877557421884197L;
+	
 	@Inject
 	private EntityManager en;
 	
