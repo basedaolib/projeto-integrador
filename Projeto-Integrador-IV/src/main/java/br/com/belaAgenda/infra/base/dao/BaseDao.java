@@ -1,9 +1,9 @@
 package br.com.belaAgenda.infra.base.dao;
 
 import br.com.belaAgenda.infra.base.model.EntityId;
-import br.com.generic.dao.BaseDAO;
+import br.com.generic.dao.GenericDAO;
 
-public interface BaseDao<T extends EntityId> extends BaseDAO<T> {
+public interface BaseDao<T extends EntityId> extends GenericDAO<T> {
 
 	public T save(T entity);
 	public T inativar(T entity);

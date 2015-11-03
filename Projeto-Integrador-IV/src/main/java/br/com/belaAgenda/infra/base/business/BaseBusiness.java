@@ -3,6 +3,10 @@ package br.com.belaAgenda.infra.base.business;
 import java.util.List;
 
 import br.com.belaAgenda.infra.base.model.EntityId;
+import br.com.generic.dao.WhereBuilder;
+import br.com.generic.dao.WhereEntityBuilder;
+import br.com.generic.dao.WhereEntityListBuilder;
+import br.com.generic.dao.WhereListBuilder;
 
 public interface BaseBusiness<T extends EntityId>{
 	
@@ -18,19 +22,18 @@ public interface BaseBusiness<T extends EntityId>{
 
 	public T disassociate(T entity);
 
-	public T findEntityForId(long id);
+	public T findEntityById(long id);
+
+    public List<T> list(int beginning, int end, String order);
+
+	public WhereEntityListBuilder<T> listEntities();
+
+	public WhereEntityBuilder<T> searchEntity();
+
+    public <E> WhereListBuilder<T, E> listProperties(String field);
+
+    public<E> WhereBuilder<T, E> searchProperty(String field);
+
 	
-	public List<T> list(int beginning, int end, String order);
-
-	public List<T> findEntitiesForProperties(int beginning, int end, String order, String names, Object... values);
-
-	public T findEntityForProperties(String names, Object... values);
-
-	public <E> List<E> findFieldsForProperties(int beginning, int end, String order, String field, String names,
-			Object... values);
-
-	public <E> E findFieldForProperties(String field, String names, Object... values);
-	
-	public String getMessage(String key);
 
 }

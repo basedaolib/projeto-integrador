@@ -11,7 +11,9 @@ import org.primefaces.context.RequestContext;
 import br.com.belaAgenda.business.svc.ServicoBusiness;
 import br.com.belaAgenda.infra.base.controller.BaseBean;
 import br.com.belaAgenda.infra.base.model.type.EstadoEntidade;
+import br.com.belaAgenda.model.rh.Funcionario;
 import br.com.belaAgenda.model.svc.Servico;
+import br.com.generic.dao.WhereEntityListBuilder;
 
  @Named
  @ViewScoped
@@ -28,15 +30,20 @@ public class ServicoSearchBean extends BaseBean {
 	public void pesquisar(){
 		String codigoS;
 		Long codigo;
+		WhereEntityListBuilder<Servico> servicoWhere = servicoBusiness.listEntities();
 		try{
 			if(pesquisa!= null && pesquisa.startsWith(",")){
 					codigoS = pesquisa.replace(",", "");
 					codigo = Long.parseLong(codigoS);
-					servicos = servicoBusiness.findEntitiesForProperties(0, 0, "codigo", "codigo,estado", codigo, EstadoEntidade.Ativo);
+					servicos = servicoWhere.sortBy("codigo")
+							.equal("codigo", codigo)
+							.list();
 					return;
 			}
 		}finally{}
-		servicos = servicoBusiness.findEntitiesForProperties(0, 0, "nome", "nome+,estado", pesquisa + "%", EstadoEntidade.Ativo);
+		servicos = servicoWhere.sortBy("nome")
+				.like("nome", pesquisa + "%")
+				.list();
 	}
 	
 	public void openSearch(){

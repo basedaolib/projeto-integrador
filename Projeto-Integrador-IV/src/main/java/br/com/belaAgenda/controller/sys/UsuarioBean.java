@@ -10,8 +10,10 @@ import javax.inject.Named;
 import br.com.belaAgenda.business.sys.UsuarioBusiness;
 import br.com.belaAgenda.infra.base.controller.BaseBean;
 import br.com.belaAgenda.infra.base.model.type.EstadoEntidade;
+import br.com.belaAgenda.model.rh.Funcionario;
 import br.com.belaAgenda.model.sys.Usuario;
 import br.com.belaAgenda.model.sys.types.NivelUsuario;
+import br.com.generic.dao.WhereEntityListBuilder;
 
 @Named
 @ViewScoped
@@ -54,15 +56,22 @@ public class UsuarioBean extends BaseBean{
 	public void pesquisar(){
 		String codigoS;
 		Long codigo;
+		WhereEntityListBuilder<Usuario> usuarioWhere = usuarioBusiness.listEntities();
 		try{
 			if(pesquisa!= null && pesquisa.startsWith(",")){
 					codigoS = pesquisa.replace(",", "");
 					codigo = Long.parseLong(codigoS);
-				usuarios = usuarioBusiness.findEntitiesForProperties(0, 0, "codigo", "codigo,estado", codigo, estado);
-				return;
-				}
+					usuarios = usuarioWhere.sortBy("codigo")
+							.equal("codigo", codigo)
+							.equal("estado", estado)
+							.list();
+					return;
+			}
 		}finally{}
-		usuarios = usuarioBusiness.findEntitiesForProperties(0, 0, "nome", "nome+,estado", pesquisa + "%", estado);
+		usuarios = usuarioWhere.sortBy("nome")
+				.like("nome", pesquisa + "%")
+				.equal("estado", estado)
+				.list();
 	}
 	
 	public void editar(Usuario usuario){

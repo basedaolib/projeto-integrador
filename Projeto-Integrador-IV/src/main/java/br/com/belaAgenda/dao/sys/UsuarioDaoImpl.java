@@ -10,7 +10,10 @@ class UsuarioDaoImpl extends ChaveValorDaoImpl<Usuario> implements UsuarioDao {
 
 	@Override
 	protected Usuario consist(Usuario entity) {
-		String login = this.<String>findFieldForProperties("login", "login,id!=", entity.getLogin(), entity.getId());
+		String login = this.<String>searchProperty("login")
+				.equal("login", entity.getLogin())
+				.notEqual("id", entity.getId())
+				.search();
 		
 		if(login != null){
 			throw new UsuarioDaoException(getMessage("usuarioDao.oLonginNaoPodeRepetir"));

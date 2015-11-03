@@ -28,7 +28,10 @@ public class AppAuthorizingRealm extends AuthorizingRealm {
 	@Override
 	protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
 		String login = (String) principals.fromRealm(getName()).iterator().next();
-		Usuario usuario = usuarioBusiness.findEntityForProperties("login,estado", login, EstadoEntidade.Ativo);
+		Usuario usuario = usuarioBusiness.searchEntity()
+				.equal("login", login)
+				.equal("estado", EstadoEntidade.Ativo)
+				.search();
 		if(usuario != null) {
 			SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
 			Set<String> roles = new HashSet<String>();
@@ -43,9 +46,10 @@ public class AppAuthorizingRealm extends AuthorizingRealm {
 	protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
 		UsernamePasswordToken usernamePasswordToken =(UsernamePasswordToken) token;
 		
-		Usuario usuario = usuarioBusiness.findEntityForProperties("login", usernamePasswordToken.getUsername());
+		Usuario usuario = usuarioBusiness.searchEntity()
+				.equal("login", usernamePasswordToken.getUsername())
+				.search();
 		
- 
         if(usuario != null) {
              AuthenticationInfo info = new  SimpleAuthenticationInfo(usuario.getLogin(), usuario.getSenha(),getName());
              SimpleCredentialsMatcher cmatcher = new SimpleCredentialsMatcher();

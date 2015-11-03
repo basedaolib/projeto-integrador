@@ -16,8 +16,10 @@ public class PessoaDaoImpl<T extends Pessoa> extends ChaveValorDaoImpl<T> implem
 	}
 	
 	private void validarCPF(T entity){
-		String nome = this.<String>findFieldForProperties("nome", "pessoaFisica.cpf,id!=", 
-				entity.getPessoaFisica().getCpf(), entity.getId());
+		String nome = this.<String>searchProperty("nome")
+				.equal("pessoaFisica.cpf", entity.getPessoaFisica().getCpf())
+				.notEqual("id", entity.getId())
+				.search();
 		
 		if(nome != null){
 			throw new PessoaDaoException(getMessage("pessoaDao.cpfJaCadastrado"));
@@ -25,8 +27,11 @@ public class PessoaDaoImpl<T extends Pessoa> extends ChaveValorDaoImpl<T> implem
 	}
 	
 	private void validarRG(T entity){
-		String nome = this.<String>findFieldForProperties("nome", "pessoaFisica.rg,pessoaFisica.orgaoExpedidor,id!=", 
-				entity.getPessoaFisica().getCpf(), entity.getPessoaFisica().getOrgaoExpedidor() ,entity.getId());
+		String nome = this.<String>searchProperty("nome")
+				.equal("pessoaFisica.rg", entity.getPessoaFisica().getRg())
+				.equal("pessoaFisica.orgaoExpedidor", entity.getPessoaFisica().getOrgaoExpedidor())
+				.notEqual("id", entity.getId())
+				.search();
 		
 		if(nome != null){
 			throw new PessoaDaoException(getMessage("pessoaDao.rgJaCadastrado"));

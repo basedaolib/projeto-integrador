@@ -3,13 +3,14 @@ package br.com.belaAgenda.infra.base.dao;
 import java.io.Serializable;
 
 import javax.inject.Inject;
+import javax.persistence.EntityManager;
 
 import br.com.belaAgenda.infra.base.model.EntityId;
 import br.com.belaAgenda.infra.base.model.type.EstadoEntidade;
 import br.com.belaAgenda.infra.resourceBundle.MessageProvider;
-import br.com.generic.dao.BaseDAOImpl;
+import br.com.generic.dao.GenericDAOImpl;
 
-public class BaseDaoImpl<T extends EntityId> extends BaseDAOImpl<T> implements BaseDao<T>, Serializable{
+public class BaseDaoImpl<T extends EntityId> extends GenericDAOImpl<T> implements BaseDao<T>, Serializable{
 
 	private static final long serialVersionUID = -3066284710854840911L;
 	@Inject
@@ -62,5 +63,11 @@ public class BaseDaoImpl<T extends EntityId> extends BaseDAOImpl<T> implements B
 	}
 	protected T  depoisInativar(T entity){ 
 		return entity;
+	}
+	
+	@Override
+	@Inject
+	public void setEntityManager(EntityManager manager) {
+		super.setEntityManager(manager);
 	}
 }

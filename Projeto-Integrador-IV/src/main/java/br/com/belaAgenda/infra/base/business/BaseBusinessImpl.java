@@ -8,6 +8,10 @@ import javax.inject.Inject;
 import br.com.belaAgenda.infra.base.dao.BaseDao;
 import br.com.belaAgenda.infra.base.model.EntityId;
 import br.com.belaAgenda.infra.resourceBundle.MessageProvider;
+import br.com.generic.dao.WhereBuilder;
+import br.com.generic.dao.WhereEntityBuilder;
+import br.com.generic.dao.WhereEntityListBuilder;
+import br.com.generic.dao.WhereListBuilder;
 
 @SuppressWarnings("rawtypes")
 public abstract class BaseBusinessImpl<T extends EntityId, D extends BaseDao> implements BaseBusiness<T>, Serializable{
@@ -55,8 +59,8 @@ public abstract class BaseBusinessImpl<T extends EntityId, D extends BaseDao> im
 	}
 
 	@SuppressWarnings("unchecked")
-	public T findEntityForId(long id) {
-		return (T) dao.findEntityForId(id);
+	public T findEntityById(long id) {
+		return (T) dao.findEntityById(id);
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -64,24 +68,29 @@ public abstract class BaseBusinessImpl<T extends EntityId, D extends BaseDao> im
 		return dao.list(beginning, end, order);
 	}
 
+	@Override
 	@SuppressWarnings("unchecked")
-	public List<T> findEntitiesForProperties(int beginning, int end, String order, String names, Object... values) {
-		return dao.findEntitiesForProperties(beginning, end, order, names, values);
+	public WhereEntityListBuilder<T> listEntities() {
+		return dao.listEntities();
 	}
 
+	@Override
 	@SuppressWarnings("unchecked")
-	public T findEntityForProperties(String names, Object... values) {
-		return (T) dao.findEntityForProperties(names, values);
+	public WhereEntityBuilder<T> searchEntity() {
+		return dao.searchEntity();
 	}
 
+	@Override
 	@SuppressWarnings("unchecked")
-	public <E> List<E> findFieldsForProperties(int beginning, int end, String order, String field, String names,
-			Object... values) {
-		return dao.findFieldsForProperties(beginning, end, order, field, names, values);
+	public <E> WhereListBuilder<T, E> listProperties(String field) {
+		return dao.listProperties(field);
 	}
 
+	@Override
 	@SuppressWarnings("unchecked")
-	public <E> E findFieldForProperties(String field, String names, Object... values) {
-		return (E) dao.findFieldForProperties(field, names, values);
+	public <E> WhereBuilder<T, E> searchProperty(String field) {
+		return dao.searchProperty(field);
 	}
+
+	
 }

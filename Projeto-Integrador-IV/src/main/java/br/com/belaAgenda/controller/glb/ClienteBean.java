@@ -14,6 +14,7 @@ import br.com.belaAgenda.model.glb.types.EstadoCivil;
 import br.com.belaAgenda.model.glb.types.OrgaoExpedidorRG;
 import br.com.belaAgenda.model.glb.types.Sexo;
 import br.com.belaAgenda.model.glb.types.UnidadeFederacao;
+import br.com.generic.dao.WhereEntityListBuilder;
 import br.com.belaAgenda.model.glb.Cliente;
 
 @Named
@@ -57,15 +58,22 @@ public class ClienteBean extends BaseBean {
 	public void pesquisar(){
 		String codigoS;
 		Long codigo;
+		WhereEntityListBuilder<Cliente> clienteWhere = clienteBusiness.listEntities();
 		try{
 			if(pesquisa!= null && pesquisa.startsWith(",")){
 					codigoS = pesquisa.replace(",", "");
 					codigo = Long.parseLong(codigoS);
-					clientes = clienteBusiness.findEntitiesForProperties(0, 0, "codigo", "codigo,estado", codigo, estado);
+					clientes = clienteWhere.sortBy("codigo")
+							.equal("codigo", codigo)
+							.equal("estado", estado)
+							.list();
 					return;
 			}
 		}finally{}
-		clientes = clienteBusiness.findEntitiesForProperties(0, 0, "nome", "nome+,estado", pesquisa + "%", estado);
+		clientes = clienteWhere.sortBy("nome")
+				.like("nome", pesquisa + "%")
+				.equal("estado", estado)
+				.list();
 	}
 	
 	public void editar(Cliente cliente){
