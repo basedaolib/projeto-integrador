@@ -13,7 +13,7 @@
 					columnClasses="ui-grid-col-10,ui-grid-col-2,ui-grid-col-2,ui-grid-col-2"
 					layout="grid" styleClass="ui-panelgrid-blank">
 
-					<p:inputText value="#{clienteBean.pesquisa}"/>
+					<p:inputText value="#{clienteBean.pesquisa}" />
 
 
 					<p:selectOneRadio id="console" value="#{clienteBean.estado}">
@@ -72,7 +72,7 @@
 			height="530" showEffect="explode" responsive="true">
 
 			<h:form id="cadastro">
-
+				<p:messages id="mensagens"></p:messages>
 				<p:tabView>
 					<p:tab title="#{global.dadosGerais}">
 						<h:panelGrid columns="1" cellspacing="5">

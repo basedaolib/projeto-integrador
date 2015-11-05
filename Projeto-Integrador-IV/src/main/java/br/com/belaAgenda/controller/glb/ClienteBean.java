@@ -45,7 +45,7 @@ public class ClienteBean extends BaseBean {
 	public void salvar(){
 		this.cliente = clienteBusiness.save(this.cliente);
 		
-		addMessage(null, FacesMessage.SEVERITY_INFO ,getMessage("clienteBean.clienteSalvo"), null);
+		addMessage("mensagem", FacesMessage.SEVERITY_INFO ,getMessage("clienteBean.clienteSalvo"), null);
 		clientes.add(cliente);
 	}
 	

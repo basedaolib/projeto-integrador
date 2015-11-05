@@ -11,7 +11,7 @@
 					columnClasses="ui-grid-col-10,ui-grid-col-2,ui-grid-col-2,ui-grid-col-2"
 					layout="grid" styleClass="ui-panelgrid-blank">
 
-					<p:inputText value="#{funcionarioBean.pesquisa}"/>
+					<p:inputText value="#{funcionarioBean.pesquisa}" />
 
 
 					<p:selectOneRadio id="console" value="#{funcionarioBean.estado}">
@@ -48,14 +48,20 @@
 				</p:column>
 
 				<p:column headerText="#{global.opcoes}" width="20%">
-					<p:commandButton icon="ui-icon-pencil"
-						actionListener="#{funcionarioBean.editar(item)}"
-						update="root:formPopUp" oncomplete="PF('formPopUp').show();">
-					</p:commandButton>
-					<p:commandButton icon="ui-icon-copy"
-						actionListener="#{funcionarioBean.clonar(item)}"
-						update="root:formPopUp" oncomplete="PF('formPopUp').show();">
-					</p:commandButton>
+					<div class="ui-fluid">
+						<p:panelGrid columns="4"
+							columnClasses="ui-grid-col-10,ui-grid-col-10"
+							layout="grid" styleClass="ui-panelgrid-blank">
+							<p:commandButton icon="ui-icon-pencil"
+								actionListener="#{funcionarioBean.editar(item)}"
+								update="root:formPopUp" oncomplete="PF('formPopUp').show();">
+							</p:commandButton>
+							<p:commandButton icon="ui-icon-copy"
+								actionListener="#{funcionarioBean.clonar(item)}"
+								update="root:formPopUp" oncomplete="PF('formPopUp').show();">
+							</p:commandButton>
+						</p:panelGrid>
+					</div>
 				</p:column>
 
 			</p:dataTable>
@@ -66,7 +72,7 @@
 			height="530" showEffect="explode" responsive="true">
 
 			<h:form id="cadastro">
-
+				<p:messages id="mensagens"></p:messages>
 				<p:tabView id="tabs">
 					<p:tab title="#{global.dadosGerais}">
 						<h:panelGrid columns="1" cellspacing="5">
@@ -231,38 +237,37 @@
 					</p:tab>
 					<p:tab title="#{funcionarioLabels.comperencias}"
 						id="tabComperencias">
-						<h:form id="formComperencias">
-							<h:panelGrid columns="2" cellpadding="10">
-								<p:dataTable var="item"
-									value="#{funcionarioBean.funcionario.servicos}" layout="grid"
-									paginator="true" id="servicosDatagrid"
-									paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-									rows="10">
+						<h:panelGrid columns="2" cellpadding="10">
+							<p:dataTable var="item"
+								value="#{funcionarioBean.funcionario.servicos}" layout="grid"
+								paginator="true" id="servicosDatagrid"
+								paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+								rows="10">
 
-									<p:column headerText="#{global.codigo}" width="10%">
-										<h:outputText value="#{item.codigo}" dir="rtl" />
-									</p:column>
+								<p:column headerText="#{global.codigo}" width="10%">
+									<h:outputText value="#{item.codigo}" dir="rtl" />
+								</p:column>
 
-									<p:column headerText="#{global.nome}" width="50%">
-										<h:outputText value="#{item.nome}" />
-									</p:column>
+								<p:column headerText="#{global.nome}" width="70%">
+									<h:outputText value="#{item.nome}" />
+								</p:column>
 
-									<p:column headerText="#{global.opcoes}" width="20%">
-										<p:commandButton
-											actionListener="#{funcionarioBean.remover(item)}" />
-									</p:column>
+								<p:column headerText="#{global.opcoes}" width="15%">
+									<p:commandButton icon="ui-icon-cancel" process="@this"
+										update="servicosDatagrid"
+										actionListener="#{funcionarioBean.remover(item)}" />
+								</p:column>
 
-								</p:dataTable>
+							</p:dataTable>
 
-								<p:commandButton value="#{global.adicionar}" process="@this"
-									actionListener="#{servicoSearchBean.openSearch}">
-									<p:ajax event="dialogReturn"
-										listener="#{funcionarioBean.onServicosChosen(event)}"
-										update="servicosDatagrid" process="@this" />
+							<p:commandButton icon="ui-icon-plus" process="@this"
+								actionListener="#{servicoSearchBean.openSearch}">
+								<p:ajax event="dialogReturn"
+									listener="#{funcionarioBean.onServicosChosen}"
+									update="servicosDatagrid" process="@this" />
 
-								</p:commandButton>
-							</h:panelGrid>
-						</h:form>
+							</p:commandButton>
+						</h:panelGrid>
 					</p:tab>
 				</p:tabView>
 

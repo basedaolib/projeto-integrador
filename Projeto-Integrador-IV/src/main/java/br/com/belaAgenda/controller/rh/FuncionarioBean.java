@@ -49,8 +49,8 @@ public class FuncionarioBean extends BaseBean {
 	public void salvar(){
 		this.funcionario = funcionarioBusiness.save(this.funcionario);
 		
-		addMessage(null, FacesMessage.SEVERITY_INFO ,getMessage("funcionarioBean.funcionarioSalvo"), null);
 		funcionarios.add(funcionario);
+		addMessage(null, FacesMessage.SEVERITY_INFO ,getMessage("funcionarioBean.funcionarioSalvo"), null);
 	}
 	
 	public void inativar(){
