@@ -4,121 +4,128 @@
 	xmlns:f="http://xmlns.jcp.org/jsf/core"
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui">
-
-	<h:form id="root">
-		<h:form id="formDataTable">
-
-
-			<div class="ui-fluid">
-				<p:panelGrid columns="4"
-					columnClasses="ui-grid-col-10,ui-grid-col-2,ui-grid-col-2,ui-grid-col-2"
-					layout="grid" styleClass="ui-panelgrid-blank">
-
-					<p:inputText value="#{usuarioBean.pesquisa}"/>
+	<p:panel header="#{indexLabels.cadastroUsuario}">
+		<h:form id="root">
+			<h:form id="formDataTable">
 
 
-					<p:selectOneRadio id="console" value="#{usuarioBean.estado}">
-						<f:selectItems value="#{usuarioBean.estadosEntidade()}" />
-					</p:selectOneRadio>
+				<div class="ui-fluid">
+					<p:panelGrid columns="4"
+						columnClasses="ui-grid-col-10,ui-grid-col-2,ui-grid-col-2,ui-grid-col-2"
+						layout="grid" styleClass="ui-panelgrid-blank">
 
-					<p:commandButton value="#{global.pesquisar}"
-						actionListener="#{usuarioBean.pesquisar}" icon="ui-icon-search"
-						update="usuariosDatagrid" />
-
-					<p:commandButton value="#{global.novo}"
-						actionListener="#{usuarioBean.adicionar}" icon="ui-icon-plus"
-						update="root:formPopUp" oncomplete="PF('formPopUp').show();" />
-
-				</p:panelGrid>
+						<p:inputText value="#{usuarioBean.pesquisa}" />
 
 
-			</div>
+						<p:selectOneRadio id="console" value="#{usuarioBean.estado}">
+							<f:selectItems value="#{usuarioBean.estadosEntidade()}" />
+						</p:selectOneRadio>
 
-			<p:dataTable var="item" value="#{usuarioBean.usuarios}" layout="grid"
-				paginator="true" id="usuariosDatagrid"
-				paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-				rows="10">
+						<p:commandButton value="#{global.pesquisar}"
+							actionListener="#{usuarioBean.pesquisar}" icon="ui-icon-search"
+							update="usuariosDatagrid" />
 
-				<p:column headerText="#{global.codigo}" width="10%">
-					<h:outputText value="#{item.codigo}" dir="rtl" />
-				</p:column>
+						<p:commandButton value="#{global.novo}"
+							actionListener="#{usuarioBean.adicionar}" icon="ui-icon-plus"
+							update="root:formPopUp" oncomplete="PF('formPopUp').show();" />
 
-				<p:column headerText="#{global.nome}" width="50%">
-					<h:outputText value="#{item.nome}" />
-				</p:column>
-
-				<p:column headerText="#{usuarioLabels.login}" width="40%">
-					<h:outputText value="#{item.login}" />
-				</p:column>
-
-				<p:column headerText="#{global.opcoes}" width="20%">
-					<p:commandButton icon="ui-icon-pencil"
-						actionListener="#{usuarioBean.editar(item)}"
-						update="root:formPopUp" oncomplete="PF('formPopUp').show();">
-					</p:commandButton>
-					<p:commandButton icon="ui-icon-copy"
-						actionListener="#{usuarioBean.clonar(item)}"
-						update="root:formPopUp" oncomplete="PF('formPopUp').show();">
-					</p:commandButton>
-				</p:column>
-
-			</p:dataTable>
-
-		</h:form>
-		<p:dialog header="#{usuarioBean.obterTituloCadastro()}"
-			widgetVar="formPopUp" id="formPopUp" modal="true"
-			showEffect="explode" responsive="true">
-
-			<h:form id="cadastro">
-
-				<p:messages autoUpdate="true"></p:messages>
-
-				<h:panelGrid columns="1">
-
-					<p:outputLabel value="#{global.codigo}" />
-					<p:inputText id="codigoInput" value="#{usuarioBean.usuario.codigo}"
-						disabled="true" />
-					<p:message for="codigoInput" />
-
-					<p:outputLabel value="#{global.nome}" />
-					<p:inputText id="nomeInput" value="#{usuarioBean.usuario.nome}" />
-					<p:message for="nomeInput" />
-
-					<p:outputLabel value="#{usuarioLabels.login}" />
-					<p:inputText id="loginInput" value="#{usuarioBean.usuario.login}" />
-					<p:message for="loginInput" />
-
-					<p:outputLabel value="#{usuarioLabels.nivel}" />
-					<p:selectOneMenu id="nivelInput"
-						value="#{usuarioBean.usuario.nivel}">
-						<f:selectItems value="#{usuarioBean.niveisUsuario}" />
-					</p:selectOneMenu>
-					<p:message for="nivelInput" />
-
-					<p:outputLabel value="#{usuarioLabels.senha}" />
-					<p:password id="senhaImput" value="#{usuarioBean.usuario.senha}" />
-					<p:message for="senhaImput" />
-
-					<p:outputLabel value="#{usuarioLabels.confirmacaoSenha}" />
-					<p:password id="reSenhaInput"
-						value="#{usuarioBean.usuario.confirmacaoSenha}" />
-					<p:message for="reSenhaInput" />
-
-					<h:panelGrid columns="2" cellpadding="10">
-						<p:commandButton value="#{global.salvar}"
-							actionListener="#{usuarioBean.salvar()}" icon="ui-icon-disk"
-							process="cadastro" update="cadastro">
-						</p:commandButton>
+					</p:panelGrid>
 
 
-						<p:commandButton value="#{global.inativar}"
-							actionListener="#{usuarioBean.inativar()}" icon="ui-icon-cancel"
-							disabled="usuarioBean.podeInativar()" process="cadastro"
-							update="cadastro">
-						</p:commandButton>
-					</h:panelGrid>
-				</h:panelGrid>
+				</div>
+
+				<p:dataTable var="item" value="#{usuarioBean.usuarios}"
+					layout="grid" paginator="true" id="usuariosDatagrid"
+					paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+					rows="10">
+
+					<p:column headerText="#{global.codigo}" width="10%">
+						<h:outputText value="#{item.codigo}" dir="rtl" />
+					</p:column>
+
+					<p:column headerText="#{global.nome}" width="50%">
+						<h:outputText value="#{item.nome}" />
+					</p:column>
+
+					<p:column headerText="#{usuarioLabels.login}" width="40%">
+						<h:outputText value="#{item.login}" />
+					</p:column>
+
+					<p:column headerText="#{global.opcoes}" width="20%">
+						<div class="ui-fluid">
+							<p:panelGrid columns="2"
+								columnClasses="ui-grid-col-10,ui-grid-col-10" layout="grid"
+								styleClass="ui-panelgrid-blank">
+								<p:commandButton icon="ui-icon-pencil"
+									actionListener="#{usuarioBean.editar(item)}"
+									update="root:formPopUp" oncomplete="PF('formPopUp').show();">
+								</p:commandButton>
+								<p:commandButton icon="ui-icon-copy"
+									actionListener="#{usuarioBean.clonar(item)}"
+									update="root:formPopUp" oncomplete="PF('formPopUp').show();">
+								</p:commandButton>
+							</p:panelGrid>
+						</div>
+					</p:column>
+
+				</p:dataTable>
+
 			</h:form>
-		</p:dialog>
-	</h:form>
+			<p:dialog header="#{usuarioBean.obterTituloCadastro()}"
+				widgetVar="formPopUp" id="formPopUp" modal="true"
+				showEffect="explode" responsive="true">
+
+				<h:form id="cadastro">
+
+					<p:messages autoUpdate="true"></p:messages>
+
+					<h:panelGrid columns="1">
+
+						<p:outputLabel value="#{global.codigo}" />
+						<p:inputText id="codigoInput"
+							value="#{usuarioBean.usuario.codigo}" disabled="true" />
+						<p:message for="codigoInput" />
+
+						<p:outputLabel value="#{global.nome}" />
+						<p:inputText id="nomeInput" value="#{usuarioBean.usuario.nome}" />
+						<p:message for="nomeInput" />
+
+						<p:outputLabel value="#{usuarioLabels.login}" />
+						<p:inputText id="loginInput" value="#{usuarioBean.usuario.login}" />
+						<p:message for="loginInput" />
+
+						<p:outputLabel value="#{usuarioLabels.nivel}" />
+						<p:selectOneMenu id="nivelInput"
+							value="#{usuarioBean.usuario.nivel}">
+							<f:selectItems value="#{usuarioBean.niveisUsuario}" />
+						</p:selectOneMenu>
+						<p:message for="nivelInput" />
+
+						<p:outputLabel value="#{usuarioLabels.senha}" />
+						<p:password id="senhaImput" value="#{usuarioBean.usuario.senha}" />
+						<p:message for="senhaImput" />
+
+						<p:outputLabel value="#{usuarioLabels.confirmacaoSenha}" />
+						<p:password id="reSenhaInput"
+							value="#{usuarioBean.usuario.confirmacaoSenha}" />
+						<p:message for="reSenhaInput" />
+
+						<h:panelGrid columns="2" cellpadding="10">
+							<p:commandButton value="#{global.salvar}"
+								actionListener="#{usuarioBean.salvar()}" icon="ui-icon-disk"
+								process="cadastro" update="cadastro">
+							</p:commandButton>
+
+
+							<p:commandButton value="#{global.inativar}"
+								actionListener="#{usuarioBean.inativar()}" icon="ui-icon-cancel"
+								disabled="usuarioBean.podeInativar()" process="cadastro"
+								update="cadastro">
+							</p:commandButton>
+						</h:panelGrid>
+					</h:panelGrid>
+				</h:form>
+			</p:dialog>
+		</h:form>
+	</p:panel>
 </ui:composition>

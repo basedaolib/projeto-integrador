@@ -8,10 +8,10 @@ import javax.inject.Inject;
 import br.com.belaAgenda.infra.base.dao.BaseDao;
 import br.com.belaAgenda.infra.base.model.EntityId;
 import br.com.belaAgenda.infra.resourceBundle.MessageProvider;
-import br.com.generic.dao.WhereBuilder;
-import br.com.generic.dao.WhereEntityBuilder;
-import br.com.generic.dao.WhereEntityListBuilder;
-import br.com.generic.dao.WhereListBuilder;
+import br.com.generic.dao.SearchEntityListBuilder;
+import br.com.generic.dao.SearchBuilder;
+import br.com.generic.dao.SearchEntityBuilder;
+import br.com.generic.dao.SearchListBuilder;
 
 @SuppressWarnings("rawtypes")
 public abstract class BaseBusinessImpl<T extends EntityId, D extends BaseDao> implements BaseBusiness<T>, Serializable{
@@ -70,25 +70,25 @@ public abstract class BaseBusinessImpl<T extends EntityId, D extends BaseDao> im
 
 	@Override
 	@SuppressWarnings("unchecked")
-	public WhereEntityListBuilder<T> listEntities() {
+	public SearchEntityListBuilder<T> listEntities() {
 		return dao.listEntities();
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
-	public WhereEntityBuilder<T> searchEntity() {
+	public SearchEntityBuilder<T> searchEntity() {
 		return dao.searchEntity();
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
-	public <E> WhereListBuilder<T, E> listProperties(String field) {
+	public <E> SearchListBuilder<T, E> listProperties(String field) {
 		return dao.listProperties(field);
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
-	public <E> WhereBuilder<T, E> searchProperty(String field) {
+	public <E> SearchBuilder<T, E> searchProperty(String field) {
 		return dao.searchProperty(field);
 	}
 

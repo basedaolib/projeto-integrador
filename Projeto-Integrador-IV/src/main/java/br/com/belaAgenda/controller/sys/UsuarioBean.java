@@ -10,10 +10,9 @@ import javax.inject.Named;
 import br.com.belaAgenda.business.sys.UsuarioBusiness;
 import br.com.belaAgenda.infra.base.controller.BaseBean;
 import br.com.belaAgenda.infra.base.model.type.EstadoEntidade;
-import br.com.belaAgenda.model.rh.Funcionario;
 import br.com.belaAgenda.model.sys.Usuario;
 import br.com.belaAgenda.model.sys.types.NivelUsuario;
-import br.com.generic.dao.WhereEntityListBuilder;
+import br.com.generic.dao.SearchEntityListBuilder;
 
 @Named
 @ViewScoped
@@ -56,7 +55,7 @@ public class UsuarioBean extends BaseBean{
 	public void pesquisar(){
 		String codigoS;
 		Long codigo;
-		WhereEntityListBuilder<Usuario> usuarioWhere = usuarioBusiness.listEntities();
+		SearchEntityListBuilder<Usuario> usuarioWhere = usuarioBusiness.listEntities();
 		try{
 			if(pesquisa!= null && pesquisa.startsWith(",")){
 					codigoS = pesquisa.replace(",", "");

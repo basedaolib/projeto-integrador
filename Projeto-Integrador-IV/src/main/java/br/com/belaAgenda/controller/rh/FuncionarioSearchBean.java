@@ -1,4 +1,4 @@
-package br.com.belaAgenda.controller.svc;
+package br.com.belaAgenda.controller.rh;
 
 import java.util.List;
 
@@ -8,56 +8,56 @@ import javax.inject.Named;
 
 import org.primefaces.context.RequestContext;
 
-import br.com.belaAgenda.business.svc.ServicoBusiness;
+import br.com.belaAgenda.business.rh.FuncionarioBusiness;
 import br.com.belaAgenda.infra.base.controller.BaseBean;
-import br.com.belaAgenda.model.svc.Servico;
+import br.com.belaAgenda.model.rh.Funcionario;
 import br.com.generic.dao.SearchEntityListBuilder;
 
  @Named
  @ViewScoped
-public class ServicoSearchBean extends BaseBean {
+public class FuncionarioSearchBean extends BaseBean {
 	private static final long serialVersionUID = -6805305359830905268L;
 
-	private List<Servico> servicos;
+	private List<Funcionario> funcionarios;
 	
 	private String pesquisa;
 	
 	@Inject
-	private ServicoBusiness servicoBusiness;
+	private FuncionarioBusiness funcionarioBusiness;
 	
 	public void pesquisar(){
 		String codigoS;
 		Long codigo;
-		SearchEntityListBuilder<Servico> servicoWhere = servicoBusiness.listEntities();
+		SearchEntityListBuilder<Funcionario> funcionarioWhere = funcionarioBusiness.listEntities();
 		try{
 			if(pesquisa!= null && pesquisa.startsWith(",")){
 					codigoS = pesquisa.replace(",", "");
 					codigo = Long.parseLong(codigoS);
-					servicos = servicoWhere.sortBy("codigo")
+					funcionarios = funcionarioWhere.sortBy("codigo")
 							.equal("codigo", codigo)
 							.list();
 					return;
 			}
 		}finally{}
-		servicos = servicoWhere.sortBy("nome")
+		funcionarios = funcionarioWhere.sortBy("nome")
 				.like("nome", pesquisa + "%")
 				.list();
 	}
 	
 	public void openSearch(){
-		RequestContext.getCurrentInstance().openDialog("/pages/svc/servicoSearch.xhtml");
+		RequestContext.getCurrentInstance().openDialog("/pages/rh/funcionarioSearch.xhtml");
 	}
 	
-	public void selecionar(Servico servico){
-		RequestContext.getCurrentInstance().closeDialog(servico);
+	public void selecionar(Funcionario funcionario){
+		RequestContext.getCurrentInstance().closeDialog(funcionario);
 	}
 
-	public List<Servico> getServicos() {
-		return servicos;
+	public List<Funcionario> getFuncionarios() {
+		return funcionarios;
 	}
 
-	public void setServicos(List<Servico> servicos) {
-		this.servicos = servicos;
+	public void setFuncionarios(List<Funcionario> funcionarios) {
+		this.funcionarios = funcionarios;
 	}
 
 	public String getPesquisa() {

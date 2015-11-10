@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<ui:composition xmlns="http://www.w3c.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+	<p:panel header="#{indexLabels.agendamento}">
+		<h:form id="root">
+			<h:form id="formDataTable">
+
+
+				<div class="ui-fluid">
+					<p:panelGrid columns="3"
+						columnClasses="ui-grid-col-10,ui-grid-col-2,ui-grid-col-2,ui-grid-col-2"
+						layout="grid" styleClass="ui-panelgrid-blank">
+
+						<p:inputText value="#{agendamentoBean.pesquisa}" type="number" />
+
+						<p:commandButton value="#{global.pesquisar}"
+							actionListener="#{agendamentoBean.pesquisar}"
+							icon="ui-icon-search" update="agendamentosDatagrid" />
+
+						<p:commandButton value="#{global.novo}"
+							actionListener="#{agendamentoBean.adicionar}" icon="ui-icon-plus"
+							update="root:formCadastroPopUp"
+							oncomplete="PF('formCadastroPopUp').show();" />
+
+					</p:panelGrid>
+
+
+				</div>
+
+				<p:dataGrid var="item" value="#{agendamentoBean.agendamentos}"
+					paginator="true" id="agendamentosDatagrid"
+					columns="3"
+					paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+					rows="10">
+					
+					<p:panel header="#{agendamentoBean.obterTituloCadastro(item)}">
+
+						<h:panelGrid columns="2">
+
+							<p:outputLabel value="#{agendamentoLabels.cleinte}"/>
+							<p:outputLabel value="#{item.cliente.nome}" />
+							
+							<p:outputLabel value="#{agendamentoLabels.funcionario}"/>
+							<p:outputLabel value="#{item.funcionario.nome}" />
+							
+							<p:outputLabel value="#{agendamentoLabels.data}"/>
+							<p:outputLabel
+								value="#{agendamentoBean.obterDataFormatada(item.data)}" />
+							
+							<p:outputLabel value="#{agendamentoLabels.finalEstimado}"/>
+							<p:outputLabel
+								value="#{agendamentoBean.obterDataFormatada(item.finalEstimado)}" />
+
+							<p:commandButton actionListener="#{agendamentoBean.show(item)}"
+								value="#{global.show}"
+								update="formPopUp"
+								process="@this" oncomplete="PF('formPopUp').show();" />
+							<p:commandButton actionListener="#{agendamentoBean.editar(item)}"
+								value="#{global.editar}"
+								process="@this"
+								update="formCadastroPopUp"
+								oncomplete="PF('formCadastroPopUpPopUp').show();" />
+
+						</h:panelGrid>
+
+					</p:panel>
+
+				</p:dataGrid>
+
+			</h:form>
+			<p:dialog
+				header="#{agendamentoBean.obterTituloCadastro(agendamentoBean.agendamento)}"
+				widgetVar="formPopUp" id="formPopUp" modal="true"
+				showEffect="explode" responsive="true">
+
+				<h:form id="visualizar">
+
+					<p:messages autoUpdate="true"></p:messages>
+
+					<h:panelGrid columns="1">
+
+					</h:panelGrid>
+				</h:form>
+			</p:dialog>
+
+			<p:dialog
+				header="#{agendamentoBean.obterTituloCadastro(agendamentoBean.agendamento)}"
+				width="800"
+				widgetVar="formCadastroPopUp" id="formCadastroPopUp" modal="true"
+				showEffect="explode" responsive="true">
+
+				<h:form id="cadastro">
+
+					<p:messages autoUpdate="true"></p:messages>
+
+					<div class="ui-fluid">
+						<p:panelGrid columns="1"
+							columnClasses="ui-grid-col-10,ui-grid-col-2" layout="grid"
+							styleClass="ui-panelgrid-blank">
+
+							<div>
+								<p:outputLabel id="funcionarioImput"
+									value="#{agendamentoBean.agendamento.funcionario.nome}" />
+								<p:commandButton icon="ui-icon-plus" process="@this"
+									actionListener="#{funcionarioSearchBean.openSearch}">
+									<p:ajax event="dialogReturn"
+										listener="#{agendamentoBean.onFuncionarioChosen}"
+										update="funcionarioImput" process="@this" />
+
+								</p:commandButton>
+							</div>
+							<div>
+								<p:outputLabel id="clienteImput"
+									value="#{agendamentoBean.agendamento.cliente.nome}" />
+								<p:commandButton icon="ui-icon-plus" process="@this"
+									actionListener="#{clienteSearchBean.openSearch}">
+									<p:ajax event="dialogReturn"
+										listener="#{agendamentoBean.onClienteChosen}"
+										update="clienteImput" process="@this" />
+
+								</p:commandButton>
+							</div>
+
+							<p:calendar id="dataInput" mask="99/99/9999 99:99:99"
+								pattern="dd/MM/yyyy HH:mm:ss"
+								value="#{agendamentoBean.agendamento.data}"
+								converter="localDateTimeConverter" />
+							<p:message for="dataInput" />
+							<p:calendar id="finalEstimadoInput" mask="99/99/9999 99:99:99"
+								pattern="dd/MM/yyyy HH:mm:ss"
+								value="#{agendamentoBean.agendamento.finalEstimado}"
+								converter="localDateTimeConverter" />
+							<p:message for="finalEstimadoInput" />
+
+							<h:panelGrid columns="2" cellpadding="10">
+								<p:dataTable var="item"
+									value="#{agendamentoBean.agendamento.servicos}" layout="grid"
+									paginator="true" id="servicosDatagrid"
+									paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+									rows="10">
+
+									<p:column headerText="#{global.codigo}" width="10%">
+										<h:outputText value="#{item.codigo}" dir="rtl" />
+									</p:column>
+
+									<p:column headerText="#{global.nome}" width="70%">
+										<h:outputText value="#{item.nome}" />
+									</p:column>
+
+									<p:column headerText="#{global.opcoes}" width="15%">
+										<p:commandButton icon="ui-icon-cancel" process="@this"
+											update="servicosDatagrid"
+											actionListener="#{funcionarioBean.remover(item)}" />
+									</p:column>
+
+								</p:dataTable>
+
+								<p:commandButton icon="ui-icon-plus" process="@this"
+									actionListener="#{servicoSearchBean.openSearch}">
+									<p:ajax event="dialogReturn"
+										listener="#{agendamentoBean.onServicosChosen}"
+										update="servicosDatagrid" process="@this" />
+
+								</p:commandButton>
+							</h:panelGrid>
+						</p:panelGrid>
+						<p:commandButton value="#{global.salvar}"
+							actionListener="#{agendamentoBean.salvar()}" icon="ui-icon-disk"
+							process="cadastro" update="cadastro">
+						</p:commandButton>
+					</div>
+				</h:form>
+			</p:dialog>
+		</h:form>
+	</p:panel>
+</ui:composition>

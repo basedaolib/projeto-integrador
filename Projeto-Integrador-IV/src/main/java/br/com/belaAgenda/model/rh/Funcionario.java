@@ -13,7 +13,7 @@ public class Funcionario extends Pessoa {
 
 	private static final long serialVersionUID = -8193525146089076187L;
 	
-	@ManyToMany
+	@ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name="funcionario_servico", 
     		joinColumns={
     				@JoinColumn(name="funcionario_id")}, 

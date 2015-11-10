@@ -1,4 +1,4 @@
-package br.com.belaAgenda.controller.svc;
+package br.com.belaAgenda.controller.glb;
 
 import java.util.List;
 
@@ -8,56 +8,56 @@ import javax.inject.Named;
 
 import org.primefaces.context.RequestContext;
 
-import br.com.belaAgenda.business.svc.ServicoBusiness;
+import br.com.belaAgenda.business.glb.ClienteBusiness;
 import br.com.belaAgenda.infra.base.controller.BaseBean;
-import br.com.belaAgenda.model.svc.Servico;
+import br.com.belaAgenda.model.glb.Cliente;
 import br.com.generic.dao.SearchEntityListBuilder;
 
  @Named
  @ViewScoped
-public class ServicoSearchBean extends BaseBean {
+public class ClienteSearchBean extends BaseBean {
 	private static final long serialVersionUID = -6805305359830905268L;
 
-	private List<Servico> servicos;
+	private List<Cliente> clientes;
 	
 	private String pesquisa;
 	
 	@Inject
-	private ServicoBusiness servicoBusiness;
+	private ClienteBusiness clienteBusiness;
 	
 	public void pesquisar(){
 		String codigoS;
 		Long codigo;
-		SearchEntityListBuilder<Servico> servicoWhere = servicoBusiness.listEntities();
+		SearchEntityListBuilder<Cliente> clienteWhere = clienteBusiness.listEntities();
 		try{
 			if(pesquisa!= null && pesquisa.startsWith(",")){
 					codigoS = pesquisa.replace(",", "");
 					codigo = Long.parseLong(codigoS);
-					servicos = servicoWhere.sortBy("codigo")
+					clientes = clienteWhere.sortBy("codigo")
 							.equal("codigo", codigo)
 							.list();
 					return;
 			}
 		}finally{}
-		servicos = servicoWhere.sortBy("nome")
+		clientes = clienteWhere.sortBy("nome")
 				.like("nome", pesquisa + "%")
 				.list();
 	}
 	
 	public void openSearch(){
-		RequestContext.getCurrentInstance().openDialog("/pages/svc/servicoSearch.xhtml");
+		RequestContext.getCurrentInstance().openDialog("/pages/glb/clienteSearch.xhtml");
 	}
 	
-	public void selecionar(Servico servico){
-		RequestContext.getCurrentInstance().closeDialog(servico);
+	public void selecionar(Cliente cliente){
+		RequestContext.getCurrentInstance().closeDialog(cliente);
 	}
 
-	public List<Servico> getServicos() {
-		return servicos;
+	public List<Cliente> getClientes() {
+		return clientes;
 	}
 
-	public void setServicos(List<Servico> servicos) {
-		this.servicos = servicos;
+	public void setClientes(List<Cliente> clientes) {
+		this.clientes = clientes;
 	}
 
 	public String getPesquisa() {

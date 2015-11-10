@@ -47,6 +47,11 @@ body {
 							update="conteudo"
 							actionListener='#{indexBean.setPage("/pages/glb/cliente.xhtml")}' />
 					</p:submenu>
+					<p:submenu label="#{indexLabels.servico}">
+						<p:menuitem value="#{indexLabels.agendamento}"
+							actionListener='#{indexBean.setPage("/pages/svc/agendamento.xhtml")}'
+							update="conteudo" />
+					</p:submenu>
 					<p:submenu label="#{indexLabels.sistema}">
 						<p:menuitem value="#{indexLabels.sair}"
 							actionListener="#{loginBean.logOut()}" icon="ui-icon-extlink" />
@@ -54,9 +59,9 @@ body {
 				</p:menubar>
 			</h:form>
 
-			<p:panel id="conteudo">
+			<h:panelGrid id="conteudo" columns="1">
 				<ui:include src='#{indexBean.page}' />
-			</p:panel>
+			</h:panelGrid>
 		</p:panelGrid>
 	</div>
 </h:body>

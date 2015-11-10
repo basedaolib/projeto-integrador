@@ -33,11 +33,7 @@ public class OpenSessionInView implements Filter {
 			if(entityManager.getTransaction().isActive()){
 				entityManager.getTransaction().rollback();
 			}
-        }
-        if (entityManager != null && entityManager.isOpen()) {
-          	entityManager.close();
-        }
-        
+        }  
 		
 	}
 	

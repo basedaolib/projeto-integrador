@@ -2,6 +2,7 @@ package br.com.belaAgenda.infra.util;
 
 import javax.annotation.PreDestroy;
 import javax.enterprise.context.RequestScoped;
+import javax.enterprise.inject.Disposes;
 import javax.enterprise.inject.Produces;
 import javax.inject.Singleton;
 import javax.persistence.EntityManager;
@@ -23,11 +24,17 @@ public class JpaUtil {
 	public EntityManager getEntityManager(){
 		return factory.createEntityManager();
 		
-	}
+	} 
 	
 	@PreDestroy
 	private void closeFactory(){
 		factory.close();
 	}
+	
+	public void destroyEntityManager(@Disposes EntityManager em) {
+        if (em.isOpen()) {
+            em.close();
+        }
+    }
 
 }

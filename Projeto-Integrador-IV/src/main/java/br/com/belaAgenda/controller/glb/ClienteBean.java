@@ -10,12 +10,12 @@ import javax.inject.Named;
 import br.com.belaAgenda.business.glb.ClienteBusiness;
 import br.com.belaAgenda.infra.base.controller.BaseBean;
 import br.com.belaAgenda.infra.base.model.type.EstadoEntidade;
+import br.com.belaAgenda.model.glb.Cliente;
 import br.com.belaAgenda.model.glb.types.EstadoCivil;
 import br.com.belaAgenda.model.glb.types.OrgaoExpedidorRG;
 import br.com.belaAgenda.model.glb.types.Sexo;
 import br.com.belaAgenda.model.glb.types.UnidadeFederacao;
-import br.com.generic.dao.WhereEntityListBuilder;
-import br.com.belaAgenda.model.glb.Cliente;
+import br.com.generic.dao.SearchEntityListBuilder;
 
 @Named
 @ViewScoped
@@ -58,7 +58,7 @@ public class ClienteBean extends BaseBean {
 	public void pesquisar(){
 		String codigoS;
 		Long codigo;
-		WhereEntityListBuilder<Cliente> clienteWhere = clienteBusiness.listEntities();
+		SearchEntityListBuilder<Cliente> clienteWhere = clienteBusiness.listEntities();
 		try{
 			if(pesquisa!= null && pesquisa.startsWith(",")){
 					codigoS = pesquisa.replace(",", "");
