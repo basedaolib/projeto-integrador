@@ -1,9 +1,13 @@
 package br.com.belaAgenda.model.rh;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 
 import br.com.belaAgenda.model.glb.Pessoa;
 import br.com.belaAgenda.model.svc.Servico;
@@ -19,13 +23,13 @@ public class Funcionario extends Pessoa {
     				@JoinColumn(name="funcionario_id")}, 
     		inverseJoinColumns={
     				@JoinColumn(name="servico_id")})
-	private Set<Servico> servicos = new HashSet<Servico>();
+	private List<Servico> servicos = new ArrayList<>();
 
-	public Set<Servico> getServicos() {
-		return servicos == null ? new HashSet<Servico>() : servicos;
+	public List<Servico> getServicos() {
+		return servicos = servicos == null ? new ArrayList<>() : servicos;
 	}
 
-	public void setServicos(Set<Servico> servicos) {
+	public void setServicos(List<Servico> servicos) {
 		this.servicos = servicos;
 	}
 }

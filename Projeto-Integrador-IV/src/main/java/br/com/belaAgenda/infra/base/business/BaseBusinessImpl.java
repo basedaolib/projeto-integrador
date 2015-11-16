@@ -8,10 +8,13 @@ import javax.inject.Inject;
 import br.com.belaAgenda.infra.base.dao.BaseDao;
 import br.com.belaAgenda.infra.base.model.EntityId;
 import br.com.belaAgenda.infra.resourceBundle.MessageProvider;
-import br.com.generic.dao.SearchEntityListBuilder;
+import br.com.belaAgenda.infra.util.Transactional;
 import br.com.generic.dao.SearchBuilder;
 import br.com.generic.dao.SearchEntityBuilder;
+import br.com.generic.dao.SearchEntityListBuilder;
 import br.com.generic.dao.SearchListBuilder;
+
+
 
 @SuppressWarnings("rawtypes")
 public abstract class BaseBusinessImpl<T extends EntityId, D extends BaseDao> implements BaseBusiness<T>, Serializable{

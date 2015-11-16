@@ -11,16 +11,24 @@ public class AgendamentoBusinessImpl extends BaseBusinessImpl<Agendamento, Agend
 
 	private static final long serialVersionUID = -1813596324642553648L;
 
-	
+	@Override
 	public Agendamento iniciarAtendimento(Agendamento agendamento){
 		agendamento.setInicioAtendimento(LocalDateTime.now());
 		agendamento.setStatus(StatusAgendamento.EN_ANDAMENTO);
 		return update(agendamento);
 	}
 	
+	@Override
 	public Agendamento terminarAtendimento(Agendamento agendamento){
 		agendamento.setFinalAtendimento(LocalDateTime.now());
 		agendamento.setStatus(StatusAgendamento.CONCLUIDO);
+		return update(agendamento);
+	}
+
+	@Override
+	public Agendamento cancelarAtendimento(Agendamento agendamento) {
+		agendamento.setDataCancelamento(LocalDateTime.now());
+		agendamento.setStatus(StatusAgendamento.CANCELADO);
 		return update(agendamento);
 	}
 }

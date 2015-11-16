@@ -2,6 +2,7 @@ package br.com.belaAgenda.infra.base.controller;
 
 import java.io.Serializable;
 
+import javax.enterprise.context.Conversation;
 import javax.enterprise.context.RequestScoped;
 import javax.enterprise.inject.Produces;
 import javax.faces.application.FacesMessage;
@@ -19,6 +20,9 @@ public class BaseBean  implements Serializable{
 	@Inject
 	@RequestScoped
 	protected FacesContext facesContext;
+	
+	@Inject 
+	Conversation conversation;
 	
 	@Inject
 	protected MessageProvider messageProvider;
@@ -42,6 +46,8 @@ public class BaseBean  implements Serializable{
 		}
 		return message;
 	}
+	
+
 	
 	@Produces
 	@RequestScoped

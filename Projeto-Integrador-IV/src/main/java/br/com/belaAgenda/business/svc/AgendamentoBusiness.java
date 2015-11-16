@@ -8,5 +8,7 @@ public interface AgendamentoBusiness extends BaseBusiness<Agendamento> {
 	public Agendamento iniciarAtendimento(Agendamento agendamento);
 	
 	public Agendamento terminarAtendimento(Agendamento agendamento);
+
+	public Agendamento cancelarAtendimento(Agendamento agendamento);
 		
 }

@@ -14,7 +14,7 @@ import javax.interceptor.InvocationContext;
 import javax.persistence.EntityManager;
 
 @Interceptor @Transactional @Priority(Interceptor.Priority.APPLICATION)
-public class NamedInterceptor implements Serializable{
+public class TransactionalInterceptor implements Serializable{
 	
 	private static final long serialVersionUID = -7994877557421884197L;
 	

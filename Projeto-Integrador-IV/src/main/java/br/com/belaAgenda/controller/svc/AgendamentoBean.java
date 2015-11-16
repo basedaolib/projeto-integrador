@@ -1,7 +1,10 @@
 package br.com.belaAgenda.controller.svc;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.view.ViewScoped;
@@ -18,6 +21,7 @@ import br.com.belaAgenda.model.glb.Cliente;
 import br.com.belaAgenda.model.rh.Funcionario;
 import br.com.belaAgenda.model.svc.Agendamento;
 import br.com.belaAgenda.model.svc.Servico;
+import br.com.belaAgenda.model.svc.type.StatusAgendamento;
 
 @Named
 @ViewScoped
@@ -32,6 +36,10 @@ public class AgendamentoBean extends BaseBean {
 	
 	private List<Agendamento> agendamentos;
 	
+	private List<Servico> servicos = new ArrayList<>();
+	
+	private List<Servico> servicosSelecionados = new ArrayList<>();
+	
 	
 	private Long pesquisa;
 	
@@ -44,6 +52,7 @@ public class AgendamentoBean extends BaseBean {
 	}
 	
 	public void salvar(){
+		this.agendamento.setServicos(servicosSelecionados);
 		this.agendamento = agendamentoBusiness.save(this.agendamento);
 		
 		addMessage(null, FacesMessage.SEVERITY_INFO ,getMessage("agendamentoBean.agendamentoSalvo"), null);
@@ -59,21 +68,22 @@ public class AgendamentoBean extends BaseBean {
 					
 	}
 	
-	public void onServicosChosen(SelectEvent event) {
-	    Servico  servico = (Servico) event.getObject();
-	    
-	    agendamento.getServicos().add(servico);
-	}
 	
 	public void onClienteChosen(SelectEvent event) {
 	    agendamento.setCliente((Cliente) event.getObject());
 	}
 	
 	public void onFuncionarioChosen(SelectEvent event) {
-	    agendamento.setFuncionario((Funcionario) event.getObject());
+		Funcionario funcionario = (Funcionario) event.getObject();
+	    agendamento.setFuncionario(funcionario);
+	    servicos = funcionario.getServicos();
 	}
 	
 	public void editar(Agendamento agendamento){
+		servicos.clear();
+		servicos.addAll(agendamento.getFuncionario().getServicos());
+		servicosSelecionados.clear();
+		servicosSelecionados.addAll(agendamento.getServicos());
 		this.agendamento = agendamento;
 	}
 	
@@ -81,14 +91,19 @@ public class AgendamentoBean extends BaseBean {
 		this.agendamento = agendamento;
 	}
 	
-	public void iniciarAtendimento(Agendamento agendamento){
+	public void iniciarAtendimento(){
 		this.agendamento = agendamentoBusiness.iniciarAtendimento(agendamento);
 		UtilList.update(agendamentos, agendamento, this.agendamento);
 		 
 	}
 	
-	public void terminarAtendimento(Agendamento agendamento){
+	public void terminarAtendimento(){
 		this.agendamento = agendamentoBusiness.terminarAtendimento(agendamento);
+		UtilList.update(agendamentos, agendamento, this.agendamento);
+	}
+	
+	public void cancelarAtendimento(){
+		this.agendamento = agendamentoBusiness.cancelarAtendimento(agendamento);
 		UtilList.update(agendamentos, agendamento, this.agendamento);
 	}
 	
@@ -101,10 +116,41 @@ public class AgendamentoBean extends BaseBean {
 	}
 	
 	public String obterDataFormatada(LocalDateTime localDateTime){
+		if (localDateTime == null){
+			return "";
+		}
 		return UtilData.formatarData(localDateTime);
 				
 	}
 	
+	public boolean podeAtender(){
+		return agendado();
+	}
+	
+	public boolean podeCancelar(){
+		return agendado() || emAtendimento();	
+	}
+	
+	public boolean podeFinalizar(){
+		return emAtendimento();
+	}
+	
+	
+	public boolean emAtendimento(){
+		return agendamento.getStatus() == StatusAgendamento.EN_ANDAMENTO;
+	}
+	
+	public boolean agendado(){
+		return agendamento.getStatus() == StatusAgendamento.AGENDADO;
+	}
+	
+	public boolean cancelado(){
+		return agendamento.getStatus() == StatusAgendamento.CANCELADO;
+	}
+	
+	public boolean concluido(){
+		return agendamento.getStatus() == StatusAgendamento.CONCLUIDO;
+	}
 
 	public Agendamento getAgendamento() {
 		return agendamento;
@@ -138,6 +184,20 @@ public class AgendamentoBean extends BaseBean {
 	public void setPesquisa(Long pesquisa) {
 		this.pesquisa = pesquisa;
 	}
+
+	public List<Servico> getServicos() {
+		return servicos;
+	}
+
+	public List<Servico> getServicosSelecionados() {
+		return servicosSelecionados;
+	}
+
+	public void setServicosSelecionados(List<Servico> servicosSelecionados) {
+		this.servicosSelecionados = servicosSelecionados;
+	}
+	
+	
 
 	
 }

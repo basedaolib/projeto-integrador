@@ -50,6 +50,8 @@ public class Agendamento extends EntityId {
 	
 	private LocalDateTime finalAtendimento;
 	
+	private LocalDateTime dataCancelamento;
+	
 	@NotNull(message="{agendamento.statusObrigatorio}")
 	@Enumerated(EnumType.STRING) 
 	private StatusAgendamento status;
@@ -164,6 +166,14 @@ public class Agendamento extends EntityId {
 		this.finalEstimado = finalEstimado;
 	}
 
+
+	public LocalDateTime getDataCancelamento() {
+		return dataCancelamento;
+	}
+
+	public void setDataCancelamento(LocalDateTime dataCancelamento) {
+		this.dataCancelamento = dataCancelamento;
+	}
 
 	public List<Servico> getServicos() {
 		return servicos = servicos == null? new ArrayList<Servico>() : servicos;

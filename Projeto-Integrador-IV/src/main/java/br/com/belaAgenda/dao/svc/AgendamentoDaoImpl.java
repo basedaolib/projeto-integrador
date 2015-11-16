@@ -39,13 +39,12 @@ public class AgendamentoDaoImpl extends BaseDaoImpl<Agendamento> implements Agen
 	protected Agendamento consist(Agendamento entity) {
 		if(entity.getStatus() != StatusAgendamento.CANCELADO){
 			SearchEntityListBuilder<Agendamento> builder = listEntities()
-					.equal("cliente", entity.getCliente())
 					.equal("funcionario", entity.getFuncionario())
 					.in("status", StatusAgendamento.AGENDADO, StatusAgendamento.EN_ANDAMENTO)
 					.between("data", entity.getData(), entity.getFinalEstimado())
 					.between("finalEstimado", entity.getData(), entity.getFinalEstimado());
 			
-			if(entity.getId() == 0){
+			if(entity.getId() != 0){
 				builder.notEqual("id", entity.getId());
 			}
 			

@@ -5,6 +5,6 @@
 		http://java.sun.com/xml/ns/javaee/beans_1_0.xsd">
 		
 	<interceptors>
-		<class>br.com.belaAgenda.infra.util.NamedInterceptor</class>
+		<class>br.com.belaAgenda.infra.util.TransactionalInterceptor</class>
 	</interceptors>
 </beans>
