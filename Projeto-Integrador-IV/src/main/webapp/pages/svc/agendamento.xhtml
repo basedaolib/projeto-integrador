@@ -8,27 +8,34 @@
 		<h:form id="root">
 			<h:form id="formDataTable">
 
+				<p:panelGrid columns="8">
 
-				<div class="ui-fluid">
-					<p:panelGrid columns="3"
-						columnClasses="ui-grid-col-10,ui-grid-col-2,ui-grid-col-2,ui-grid-col-2"
-						layout="grid" styleClass="ui-panelgrid-blank">
-
-						<p:inputText value="#{agendamentoBean.pesquisa}" type="number" />
-
-						<p:commandButton value="#{global.pesquisar}"
-							actionListener="#{agendamentoBean.pesquisar}"
-							icon="ui-icon-search" update="agendamentosDatagrid" />
-
-						<p:commandButton value="#{global.novo}"
-							actionListener="#{agendamentoBean.adicionar}" icon="ui-icon-plus"
-							update="root:formCadastroPopUp"
-							oncomplete="PF('formCadastroPopUp').show();" />
-
-					</p:panelGrid>
+					<p:outputLabel value="#{global.codigo}" />
+					<p:inputText value="#{agendamentoBean.codigo}" type="number" />
 
 
-				</div>
+					<p:outputLabel value="#{agendamentoLabels.data}" />
+					<p:calendar id="dataInput" mask="99/99/9999 99:99:99"
+						pattern="dd/MM/yyyy HH:mm:ss"
+						value="#{agendamentoBean.data}"
+						converter="localDateTimeConverter" />
+
+					<p:outputLabel value="#{agendamentoLabels.finalEstimado}" />
+					<p:calendar id="finalEstimadoInput" mask="99/99/9999 99:99:99"
+						pattern="dd/MM/yyyy HH:mm:ss"
+						value="#{agendamentoBean.finalEstimado}"
+						converter="localDateTimeConverter" />
+
+					<p:commandButton value="#{global.pesquisar}"
+						actionListener="#{agendamentoBean.pesquisar}"
+						icon="ui-icon-search" update="agendamentosDatagrid" />
+
+					<p:commandButton value="#{global.novo}"
+						actionListener="#{agendamentoBean.adicionar}" icon="ui-icon-plus"
+						update="root:formCadastroPopUp"
+						oncomplete="PF('formCadastroPopUp').show();" />
+
+				</p:panelGrid>
 
 				<p:dataGrid var="item" value="#{agendamentoBean.agendamentos}"
 					paginator="true" id="agendamentosDatagrid" columns="3"
@@ -44,6 +51,9 @@
 
 							<p:outputLabel value="#{agendamentoLabels.funcionario}" />
 							<p:outputLabel value="#{item.funcionario.nome}" />
+							
+							<p:outputLabel value="#{global.status}" />
+							<p:outputLabel value="#{agendamentoBean.obterStatus(item)}" />
 
 							<p:outputLabel value="#{agendamentoLabels.data}" />
 							<p:outputLabel
@@ -105,6 +115,7 @@
 						<h:panelGrid columns="1">
 							<ui:repeat var="itemServico"
 								value="#{agendamentoBean.agendamento.servicos}">
+								<br/>
 								<p:outputLabel value="#{itemServico.nome}" />
 							</ui:repeat>
 						</h:panelGrid>
@@ -190,7 +201,9 @@
 
 					<h:panelGrid columns="2" cellpadding="10">
 						<p:selectManyCheckbox id="servicosCheckboxs"
-							value="#{agendamentoBean.servicosSelecionados}" layout="grid" columns="3">
+							converter="servicoConverter"
+							value="#{agendamentoBean.servicosSelecionados}" layout="grid"
+							columns="3">
 							<f:selectItems value="#{agendamentoBean.servicos}" var="item"
 								itemLabel="#{item.nome}" itemValue="#{item}" />
 						</p:selectManyCheckbox>

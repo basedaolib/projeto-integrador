@@ -99,8 +99,19 @@ public class FuncionarioBean extends BaseBean {
 	
 	public void onServicosChosen(SelectEvent event) {
 	    Servico  servico = (Servico) event.getObject();
+	    boolean jaAdicionado = false;
 	    
-	    funcionario.getServicos().add(servico);
+	    for(Servico item : funcionario.getServicos()){
+	        if(item.getId() == servico.getId()){
+	            jaAdicionado = true;
+	        }
+	    }
+	    if(jaAdicionado){
+	        addMessage(null, FacesMessage.SEVERITY_WARN ,getMessage("funcionarioBean.servicoJaIncluido"), null);
+	    }else{
+	        funcionario.getServicos().add(servico);
+	    }
+	    
 	}
 
 	public Funcionario getFuncionario() {
