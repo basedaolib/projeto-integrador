@@ -1,5 +1,6 @@
 package br.com.belaAgenda.controller.rh;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.faces.application.FacesMessage;
@@ -31,7 +32,7 @@ public class FuncionarioBean extends BaseBean {
 	
 	private Funcionario funcionario = new Funcionario();
 	
-	private List<Funcionario> funcionarios;
+	private List<Funcionario> funcionarios = new ArrayList<>();
 	
 	private EstadoEntidade estado = EstadoEntidade.Ativo;
 	

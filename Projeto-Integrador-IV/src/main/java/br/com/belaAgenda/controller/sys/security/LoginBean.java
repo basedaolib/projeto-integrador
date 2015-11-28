@@ -37,15 +37,11 @@ public class LoginBean extends BaseBean{
 						savedRequest != null ? 
 								savedRequest.getRequestUrl() : getContextPath() + HOME_URL);
 	        }
-	        catch (AuthenticationException e) {
+	        catch (AuthenticationException | IOException e) {
 	        	addMessage(null, FacesMessage.SEVERITY_FATAL ,
-	        			getMessage("Unknown user, please try again"), null);
+	        			getMessage("usuarioLabels.usuarioOuSenhaInvalida"), null);
 	            e.printStackTrace();
-	        }catch (IOException e) {
-	        	addMessage(null, FacesMessage.SEVERITY_FATAL ,
-	        			getMessage("Unknown user, please try again"), null);
-	            e.printStackTrace();
-			}
+	        }
 	}
 	
 

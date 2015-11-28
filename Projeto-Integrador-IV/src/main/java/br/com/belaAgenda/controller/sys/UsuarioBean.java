@@ -1,5 +1,6 @@
 package br.com.belaAgenda.controller.sys;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.faces.application.FacesMessage;
@@ -25,7 +26,7 @@ public class UsuarioBean extends BaseBean{
 	
 	private Usuario usuario = new Usuario();
 	
-	private List<Usuario> usuarios;
+	private List<Usuario> usuarios = new ArrayList<>();
 	
 	private EstadoEntidade estado = EstadoEntidade.Ativo;
 	

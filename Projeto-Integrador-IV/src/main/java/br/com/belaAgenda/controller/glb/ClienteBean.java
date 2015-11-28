@@ -1,5 +1,6 @@
 package br.com.belaAgenda.controller.glb;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.faces.application.FacesMessage;
@@ -28,7 +29,7 @@ public class ClienteBean extends BaseBean {
 	
 	private Cliente cliente = new Cliente();
 	
-	private List<Cliente> clientes;
+	private List<Cliente> clientes = new ArrayList<>();
 	
 	private EstadoEntidade estado = EstadoEntidade.Ativo;
 	
