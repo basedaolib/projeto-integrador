@@ -46,6 +46,11 @@ body {
 						<p:menuitem value="#{indexLabels.cadastroCliente}"
 							update="conteudo"
 							actionListener='#{indexBean.setPage("/pages/glb/cliente.xhtml")}' />
+							
+						<p:menuitem value="#{indexLabels.cadastroServico}"
+							update="conteudo"
+							actionListener='#{indexBean.setPage("/pages/svc/servico.xhtml")}' />
+							
 					</p:submenu>
 					<p:submenu label="#{indexLabels.servico}">
 						<p:menuitem value="#{indexLabels.agendamento}"

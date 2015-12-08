@@ -34,6 +34,6 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="/home/henrique/git/projeto-integrador/Projeto-Integrador-IV/src/main/webapp/WEB-INF/lib/generic-dao-0.0.1.jar" sourcepath="/generic-dao"/>
+	<classpathentry kind="lib" path="C:/Users/Cristiano/git/projeto-integrador/Projeto-Integrador-IV/src/main/webapp/WEB-INF/lib/generic-dao-0.0.1.jar" sourcepath="/generic-dao"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

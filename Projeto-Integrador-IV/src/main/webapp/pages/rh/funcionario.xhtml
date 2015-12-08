@@ -36,7 +36,7 @@
 				<p:dataTable var="item" value="#{funcionarioBean.funcionarios}"
 					layout="grid" paginator="true" id="funcionariosDatagrid"
 					paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-					rows="10">
+					rows="10" emptyMessage="">
 
 					<p:column headerText="#{global.codigo}" width="10%">
 						<h:outputText value="#{item.codigo}" />

@@ -39,7 +39,7 @@
 				<p:dataTable var="item" value="#{clienteBean.clientes}"
 					layout="grid" paginator="true" id="clientesDatagrid"
 					paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-					rows="10">
+					rows="10" emptyMessage="">
 
 					<p:column headerText="#{global.codigo}" width="10%">
 						<h:outputText value="#{item.codigo}" />
